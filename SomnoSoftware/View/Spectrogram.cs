@@ -18,6 +18,14 @@ namespace SomnoSoftware
         private int h = 0;
         private int w = 0;
         
+
+        // Position Variables for Spectrogram
+        float faxispos_x = 70;      // x-position freqency axis
+        float faxispos_ytop = 20;   // y-distance frequency axis on top
+        float faxispos_ybot = 40;   // y-distance freqency axis on bottom
+
+        float taxispos_xl = 100;      // x-position time axis left
+        
         /// <summary>
         /// Constructor
         /// </summary>
@@ -45,11 +53,6 @@ namespace SomnoSoftware
             string[] ftick_label = new string[5]{"2000","1500","1000","500","0"};
             string[] ttick_label = new string[4]{"0", "2", "4", "6"};
             
-            float faxispos_x = 70;      // x-position freqency axis
-            float faxispos_ytop = 20;   // y-distance frequency axis on top
-            float faxispos_ybot = 40;   // y-distance freqency axis on bottom
-
-            float taxispos_xl = 100;      // x-position time axis left
             float taxispos_y = h-faxispos_ybot;
 
             ///////// frequency axis ////////////////////            
@@ -87,24 +90,34 @@ namespace SomnoSoftware
         /// <summary>
         /// Draw current spectral line
         /// </summary>
-        /// <param name="time">time index</param>
         /// <param name="FFT">64 sample spectrum of current data</param>
-        public void DrawSpectrogram(int time, double[] FFT)
+        public void DrawSpectrogram(double[] FFT, int counter)
         {                    
             Graphics g = Graphics.FromImage(bmp_front);
-            SolidBrush brush = new SolidBrush(Color.Black);
-            int fftsize = 2 * FFT.Length;
-            //int timeframe = 
+            SolidBrush brush = new SolidBrush(Color.Black);            
+
+            float taxis_length = w - faxispos_x - taxispos_xl;  // Length of t-axis in pixels
+            float faxis_length = h - faxispos_ybot - faxispos_ytop;  // Length of f-axis in pixels
             
-            for (int i = 0; i < FFT.Length; i++)
+            int line_width = (int)Math.Round(taxis_length / (float)Statics.num_of_lines);
+            int line_height = (int)Math.Round(faxis_length / (float)(2000/FFT.Length));
+            
+            for (int i = 0; i < FFT.Length-20; i++)
             {
                 Color c = MapRainbowColor((float)FFT[i], 50 , 0);
                 brush.Color = c;
+                int x = (int)faxispos_x + counter * line_width;
+                int y = (int)(h - faxispos_ybot) - (i+1) * line_height;
+                //Size s = new Size(
                 
-                g.FillRectangle(brush, new Rectangle(time/128, 303 - i * 5, 5, 5));
+                g.FillRectangle(brush, new Rectangle(x, y, line_width, line_height));
+                //new Rectangle(
+                
             }
 
             pb.Image = bmp_front;
+
+            
                      
         }
 
