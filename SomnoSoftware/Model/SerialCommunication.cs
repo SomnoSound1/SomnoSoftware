@@ -4,6 +4,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Windows.Forms;
 
 namespace SomnoSoftware.Model
 {
@@ -159,6 +160,12 @@ namespace SomnoSoftware.Model
                 }
             }
 
+        }
+
+        public void Reconnect()
+        {
+            Connect(serialPort.PortName);
+            StartSensor();
         }
     }
 }

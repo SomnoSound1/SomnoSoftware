@@ -20,7 +20,8 @@ namespace SomnoSoftware.Control
         private ProcessData processData;
         private SaveData saveData;
         public event EventHandler<NewDataAvailableEvent> NewDataAvailable;
-        public event EventHandler<UpdateStatusEvent> UpdateStatus; 
+        public event EventHandler<UpdateStatusEvent> UpdateStatus;
+        private DateTime dcTime;
 
         //Save Variables
         private bool save = false;
@@ -111,6 +112,8 @@ namespace SomnoSoftware.Control
             else
             Disconnect();
 
+            //Enable/Disable Disconnect Timer
+            form1.EnableTimer(processData.sensorAnswer);
             //Save Button aktivieren/deaktivieren
             form1.ChangeSaveButtonState(processData.sensorAnswer);
             //Connect Button anpassen
@@ -132,6 +135,27 @@ namespace SomnoSoftware.Control
             if(save)
             EndSave();
         }
+
+        /// <summary>
+        /// Checks the time the last package arrived and tries to reconnect if time exceeds 3 seconds
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Reconnect(Object sender, EventArgs e)
+        {
+            form1.EnableTimer(!processData.sensorAnswer);
+            TimeSpan time;
+            time = DateTime.Now - dcTime;
+            if (time.Seconds >= 3)
+            {
+                UpdateStatus(this, new UpdateStatusEvent("Searching Sensor..."));
+                serial.Reconnect();
+                dcTime = DateTime.Now;
+                //TODO neue connect klassen erstellen und hier verwenden! sowie beim normalen connect
+            }
+            form1.EnableTimer(processData.sensorAnswer);
+        }
+
 
         /// <summary>
         /// Exits the program
@@ -210,6 +234,9 @@ namespace SomnoSoftware.Control
         /// <param name="e"></param>
         public void NewSerialDataRecieved(object sender, SerialDataEventArgs e)
         {
+            //Reset Timer for disconnect
+            dcTime = DateTime.Now;
+
             foreach (byte t in e.Data)
             {
                 //Import Byte and convert if one package complete

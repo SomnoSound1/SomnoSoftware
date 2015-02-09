@@ -34,6 +34,7 @@
             this.zedGraphAudio = new ZedGraph.ZedGraphControl();
             this.labelStatus = new System.Windows.Forms.Label();
             this.pb_spec = new System.Windows.Forms.PictureBox();
+            this.timerDisconnect = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pb_spec)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,6 +89,10 @@
             this.pb_spec.TabIndex = 5;
             this.pb_spec.TabStop = false;
             // 
+            // timerDisconnect
+            // 
+            this.timerDisconnect.Interval = 5000;
+            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,6 +119,7 @@
         private ZedGraph.ZedGraphControl zedGraphAudio;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.PictureBox pb_spec;
+        private System.Windows.Forms.Timer timerDisconnect;
     }
 }
 

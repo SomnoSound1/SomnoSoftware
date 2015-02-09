@@ -8,10 +8,9 @@ namespace SomnoSoftware
     public static class Statics
     {
         public static int FS = 4890;
-        public static int FFTSize = 128;
         public static int timeDisplay = 6 * FS;
         //false = 3 channel edf file, true 9 channel edf file (with imu data)
-        public static bool complexSave = true;
+        public static bool complexSave = false;
         public static int FFTSize = 256;
         public static int num_of_lines = (int)Math.Round((double)(Statics.timeDisplay / Statics.FFTSize));
 
@@ -23,9 +22,7 @@ namespace SomnoSoftware
 
         public static float deg2rad(float degrees)
         {
-
             return (float)(Math.PI / 180) * degrees;
-
         }
 
         /// <summary>
