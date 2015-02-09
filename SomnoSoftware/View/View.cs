@@ -21,6 +21,7 @@ namespace SomnoSoftware
         public Int32 time = 0;
         Spectrogram spec;
         Rectangle rect;
+        private int counter = 0;
 
         /// <summary>
         /// Constructor, initializing the components
@@ -67,12 +68,18 @@ namespace SomnoSoftware
 
             //Go on time Axes
             time += e.audio.Length;
-            if (time > (229*e.audio.Length))
+            if (time > Statics.timeDisplay)
                 time=0;
 
             //Update Graphs
-            UpdateZedGraph(zedGraphAudio,e.audio);
-            spec.DrawSpectrogram(time, e.FFT);
+            UpdateZedGraph(zedGraphAudio,e.audio);                       
+                      
+            spec.DrawSpectrogram(e.FFT, counter);
+
+            if (counter < Statics.num_of_lines)
+                counter++;
+            else
+                counter = 0;
         }
 
         private void UpdateZedGraph(ZedGraphControl zedGraph, Int16[] Data)

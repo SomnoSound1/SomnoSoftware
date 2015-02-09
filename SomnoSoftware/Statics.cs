@@ -12,6 +12,8 @@ namespace SomnoSoftware
         public static int timeDisplay = 6 * FS;
         //false = 3 channel edf file, true 9 channel edf file (with imu data)
         public static bool complexSave = true;
+        public static int FFTSize = 256;
+        public static int num_of_lines = (int)Math.Round((double)(Statics.timeDisplay / Statics.FFTSize));
 
         /// <summary>
         /// Converts a Degree Angle into Rad
