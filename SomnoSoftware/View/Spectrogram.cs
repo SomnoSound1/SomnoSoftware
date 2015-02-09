@@ -17,7 +17,11 @@ namespace SomnoSoftware
         private PictureBox pb;
         private int h = 0;
         private int w = 0;
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pb"></param>
         public Spectrogram(ref PictureBox pb)
         {
             this.pb = pb;
