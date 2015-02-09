@@ -14,6 +14,7 @@ namespace SomnoSoftware
     public partial class View : Form
     {
         //Hallo
+        //und nochmal ein Test
         private Controller controller;
         public Int32 time = 0;
         Spectrogram spec;
