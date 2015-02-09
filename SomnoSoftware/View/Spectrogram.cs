@@ -14,10 +14,11 @@ namespace SomnoSoftware
     {
         private Bitmap bmp_front;
         private Bitmap bmp_back;
+        private Bitmap spect;
         private PictureBox pb;
         private int h = 0;
         private int w = 0;
-        
+               
 
         // Position Variables for Spectrogram
         float faxispos_x = 70;      // x-position freqency axis
@@ -25,6 +26,9 @@ namespace SomnoSoftware
         float faxispos_ybot = 40;   // y-distance freqency axis on bottom
 
         float taxispos_xl = 100;      // x-position time axis left
+
+        float taxis_length;
+        float faxis_length;
         
         /// <summary>
         /// Constructor
@@ -32,11 +36,16 @@ namespace SomnoSoftware
         /// <param name="pb">referece variable on picturebox for spectrogram (pb_spec)</param>
         public Spectrogram(ref PictureBox pb)
         {
+            h = pb.Height;
+            w = pb.Width;            
+            taxis_length = w - faxispos_x - taxispos_xl;  // Length of t-axis in pixels
+            faxis_length = h - faxispos_ybot - faxispos_ytop;  // Length of f-axis in pixels
+            
             this.pb = pb;
             bmp_front = new Bitmap(pb.Width, pb.Height);
             bmp_back = new Bitmap(pb.Width, pb.Height);
-            h = pb.Height;
-            w = pb.Width;
+            spect = new Bitmap((int)taxis_length, (int)faxis_length);
+           
             InitializeSpectrogram();
         }
 
@@ -91,34 +100,64 @@ namespace SomnoSoftware
         /// Draw current spectral line
         /// </summary>
         /// <param name="FFT">64 sample spectrum of current data</param>
-        public void DrawSpectrogram(double[] FFT, int counter)
-        {                    
-            Graphics g = Graphics.FromImage(bmp_front);
-            SolidBrush brush = new SolidBrush(Color.Black);            
+        //public void DrawSpectrogram(double[] FFT, int counter)
+        //{                    
+        //    Graphics g = Graphics.FromImage(bmp_front);
+        //    SolidBrush brush = new SolidBrush(Color.Black);    
 
-            float taxis_length = w - faxispos_x - taxispos_xl;  // Length of t-axis in pixels
-            float faxis_length = h - faxispos_ybot - faxispos_ytop;  // Length of f-axis in pixels
+        //    int line_width = (int)Math.Round(taxis_length / (float)Statics.num_of_lines);           
             
+        //    int limit = 2000/(Statics.FS/Statics.FFTSize);
+        //    int line_height = (int)Math.Round(faxis_length / (float)limit);
+            
+            
+        //    for (int i = 0; i < limit; i++)
+        //    {
+        //        Color c = MapRainbowColor((float)FFT[i], 50 , 0);
+        //        brush.Color = c;
+        //        int x = (int)faxispos_x + counter * line_width + 1;
+        //        int y = (int)(h - faxispos_ybot) - (i+1) * line_height - 1;
+        //        //Size s = new Size(
+                
+        //        g.FillRectangle(brush, new Rectangle(x, y, line_width, line_height));
+        //        //new Rectangle(
+               
+                
+        //    }
+
+        //    pb.Image = bmp_front;            
+                     
+        //}
+
+        public void DrawSpectrogram(double[] FFT, int counter)
+        {
+            Graphics g = Graphics.FromImage(spect);
+            Graphics g2 = Graphics.FromImage(bmp_front);
+            SolidBrush brush = new SolidBrush(Color.Black);
+
             int line_width = (int)Math.Round(taxis_length / (float)Statics.num_of_lines);
-            int line_height = (int)Math.Round(faxis_length / (float)(2000/FFT.Length));
-            
-            for (int i = 0; i < FFT.Length-20; i++)
+
+            int limit = 2000 / (Statics.FS / Statics.FFTSize);
+            int line_height = (int)Math.Round(faxis_length / (float)limit);
+
+
+            for (int i = 0; i < limit; i++)
             {
-                Color c = MapRainbowColor((float)FFT[i], 50 , 0);
+                Color c = MapRainbowColor((float)FFT[i], 50, 0);
                 brush.Color = c;
-                int x = (int)faxispos_x + counter * line_width;
-                int y = (int)(h - faxispos_ybot) - (i+1) * line_height;
-                //Size s = new Size(
-                
-                g.FillRectangle(brush, new Rectangle(x, y, line_width, line_height));
-                //new Rectangle(
-                
+                int x = (int)counter * line_width + 1;
+                int y = (int)(i + 1) * line_height - 1;              
+
+                g.FillRectangle(brush, new Rectangle(x, y, line_width, line_height));                
             }
 
+            spect.
+            Rectangle r = new Rectangle((int)faxispos_x, (int)faxispos_ytop, (int)taxis_length, (int)faxis_length);
+            g2.DrawImage(spect, r); 
+            
+            
             pb.Image = bmp_front;
 
-            
-                     
         }
 
 
