@@ -19,9 +19,9 @@ namespace SomnoSoftware
         private int w = 0;
         
         /// <summary>
-        /// 
+        /// Constructor
         /// </summary>
-        /// <param name="pb"></param>
+        /// <param name="pb">referece variable on picturebox for spectrogram (pb_spec)</param>
         public Spectrogram(ref PictureBox pb)
         {
             this.pb = pb;
@@ -32,6 +32,9 @@ namespace SomnoSoftware
             InitializeSpectrogram();
         }
 
+        /// <summary>
+        /// Draw axis for spectrogram
+        /// </summary>
         private void InitializeSpectrogram()
         {
             Graphics g = Graphics.FromImage(bmp_back);
@@ -81,13 +84,18 @@ namespace SomnoSoftware
             pb.BackgroundImage = bmp_back;
         }
 
-
+        /// <summary>
+        /// Draw current spectral line
+        /// </summary>
+        /// <param name="time">time index</param>
+        /// <param name="FFT">64 sample spectrum of current data</param>
         public void DrawSpectrogram(int time, double[] FFT)
-        {
-                    
+        {                    
             Graphics g = Graphics.FromImage(bmp_front);
             SolidBrush brush = new SolidBrush(Color.Black);
-
+            int fftsize = 2 * FFT.Length;
+            //int timeframe = 
+            
             for (int i = 0; i < FFT.Length; i++)
             {
                 Color c = MapRainbowColor((float)FFT[i], 50 , 0);

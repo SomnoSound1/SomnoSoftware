@@ -11,9 +11,7 @@ namespace SomnoSoftware.Model
         public bool sensorAnswer = false;
         private byte[] dataPaket;
         private int packageSize;
-        private Hsuprot hsuprot;
-
-        private const int fftSize = 128; 
+        private Hsuprot hsuprot;         
 
         //Data
         public Int16[] audio = new Int16[20];
@@ -23,8 +21,8 @@ namespace SomnoSoftware.Model
 
         //Lists
         private List<Int16> buffer = new List<Int16>();
-        public Int16[] audioArray = new Int16[fftSize];
-        public double[] fft = new double[fftSize/2];
+        public Int16[] audioArray = new Int16[Statics.FFTSize];
+        public double[] fft = new double[Statics.FFTSize / 2];
 
 
         //Offset Korrektur für Gyro-Werte
@@ -178,17 +176,17 @@ namespace SomnoSoftware.Model
         /// </summary>
         public bool Buffering()
         {
-            double[] audioDoubles = new double[fftSize];
+            double[] audioDoubles = new double[Statics.FFTSize];
 
-            if (buffer.Count < fftSize)
+            if (buffer.Count < Statics.FFTSize)
             {
                 buffer.AddRange(audio);
                 return false;
             }
             else
             {
-                buffer.CopyTo(0, audioArray, 0, fftSize);
-                buffer.RemoveRange(0, fftSize);
+                buffer.CopyTo(0, audioArray, 0, Statics.FFTSize);
+                buffer.RemoveRange(0, Statics.FFTSize);
                 buffer.AddRange(audio);
 
                 audioDoubles = Array.ConvertAll(audioArray, item => (double)item);
