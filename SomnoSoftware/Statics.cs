@@ -7,9 +7,10 @@ namespace SomnoSoftware
 {
     public static class Statics
     {
-        public static const int FS = 4890;
-        public static const int FFTSize = 128;
-        public static const int timeDisplay = 6 * FS;
+        public static int FS = 4890;
+        public static int FFTSize = 256;
+        public static int timeDisplay = 6 * FS;
+        public static int num_of_lines = (int)Math.Round((double)(Statics.timeDisplay / Statics.FFTSize));
 
         /// <summary>
         /// Converts a Degree Angle into Rad
