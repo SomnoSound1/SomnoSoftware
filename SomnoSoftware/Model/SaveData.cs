@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using NeuroLoopGainLibrary;
@@ -20,17 +21,38 @@ namespace SomnoSoftware.Model
 
         }
 
-        public SaveData(int nrSignals, int sampleDuration, string fileName)
+        public SaveData(int sampleDuration, string fileName, bool complex)
         {
+            if (complex)
+                nrSignals = 9;
+            else
+                nrSignals = 3;
+
             edfFile = new EdfFile(fileName, false, false, false, false);
             edfFile.CreateNewFile(nrSignals, true);
-            this.nrSignals = nrSignals;
+            
             edfFile.FileInfo.SampleRecDuration = sampleDuration;
             buffer = new List<short>[nrSignals];
             for (int i = 0; i < nrSignals; i++)
                 buffer[i]=new List<short>();
-        }
 
+
+            addSignal(0, "Audio", "Amplitude", Statics.FS, 1024, 0);
+            addSignal(1, "Aktivitaet", "Aktivitaet", 1, 10, 0);
+            addSignal(2, "Position", "Position", 1, 3, 0);
+            if (complex)
+            {
+                addSignal(3, "Gyro X", "Winkelgeschwindigkeit", Statics.FS / 20, 255, 0);
+                addSignal(4, "Gyro Y", "Winkelgeschwindigkeit", Statics.FS / 20, 255, 0);
+                addSignal(5, "Gyro Z", "Winkelgeschwindigkeit", Statics.FS / 20, 255, 0);
+
+                addSignal(6, "Acc X", "Beschleunigung", Statics.FS / 20, 255, 0);
+                addSignal(7, "Acc X", "Beschleunigung", Statics.FS / 20, 255, 0);
+                addSignal(8, "Acc X", "Beschleunigung", Statics.FS / 20, 255, 0);
+            }
+
+        }
+        
         /// <summary>
         /// Adds information about a single signal to the edfFile
         /// </summary>
@@ -40,7 +62,7 @@ namespace SomnoSoftware.Model
         /// <param name="nrSamples">Nr Samples per Data Block</param>
         /// <param name="max">max value</param>
         /// <param name="min">min value</param>
-        public void addSignal(int signalNr, string name, string dim, int nrSamples, double max, double min)
+        private void addSignal(int signalNr, string name, string dim, int nrSamples, double max, double min)
         {
             edfFile.SignalInfo[signalNr].PreFilter = "Filter";
             edfFile.SignalInfo[signalNr].PhysiDim = dim;
@@ -82,6 +104,31 @@ namespace SomnoSoftware.Model
         /// </summary>
         /// <param name="signalNr"></param>
         /// <param name="data"></param>
+        public void sendData(int signalNr, short data)
+        {
+            Int16[] data_ = new Int16[1];
+            data_[0] = data;
+
+            Int16[] Data = new short[edfFile.SignalInfo[signalNr].NrSamples];
+
+            if (buffer[signalNr].Count < edfFile.SignalInfo[signalNr].NrSamples)
+                buffer[signalNr].AddRange(data_);
+            else
+            {
+                buffer[signalNr].CopyTo(0, Data, 0, edfFile.SignalInfo[signalNr].NrSamples);
+                buffer[signalNr].RemoveRange(0, edfFile.SignalInfo[signalNr].NrSamples);
+                buffer[signalNr].AddRange(data_);
+
+                writeDataBuffer(signalNr, Data);
+            }
+        }
+
+
+        /// <summary>
+        /// Collects Data and sends it to the DataBuffer
+        /// </summary>
+        /// <param name="signalNr"></param>
+        /// <param name="data"></param>
         public void sendData(int signalNr, short[] data)
         {
             Int16[] Data = new short[edfFile.SignalInfo[signalNr].NrSamples];
@@ -103,7 +150,7 @@ namespace SomnoSoftware.Model
         /// </summary>
         /// <param name="signalNr"></param>
         /// <param name="data"></param>
-        private void writeDataBuffer(int signalNr, short[] data)
+        public void writeDataBuffer(int signalNr, short[] data)
         {
             //Check if data size is equal to assigned size in edffile
             if (edfFile.SignalInfo[signalNr].NrSamples != data.Length)
@@ -118,6 +165,8 @@ namespace SomnoSoftware.Model
             for (int i = 0; i < edfFile.SignalInfo[signalNr].NrSamples; i++)
                 edfFile.DataBuffer[i + offset] = data[i];
 
+            //If Audio Signal reached (longest Signal) write!
+            if(signalNr==(0))
             writeDataBlock();
         }
 

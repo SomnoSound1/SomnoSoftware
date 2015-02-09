@@ -48,6 +48,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="x-IMU API">
+      <HintPath>..\..\..\Visual Studio 2010\Projects\SomnoSound Experimental Analysis HSUPROT 2\SomnoSound Experimental Analysis\x-IMU API.dll</HintPath>
+    </Reference>
     <Reference Include="ZedGraph">
       <HintPath>O:\Lokal\ZedGraph\zedgraph_dll_v5.1.5\ZedGraph.dll</HintPath>
     </Reference>
@@ -59,9 +62,12 @@
     <Compile Include="EventArgs\UpdateStatusEvent.cs" />
     <Compile Include="Model\FourierTransform.cs" />
     <Compile Include="Model\HSUProtokoll\Hsuprot.cs" />
+    <Compile Include="Model\MadgwickAHRS.cs" />
     <Compile Include="Model\ProcessData.cs" />
+    <Compile Include="Model\ProcessIMU.cs" />
     <Compile Include="Model\SaveData.cs" />
     <Compile Include="Model\SerialCommunication.cs" />
+    <Compile Include="Statics.cs" />
     <Compile Include="View\SaveDialog.cs">
       <SubType>Form</SubType>
     </Compile>

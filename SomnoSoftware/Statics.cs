@@ -7,9 +7,11 @@ namespace SomnoSoftware
 {
     public static class Statics
     {
-        public static const int FS = 4890;
-        public static const int FFTSize = 128;
-        public static const int timeDisplay = 6 * FS;
+        public static int FS = 4890;
+        public static int FFTSize = 128;
+        public static int timeDisplay = 6 * FS;
+        //false = 3 channel edf file, true 9 channel edf file (with imu data)
+        public static bool complexSave = true;
 
         /// <summary>
         /// Converts a Degree Angle into Rad

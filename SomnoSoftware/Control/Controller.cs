@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Timers;
+using System.Windows.Forms.VisualStyles;
 using SomnoSoftware.Model;
 using ZedGraph;
 
@@ -23,7 +24,7 @@ namespace SomnoSoftware.Control
 
         //Save Variables
         private bool save = false;
-
+        
         bool exitProgram = false;
         bool stopProgram = false;
 
@@ -185,8 +186,7 @@ namespace SomnoSoftware.Control
         /// <param name="gender"></param>
         public void StartRecording(string name, DateTime birthDate, char gender)
         {
-            saveData = new SaveData(1,1,"output.edf");
-            saveData.addSignal(0, "audio", "amplitude", Statics.FS, 1024, 0);
+            saveData = new SaveData(1,"output.edf",Statics.complexSave);
             saveData.addInformation("test","",birthDate,gender,name);
             save = true;
             saveDialog.Dispose();
@@ -216,16 +216,34 @@ namespace SomnoSoftware.Control
                 if (processData.ImportByte(t))
                 {
                     processData.Convert2Byte();
+                    
+                    //IMU
+                    processData.CalculateIMU();
 
+                    //FFT
                     if (processData.Buffering())
                     {
                         // Send data to Form
                         if (NewDataAvailable != null)
-                            NewDataAvailable(this, new NewDataAvailableEvent(processData.audioArray,processData.fft));
+                            NewDataAvailable(this, new NewDataAvailableEvent(processData.audioArray,processData.fft,processData.activity,processData.sleepPosition));
                     }
+
                     //Save Data
                     if (save)
-                    saveData.sendData(0,processData.audio);
+                    {
+                        if (Statics.complexSave)
+                        {
+                            for (int i = 0; i < 3; i++)
+                            {
+                                saveData.sendData(i + 3, processData.gyro[i]);
+                                saveData.sendData(i + 6, processData.accelerationRaw[i]);
+                            }
+                        }
+                        saveData.sendData(1, (short)processData.activity);
+                        saveData.sendData(2, (short)processData.sleepPosition);
+                        saveData.sendData(0, processData.audio);
+
+                    }
                 }
             }
 

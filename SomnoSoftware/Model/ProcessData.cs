@@ -11,13 +11,16 @@ namespace SomnoSoftware.Model
         public bool sensorAnswer = false;
         private byte[] dataPaket;
         private int packageSize;
-        private Hsuprot hsuprot;         
+        private Hsuprot hsuprot;
+        private ProcessIMU processImu; 
 
         //Data
         public Int16[] audio = new Int16[20];
         public Int16[] gyro = new Int16[3];
         public Int16[] accelerationRaw = new Int16[3];
         public Int16[] gyroRaw = new Int16[3];
+        public int activity;
+        public int sleepPosition;
 
         //Lists
         private List<Int16> buffer = new List<Int16>();
@@ -33,6 +36,7 @@ namespace SomnoSoftware.Model
 
         public ProcessData(int packageSize)
         {
+            processImu = new ProcessIMU();
             hsuprot = new Hsuprot();
             this.packageSize = packageSize;
             dataPaket = new byte[packageSize];
@@ -195,6 +199,14 @@ namespace SomnoSoftware.Model
             }
         }
 
-
+        /// <summary>
+        /// Updates Madgwick and calculates the activity and the sleep position
+        /// </summary>
+        public void CalculateIMU()
+        {
+            processImu.UpdateIMU(gyro[0],gyro[1],gyro[2],accelerationRaw[0],accelerationRaw[1],accelerationRaw[2]);
+            activity = processImu.MeasureActivity();
+            sleepPosition = processImu.MeasureSleepPosition();
+        }
     }
 }
