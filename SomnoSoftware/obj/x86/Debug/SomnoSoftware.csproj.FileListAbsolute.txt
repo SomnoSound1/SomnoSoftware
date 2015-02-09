@@ -1,0 +1,47 @@
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.Properties.Resources.resources
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.View.resources
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.csproj.GenerateResource.Cache
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\SomnoSoftware.exe
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\SomnoSoftware.pdb
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.exe
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.pdb
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\ZedGraph.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\ZedGraph.xml
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\de\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\es\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\fr\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\hu\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\it\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\ja\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\pt\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\ru\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\sk\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\sv\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\tr\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\zh-cn\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\documents\visual studio 2010\Projects\SomnoSoftware\SomnoSoftware\bin\Debug\zh-tw\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\Documents\Visual Studio 2010\Projects\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.csprojResolveAssemblyReference.cache
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.exe
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.pdb
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\SomnoSoftware.exe
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\SomnoSoftware.pdb
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\ZedGraph.xml
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\de\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\es\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\fr\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\hu\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\it\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\ja\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\pt\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\ru\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\sk\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\sv\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\tr\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\zh-cn\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\bin\Debug\zh-tw\ZedGraph.resources.dll
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.csprojResolveAssemblyReference.cache
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.Properties.Resources.resources
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.View.resources
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.csproj.GenerateResource.Cache
+C:\Users\Lizenznehmer\Documents\Visual Studio 2010\Projects\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.SaveDialog.resources
+R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.SaveDialog.resources
