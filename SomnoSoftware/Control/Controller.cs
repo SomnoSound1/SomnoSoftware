@@ -29,7 +29,7 @@ namespace SomnoSoftware.Control
         bool stopProgram = false;
 
         /// <summary>
-        /// Constructor of the controller class
+        /// Constructor of the controller class!
         /// </summary>
         public Controller()
         {
