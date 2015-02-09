@@ -22,7 +22,6 @@ namespace SomnoSoftware.Control
         public event EventHandler<UpdateStatusEvent> UpdateStatus; 
 
         //Save Variables
-        private const int sampleRate = 4890;
         private bool save = false;
 
         bool exitProgram = false;
@@ -187,7 +186,7 @@ namespace SomnoSoftware.Control
         public void StartRecording(string name, DateTime birthDate, char gender)
         {
             saveData = new SaveData(1,1,"output.edf");
-            saveData.addSignal(0, "audio", "amplitude", sampleRate, 1024, 0);
+            saveData.addSignal(0, "audio", "amplitude", Statics.FS, 1024, 0);
             saveData.addInformation("test","",birthDate,gender,name);
             save = true;
             saveDialog.Dispose();
