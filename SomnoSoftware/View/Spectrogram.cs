@@ -25,7 +25,7 @@ namespace SomnoSoftware
         float faxispos_ytop = 20;   // y-distance frequency axis on top
         float faxispos_ybot = 40;   // y-distance freqency axis on bottom
 
-        float taxispos_xl = 100;      // x-position time axis left
+        float taxispos_xr = 50;      // x-position time axis right
 
         float taxis_length;
         float faxis_length;
@@ -38,7 +38,7 @@ namespace SomnoSoftware
         {
             h = pb.Height;
             w = pb.Width;            
-            taxis_length = w - faxispos_x - taxispos_xl;  // Length of t-axis in pixels
+            taxis_length = w - faxispos_x - taxispos_xr;  // Length of t-axis in pixels
             faxis_length = h - faxispos_ybot - faxispos_ytop;  // Length of f-axis in pixels
             
             this.pb = pb;
@@ -48,6 +48,7 @@ namespace SomnoSoftware
            
             InitializeSpectrogram();
         }
+
 
         /// <summary>
         /// Draw axis for spectrogram
@@ -81,86 +82,69 @@ namespace SomnoSoftware
 
             ///////// time axis ////////////////////
 
-            g.DrawLine(p_black, faxispos_x, taxispos_y, w - taxispos_xl, taxispos_y);      // time axis
+            g.DrawLine(p_black, faxispos_x, taxispos_y, w - taxispos_xr, taxispos_y);      // time axis
 
             for (int i = 0; i < ttick_label.Length; i++)
             {
-                float ttickpos_x = faxispos_x + i * (w - (faxispos_x + taxispos_xl)) / (ttick_label.Length - 1);
+                float ttickpos_x = faxispos_x + i * (w - (faxispos_x + taxispos_xr)) / (ttick_label.Length - 1);
                 g.DrawLine(p_black, ttickpos_x, taxispos_y - 3, ttickpos_x, taxispos_y + 3);
                 g.DrawString(ttick_label[i], font, b_black, ttickpos_x - 5, taxispos_y + 8);
             }
 
 
-            g.DrawString("Zeit [s]", font, b_black, ((w - faxispos_x - taxispos_xl) / 2) + faxispos_x - 20, (taxispos_y) + 20);              // label
+            g.DrawString("Zeit [s]", font, b_black, ((w - faxispos_x - taxispos_xr) / 2) + faxispos_x - 20, (taxispos_y) + 20);              // label
 
             pb.BackgroundImage = bmp_back;
         }
+
 
         /// <summary>
         /// Draw current spectral line
         /// </summary>
         /// <param name="FFT">64 sample spectrum of current data</param>
-        //public void DrawSpectrogram(double[] FFT, int counter)
-        //{                    
-        //    Graphics g = Graphics.FromImage(bmp_front);
-        //    SolidBrush brush = new SolidBrush(Color.Black);    
-
-        //    int line_width = (int)Math.Round(taxis_length / (float)Statics.num_of_lines);           
-            
-        //    int limit = 2000/(Statics.FS/Statics.FFTSize);
-        //    int line_height = (int)Math.Round(faxis_length / (float)limit);
-            
-            
-        //    for (int i = 0; i < limit; i++)
-        //    {
-        //        Color c = MapRainbowColor((float)FFT[i], 50 , 0);
-        //        brush.Color = c;
-        //        int x = (int)faxispos_x + counter * line_width + 1;
-        //        int y = (int)(h - faxispos_ybot) - (i+1) * line_height - 1;
-        //        //Size s = new Size(
-                
-        //        g.FillRectangle(brush, new Rectangle(x, y, line_width, line_height));
-        //        //new Rectangle(
-               
-                
-        //    }
-
-        //    pb.Image = bmp_front;            
-                     
-        //}
-
         public void DrawSpectrogram(double[] FFT, int counter)
         {
-            Graphics g = Graphics.FromImage(spect);
-            Graphics g2 = Graphics.FromImage(bmp_front);
+            Graphics g = Graphics.FromImage(bmp_front);
             SolidBrush brush = new SolidBrush(Color.Black);
+            
+            float x = 0;
+            float y = 0;
+            
+            float box_width = taxis_length / Statics.num_of_lines;      // width of single box
 
-            int line_width = (int)Math.Round(taxis_length / (float)Statics.num_of_lines);
+            float limit = 2000 / (Statics.FS / Statics.FFTSize);        // number of boxes ploted until 2000 Hz
+            float box_height = faxis_length / limit;                    // height of single box
+            
 
-            int limit = 2000 / (Statics.FS / Statics.FFTSize);
-            int line_height = (int)Math.Round(faxis_length / (float)limit);
-
-
-            for (int i = 0; i < limit; i++)
+            for (int i = 0; i < (int)limit; i++)
             {
                 Color c = MapRainbowColor((float)FFT[i], 50, 0);
                 brush.Color = c;
-                int x = (int)counter * line_width + 1;
-                int y = (int)(i + 1) * line_height - 1;              
+                x = faxispos_x + counter * box_width + 1;               // x-position box
+                y = (h - faxispos_ybot) - (i + 1) * box_height ;        // y-position box       
 
-                g.FillRectangle(brush, new Rectangle(x, y, line_width, line_height));                
+                g.FillRectangle(brush, new RectangleF(x, y, box_width, box_height));    // Draw box          
+
             }
 
-            spect.
-            Rectangle r = new Rectangle((int)faxispos_x, (int)faxispos_ytop, (int)taxis_length, (int)faxis_length);
-            g2.DrawImage(spect, r); 
-            
-            
+            if (counter < Statics.num_of_lines - 2)                 // avoid black line at the end of spectrogram
+            {  
+                brush.Color = Color.Black;
+                g.FillRectangle(brush, new RectangleF(x + box_width, faxispos_ytop, 3, faxis_length));
+            }
+
             pb.Image = bmp_front;
 
         }
 
 
+        /// <summary>
+        /// Determines Color based on float input value
+        /// </summary>
+        /// <param name="value">value for coverting in color</param>
+        /// <param name="red_value">value that represents red color (maximum)</param>
+        /// <param name="blue_value">value that represents blue color (minimum)</param>
+        /// <returns>Color</returns>
         private Color MapRainbowColor(float value, float red_value, float blue_value)
         {
 

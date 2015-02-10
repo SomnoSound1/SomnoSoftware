@@ -1,103 +1,123 @@
-/* Copyright (C) 2007 Jeff Morton (jeffrey.raymond.morton@gmail.com)
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SomnoSoftware
 {
-    public class FourierTransform
+    class FourierTransform       
     {
-        static private int n, nu;
-
-        static private int BitReverse(int j)
+        private struct komplex
         {
-            int j2;
-            int j1 = j;
-            int k = 0;
-            for (int i = 1; i <= nu; i++)
-            {
-                j2 = j1 / 2;
-                k = 2 * k + j1 - 2 * j2;
-                j1 = j2;
-            }
-            return k;
+            public double re;
+            public double im;
         }
 
-        static public double[] FFTDb(ref double[] x)
+        public static double[] FFT(double[] daten)
+        // Method which is externally called to calculate FFT
         {
-            // Assume n is a power of 2
-            n = x.Length;
-            nu = (int)(Math.Log(n) / Math.Log(2));
-            int n2 = n / 2;
-            int nu1 = nu - 1;
-            double[] xre = new double[n];
-            double[] xim = new double[n];
-            double[] decibel = new double[n2];
-            double tr, ti, p, arg, c, s;
-            for (int i = 0; i < n; i++)
+            int samples = daten.Length;
+            
+            komplex[] data = new komplex[samples];
+
+            for (int i = 0; i < samples; i++)
             {
-                xre[i] = x[i];
-                xim[i] = 0.0f;
+                data[i].re = daten[i];
+                data[i].im = 0.0;
             }
-            int k = 0;
-            for (int l = 1; l <= nu; l++)
+
+            data = FFT(data, samples);
+
+            double[] OutPut = new double[samples / 2];
+
+            for (int i = 0; i < samples / 2; i++)
             {
-                while (k < n)
+                OutPut[i] = Math.Sqrt(data[i].re * data[i].re + data[i].im * data[i].im);
+            }
+            return OutPut;
+        }
+
+        // Methods which actually do the calculations
+        /// <summary>
+        /// Methode FFT aus dem Buch :
+        /// 
+        /// "Praktische Informationstechnik mit C#", Oliver Kluge
+        /// Springer Verlag
+        /// 
+        /// </summary>
+        private static komplex[] FFT(komplex[] data, int samples)
+        {
+            double tempr = 0; // für Tausch bei Bit-Umkehr
+            double tempi = 0; // für Tausch bei Bit-Umkehr
+            double wreal = 0; // Drehfaktor (Realteil)
+            double wimag = 0; // Drehfaktor (Imaginärteil)
+            double real1 = 0; // Hilfsvariable
+            double imag1 = 0; // Hilfsvariable
+            double real2 = 0; // Hilfsvariable
+            double imag2 = 0; // Hilfsvariable
+            int i = 0;
+            int j = 0;
+            int k = 0;
+            int stufen = 0;
+            int sprung = 0;
+            int schritt = 0;
+            int element = 0;
+            // Bit-Umkehr
+            for (j = 0; j < samples - 1; j++)
+            {
+                if (j < i)
                 {
-                    for (int i = 1; i <= n2; i++)
+                    tempr = data[j].re;
+                    tempi = data[j].im;
+                    data[j].re = data[i].re;
+                    data[j].im = data[i].im;
+                    data[i].re = tempr;
+                    data[i].im = tempi;
+                }
+                k = samples / 2;
+                while (k <= i)
+                {
+                    i -= k;
+                    k /= 2;
+                }
+                i += k;
+            }
+
+            stufen = (int)(Math.Log10((double)samples) /
+            Math.Log10((double)2));
+            sprung = 2;
+            for (i = 0; i < stufen; i++)
+            {
+                // jede Iterationsstufe startet mit dem 1. Wert
+                element = 0;
+                for (j = samples / sprung; j >= 1; j--)
+                {
+                    schritt = sprung / 2;
+                    for (k = 0; k < schritt; k++)
                     {
-                        p = BitReverse(k >> nu1);
-                        arg = 2 * (double)Math.PI * p / n;
-                        c = (double)Math.Cos(arg);
-                        s = (double)Math.Sin(arg);
-                        tr = xre[k + n2] * c + xim[k + n2] * s;
-                        ti = xim[k + n2] * c - xre[k + n2] * s;
-                        xre[k + n2] = xre[k] - tr;
-                        xim[k + n2] = xim[k] - ti;
-                        xre[k] += tr;
-                        xim[k] += ti;
-                        k++;
+                        // 1. Zweig des Butterfly
+                        wreal = Math.Cos(k * 2.0 * Math.PI / sprung);
+                        wimag = Math.Sin(k * 2.0 * Math.PI / sprung);
+                        real1 = data[element + k].re + (wreal * data[element + k + schritt].re - wimag * data[element + k + schritt].im);
+                        imag1 = data[element + k].im + (wreal * data[element + k + schritt].im + wimag * data[element + k + schritt].re);
+                        // 2. Zweig des Butterfly
+                        wreal *= -1.0;
+                        wimag *= -1.0;
+                        real2 = data[element + k].re + (wreal * data[element + k + schritt].re - wimag * data[element + k + schritt].im);
+                        imag2 = data[element + k].im + (wreal * data[element + k + schritt].im + wimag * data[element + k + schritt].re);
+                        // Ergebnisse übernehemen
+                        data[element + k].re = real1;
+                        data[element + k].im = imag1;
+                        data[element + k + schritt].re = real2;
+                        data[element + k + schritt].im = imag2;
                     }
-                    k += n2;
+                    element += sprung;
                 }
-                k = 0;
-                nu1--;
-                n2 = n2 / 2;
+                sprung *= 2;
             }
-            k = 0;
-            int r;
-            while (k < n)
-            {
-                r = BitReverse(k);
-                if (r > k)
-                {
-                    tr = xre[k];
-                    ti = xim[k];
-                    xre[k] = xre[r];
-                    xim[k] = xim[r];
-                    xre[r] = tr;
-                    xim[r] = ti;
-                }
-                k++;
-            }
-            for (int i = 0; i < n / 2; i++)
-                decibel[i] = 10.0 * Math.Log10((float)(Math.Sqrt((xre[i] * xre[i]) + (xim[i] * xim[i]))));
-            return decibel;
+
+            return data;
         }
+
     }
 }

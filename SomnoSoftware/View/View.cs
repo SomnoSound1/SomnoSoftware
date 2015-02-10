@@ -76,7 +76,7 @@ namespace SomnoSoftware
                       
             spec.DrawSpectrogram(e.FFT, counter);
 
-            if (counter < Statics.num_of_lines)
+            if (counter < Statics.num_of_lines-1)
                 counter++;
             else
                 counter = 0;

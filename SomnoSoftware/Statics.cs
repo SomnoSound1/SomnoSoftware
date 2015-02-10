@@ -8,18 +8,21 @@ namespace SomnoSoftware
     public static class Statics
     {
         public static int FS = 4890;
-        public static int FFTSize = 128;
+        public static int FFTSize = 256;
         public static int timeDisplay = 6 * FS;
         //false = 3 channel edf file, true 9 channel edf file (with imu data)
         public static bool complexSave = true;
         public static int num_of_lines = (int)Math.Round((double)(Statics.timeDisplay / Statics.FFTSize));
+
+        // Spectrum in dB
+        public static bool dB = true;
+        public static int dB_factor = 10;
 
         /// <summary>
         /// Converts a Degree Angle into Rad
         /// </summary>
         /// <param name="degrees"></param>
         /// <returns></returns>
-
         public static float deg2rad(float degrees)
         {
 
@@ -32,7 +35,6 @@ namespace SomnoSoftware
         /// </summary>
         /// <param name="rad"></param>
         /// <returns></returns>
-
         public static double rad2deg(double rad)
         {
 
