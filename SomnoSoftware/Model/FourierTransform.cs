@@ -14,7 +14,6 @@ namespace SomnoSoftware
         }
 
         public static double[] FFT(double[] daten)
-        // Method which is externally called to calculate FFT
         {
             int samples = daten.Length;
 
@@ -32,14 +31,25 @@ namespace SomnoSoftware
 
             double[] OutPut = new double[samples / 2];
 
-            for (int i = 0; i < samples / 2; i++)
+            if (Statics.dB == true)
             {
-                OutPut[i] = Math.Sqrt(data[i].re * data[i].re + data[i].im * data[i].im);
+                for (int i = 0; i < samples / 2; i++)
+                {
+                    OutPut[i] = Statics.dB_factor * Math.Log10(Math.Sqrt(data[i].re * data[i].re + data[i].im * data[i].im));
+                }
             }
+            else
+            {
+                for (int i = 0; i < samples / 2; i++)
+                {
+                    OutPut[i] = Math.Sqrt(data[i].re * data[i].re + data[i].im * data[i].im);
+                }
+            }
+
             return OutPut;
         }
 
-        // Methods which actually do the calculations
+        
         /// <summary>
         /// Methode FFT aus dem Buch :
         /// 
