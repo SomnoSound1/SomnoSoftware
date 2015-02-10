@@ -14,6 +14,9 @@ namespace SomnoSoftware
         public static int FFTSize = 256;
         public static int num_of_lines = (int)Math.Round((double)(Statics.timeDisplay / Statics.FFTSize));
 
+        // Spectrum in dB
+        public static bool dB = true;
+        public static int dB_factor = 10;
         /// <summary>
         /// Converts a Degree Angle into Rad
         /// </summary>
