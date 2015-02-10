@@ -131,7 +131,7 @@ namespace SomnoSoftware.Model
         /// <param name="data"></param>
         public void sendData(int signalNr, short[] data)
         {
-            Int16[] Data = new short[edfFile.SignalInfo[signalNr].NrSamples];
+                Int16[] Data = new short[edfFile.SignalInfo[signalNr].NrSamples];
             
             if (buffer[signalNr].Count < edfFile.SignalInfo[signalNr].NrSamples)
                 buffer[signalNr].AddRange(data);
@@ -141,8 +141,25 @@ namespace SomnoSoftware.Model
                 buffer[signalNr].RemoveRange(0, edfFile.SignalInfo[signalNr].NrSamples);
                 buffer[signalNr].AddRange(data);
 
-                writeDataBuffer(signalNr,Data);
+                    writeDataBuffer(signalNr,Data);
             }
+        }
+
+        /// <summary>
+        /// Fills all channels of EDF-File with zeroes over a certain time 
+        /// </summary>
+        /// <param name="time">Time to fill with zeroes</param>
+        public void FillMissingData(TimeSpan time)
+        {
+           for (int j = 0; j < time.Seconds; j++)
+           {
+               for (int i = edfFile.SignalInfo.Count; i > 0; i--)
+                {
+                    Int16[] Data = new short[edfFile.SignalInfo[i-1].NrSamples];
+                    Array.Clear(Data,0,Data.Length);
+                    writeDataBuffer(i-1, Data);
+                }
+           }
         }
 
         /// <summary>

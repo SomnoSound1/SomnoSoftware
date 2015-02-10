@@ -162,10 +162,11 @@ namespace SomnoSoftware.Model
 
         }
 
-        public void Reconnect()
+        public bool Reconnect()
         {
             Connect(serialPort.PortName);
             StartSensor();
+            return (serialPort.IsOpen);
         }
     }
 }

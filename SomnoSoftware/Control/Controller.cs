@@ -25,6 +25,7 @@ namespace SomnoSoftware.Control
 
         //Save Variables
         private bool save = false;
+        private bool disconnect = false;
         
         bool exitProgram = false;
         bool stopProgram = false;
@@ -149,9 +150,18 @@ namespace SomnoSoftware.Control
             if (time.Seconds >= 3)
             {
                 UpdateStatus(this, new UpdateStatusEvent("Searching Sensor..."));
-                serial.Reconnect();
-                dcTime = DateTime.Now;
-                //TODO neue connect klassen erstellen und hier verwenden! sowie beim normalen connect
+                //If reconnect successful 
+                if (serial.Reconnect())
+                {
+                    //Replace missing Data in Save-File
+                    if (save)
+                    {
+                        time = DateTime.Now - dcTime;
+                        saveData.FillMissingData(time);
+                    }
+                    UpdateStatus(this, new UpdateStatusEvent("Reconnected"));
+                }
+                
             }
             form1.EnableTimer(processData.sensorAnswer);
         }
@@ -276,9 +286,7 @@ namespace SomnoSoftware.Control
 
            
         }
-
-
-
+        
 
     }
 }
