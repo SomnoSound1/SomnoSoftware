@@ -193,12 +193,10 @@ namespace SomnoSoftware.Model
                 buffer.RemoveRange(0, Statics.FFTSize);
                 buffer.AddRange(audio);
 
-                audioDoubles = Array.ConvertAll(audioArray, item => (double)item);
-
-                double offset = audioDoubles.Average();
-
-                for (int i = 0; i < audioDoubles.Length; i++)
-                    audioDoubles[i] -= offset;                
+                for (int i = 0; i < audioArray.Length; i++)
+                    audioArray[i] -= (short)Statics.offset;
+         
+                audioDoubles = Array.ConvertAll(audioArray, item => (double)item);           
 
                 fft = FourierTransform.FFT(audioDoubles);
                 return true;

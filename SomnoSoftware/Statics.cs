@@ -19,6 +19,9 @@ namespace SomnoSoftware
         public static bool dB = true;
         public static int dB_factor = 10;
 
+        // Audio Data Offset
+        public static int offset = 512;
+
         /// <summary>
         /// Converts a Degree Angle into Rad
         /// </summary>

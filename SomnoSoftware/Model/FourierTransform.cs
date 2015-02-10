@@ -17,6 +17,8 @@ namespace SomnoSoftware
         // Method which is externally called to calculate FFT
         {
             int samples = daten.Length;
+
+            daten = Hanning(daten);
             
             komplex[] data = new komplex[samples];
 
@@ -117,6 +119,23 @@ namespace SomnoSoftware
             }
 
             return data;
+        }
+
+        private static double[] Hanning(double[] data)
+        {
+            double hann;
+            double[] output = new double[data.Length];
+
+            double alpha = 0.5;
+            double beta = 1 - alpha;
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                hann = alpha - beta * Math.Cos((2 * Math.PI * i / (data.Length - 1)));
+                output[i] = hann * data[i];
+            }
+
+            return output;
         }
 
     }
