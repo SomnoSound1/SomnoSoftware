@@ -25,7 +25,7 @@ namespace SomnoSoftware
         float faxispos_ytop = 20;   // y-distance frequency axis on top
         float faxispos_ybot = 40;   // y-distance freqency axis on bottom
 
-        float taxispos_xr = 50;      // x-position time axis right
+        float taxispos_xr = 50;     // x-position time axis right
 
         float taxis_length;
         float faxis_length;
