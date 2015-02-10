@@ -75,7 +75,7 @@ namespace SomnoSoftware
 
             //Update Graphs
             zGraph.UpdateZedGraph(zedGraphAudio,e.audio,time);                       
-                      
+                    
             spec.DrawSpectrogram(e.FFT, counter);
 
             if (counter < Statics.num_of_lines-1)
