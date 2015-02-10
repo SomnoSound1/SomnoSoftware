@@ -64,8 +64,12 @@ namespace SomnoSoftware
         /// <param name="time"></param>
         public void UpdateZedGraph(ZedGraphControl zedGraph, Int16[] Data, int time)
         {
+            if (zedGraph.GraphPane == null)
+                return;
+
             int localTime = 0;
             double seconds = 0;
+            rect = new Rectangle((int)zedGraph.GraphPane.Chart.Rect.X, (int)zedGraph.GraphPane.Chart.Rect.Y, (int)zedGraph.GraphPane.Chart.Rect.Width, (int)zedGraph.GraphPane.Chart.Rect.Height);
 
             // Make sure that the curvelist has at least one curve
             if (zedGraph.GraphPane.CurveList.Count <= 0)
@@ -104,8 +108,8 @@ namespace SomnoSoftware
 
             //Only redraw a certain area
             var xPix = (int)zedGraph.GraphPane.XAxis.Scale.Transform(seconds);
-            rect.X = xPix - 100; //- 20;
-            rect.Width =200;
+            rect.X = xPix - ((int)zedGraph.GraphPane.Chart.Rect.Width / 6); //- 20;
+            rect.Width = (int)zedGraph.GraphPane.Chart.Rect.Width/3;
             zedGraph.Invalidate(rect);
             }
 

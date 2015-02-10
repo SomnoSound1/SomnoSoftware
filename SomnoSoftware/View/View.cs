@@ -13,12 +13,7 @@ namespace SomnoSoftware
 {
     public partial class View : Form
     {
-        //Hallo
-        //und nochmal ein Test
-        //Essen?
-        //sehr gerne ich habe Hunger!
         private Controller controller;
-        public Int32 time = 0;
         Spectrogram spec;
         private ZGraph zGraph;
         private int counter = 0;
@@ -67,14 +62,9 @@ namespace SomnoSoftware
                 this.BeginInvoke(new EventHandler<NewDataAvailableEvent>(NewDataRecieved), new object[] { sender, e });
                 return;
             }
-
-            //Go on time Axes
-            time += e.audio.Length;
-            if (time > Statics.timeDisplay)
-                time=0;
-
+            
             //Update Graphs
-            zGraph.UpdateZedGraph(zedGraphAudio,e.audio,time);                       
+            zGraph.UpdateZedGraph(zedGraphAudio,e.audio,counter*e.audio.Length);                       
                       
             spec.DrawSpectrogram(e.FFT, counter);
 

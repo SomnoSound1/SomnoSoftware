@@ -35,7 +35,12 @@
             this.labelStatus = new System.Windows.Forms.Label();
             this.pb_spec = new System.Windows.Forms.PictureBox();
             this.timerDisconnect = new System.Windows.Forms.Timer(this.components);
+            this.pb_activity = new System.Windows.Forms.PictureBox();
+            this.pb_position = new System.Windows.Forms.PictureBox();
+            this.label_position = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pb_spec)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_activity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_position)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonConnect
@@ -93,11 +98,40 @@
             // 
             this.timerDisconnect.Interval = 5000;
             // 
+            // pb_activity
+            // 
+            this.pb_activity.BackColor = System.Drawing.SystemColors.Window;
+            this.pb_activity.Location = new System.Drawing.Point(736, 70);
+            this.pb_activity.Name = "pb_activity";
+            this.pb_activity.Size = new System.Drawing.Size(36, 510);
+            this.pb_activity.TabIndex = 6;
+            this.pb_activity.TabStop = false;
+            // 
+            // pb_position
+            // 
+            this.pb_position.Location = new System.Drawing.Point(604, 35);
+            this.pb_position.Name = "pb_position";
+            this.pb_position.Size = new System.Drawing.Size(168, 32);
+            this.pb_position.TabIndex = 7;
+            this.pb_position.TabStop = false;
+            // 
+            // label_position
+            // 
+            this.label_position.AutoSize = true;
+            this.label_position.Location = new System.Drawing.Point(601, 17);
+            this.label_position.Name = "label_position";
+            this.label_position.Size = new System.Drawing.Size(35, 13);
+            this.label_position.TabIndex = 8;
+            this.label_position.Text = "label1";
+            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(744, 592);
+            this.ClientSize = new System.Drawing.Size(780, 592);
+            this.Controls.Add(this.label_position);
+            this.Controls.Add(this.pb_position);
+            this.Controls.Add(this.pb_activity);
             this.Controls.Add(this.pb_spec);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.zedGraphAudio);
@@ -107,6 +141,8 @@
             this.Text = "SomnoSoftware";
             this.Resize += new System.EventHandler(this.View_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pb_spec)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_activity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_position)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,6 +156,9 @@
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.PictureBox pb_spec;
         private System.Windows.Forms.Timer timerDisconnect;
+        private System.Windows.Forms.PictureBox pb_activity;
+        private System.Windows.Forms.PictureBox pb_position;
+        private System.Windows.Forms.Label label_position;
     }
 }
 
