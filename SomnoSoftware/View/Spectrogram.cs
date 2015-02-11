@@ -21,11 +21,11 @@ namespace SomnoSoftware
                
 
         // Position Variables for Spectrogram
-        float faxispos_x = 70;      // x-position freqency axis
-        float faxispos_ytop = 20;   // y-distance frequency axis on top
+        float faxispos_x = 60;      // x-position freqency axis
+        float faxispos_ytop = 30;   // y-distance frequency axis on top
         float faxispos_ybot = 40;   // y-distance freqency axis on bottom
 
-        float taxispos_xr = 50;     // x-position time axis right
+        float taxispos_xr = 30;     // x-position time axis right
 
         float taxis_length;
         float faxis_length;
@@ -60,7 +60,7 @@ namespace SomnoSoftware
             Brush b_black = new SolidBrush(Color.Black);
             Font font = new Font("Arial", 9);            
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-            string[] ftick_label = new string[5]{"2000","1500","1000","500","0"};
+            string[] ftick_label = new string[5]{"2","1,5","1","0,5","0"};
             string[] ttick_label = new string[4]{"0", "2", "4", "6"};
             
             float taxispos_y = h-faxispos_ybot;
@@ -73,11 +73,11 @@ namespace SomnoSoftware
             {
                 float ftickpos_y = faxispos_ytop + i * (h - (faxispos_ybot + faxispos_ytop)) / (ftick_label.Length - 1);
                 g.DrawLine(p_black, faxispos_x-3, ftickpos_y, faxispos_x+3, ftickpos_y);
-                g.DrawString(ftick_label[i], font, b_black, faxispos_x-35 , ftickpos_y-7);
+                g.DrawString(ftick_label[i], font, b_black, faxispos_x-30 , ftickpos_y-7);
             }
                      
             g.RotateTransform(270);                                                             // label
-            g.DrawString("Frequenz [Hz]", font, b_black, -((h / 2) + 40), faxispos_x - 60);
+            g.DrawString("Frequenz [kHz]", font, b_black, -((h / 2) + 40), faxispos_x - 50);
             g.ResetTransform();
 
             ///////// time axis ////////////////////
@@ -93,6 +93,8 @@ namespace SomnoSoftware
 
 
             g.DrawString("Zeit [s]", font, b_black, ((w - faxispos_x - taxispos_xr) / 2) + faxispos_x - 20, (taxispos_y) + 20);              // label
+
+            g.DrawString("Spectrogramm (" + Statics.FFTSize.ToString() + " Datenpunkte)", font, b_black, ((w - faxispos_x - taxispos_xr) / 2) + faxispos_x - 80, 10);
 
             pb.BackgroundImage = bmp_back;
         }
