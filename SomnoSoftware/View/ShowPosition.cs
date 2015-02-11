@@ -11,8 +11,7 @@ using SomnoSoftware.Control;
 namespace SomnoSoftware
 {
     class ShowPosition : Show
-    {
-        
+    {        
         public ShowPosition(ref PictureBox pb)
         {
             this.pb = pb;
