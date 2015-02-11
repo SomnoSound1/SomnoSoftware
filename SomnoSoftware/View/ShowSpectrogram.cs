@@ -10,16 +10,8 @@ using SomnoSoftware.Control;
 
 namespace SomnoSoftware
 {
-    class Spectrogram
-    {
-        private Bitmap bmp_front;
-        private Bitmap bmp_back;
-        private Bitmap spect;
-        private PictureBox pb;
-        private int h = 0;
-        private int w = 0;
-               
-
+    class ShowSpectrogram : Show 
+    {           
         // Position Variables for Spectrogram
         float faxispos_x = 60;      // x-position freqency axis
         float faxispos_ytop = 30;   // y-distance frequency axis on top
@@ -34,7 +26,7 @@ namespace SomnoSoftware
         /// Constructor
         /// </summary>
         /// <param name="pb">referece variable on picturebox for spectrogram (pb_spec)</param>
-        public Spectrogram(ref PictureBox pb)
+        public ShowSpectrogram(ref PictureBox pb)
         {
             h = pb.Height;
             w = pb.Width;            
@@ -44,7 +36,6 @@ namespace SomnoSoftware
             this.pb = pb;
             bmp_front = new Bitmap(pb.Width, pb.Height);
             bmp_back = new Bitmap(pb.Width, pb.Height);
-            spect = new Bitmap((int)taxis_length, (int)faxis_length);
            
             InitializeSpectrogram();
         }
@@ -55,11 +46,9 @@ namespace SomnoSoftware
         /// </summary>
         private void InitializeSpectrogram()
         {
-            Graphics g = Graphics.FromImage(bmp_back);
-            Pen p_black = new Pen(Color.Black, 1.5f);
-            Brush b_black = new SolidBrush(Color.Black);
-            Font font = new Font("Arial", 9);            
+            Graphics g = Graphics.FromImage(bmp_back);           
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+            
             string[] ftick_label = new string[5]{"2","1,5","1","0,5","0"};
             string[] ttick_label = new string[4]{"0", "2", "4", "6"};
             
@@ -107,8 +96,7 @@ namespace SomnoSoftware
         public void DrawSpectrogram(double[] FFT, int counter)
         {
             Graphics g = Graphics.FromImage(bmp_front);
-            SolidBrush brush = new SolidBrush(Color.Black);
-            
+                        
             float x = 0;
             float y = 0;
             
@@ -121,18 +109,18 @@ namespace SomnoSoftware
             for (int i = 0; i < (int)limit; i++)
             {
                 Color c = MapRainbowColor((float)FFT[i], 50, 0);
-                brush.Color = c;
+                b_black.Color = c;
                 x = faxispos_x + counter * box_width + 1;               // x-position box
                 y = (h - faxispos_ybot) - (i + 1) * box_height ;        // y-position box       
 
-                g.FillRectangle(brush, new RectangleF(x, y, box_width, box_height));    // Draw box          
+                g.FillRectangle(b_black, new RectangleF(x, y, box_width, box_height));    // Draw box          
 
             }
 
             if (counter < Statics.num_of_lines - 2)                 // avoid black line at the end of spectrogram
             {  
-                brush.Color = Color.Black;
-                g.FillRectangle(brush, new RectangleF(x + box_width, faxispos_ytop, 3, faxis_length));
+                b_black.Color = Color.Black;
+                g.FillRectangle(b_black, new RectangleF(x + box_width, faxispos_ytop, 3, faxis_length));
             }
 
             pb.Image = bmp_front;

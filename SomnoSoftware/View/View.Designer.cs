@@ -36,7 +36,6 @@
             this.timerDisconnect = new System.Windows.Forms.Timer(this.components);
             this.pb_activity = new System.Windows.Forms.PictureBox();
             this.pb_position = new System.Windows.Forms.PictureBox();
-            this.label_position = new System.Windows.Forms.Label();
             this.tbData = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pb_spec)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_activity)).BeginInit();
@@ -105,24 +104,15 @@
             // pb_position
             // 
             this.pb_position.BackColor = System.Drawing.SystemColors.Window;
-            this.pb_position.Location = new System.Drawing.Point(447, 12);
+            this.pb_position.Location = new System.Drawing.Point(523, 21);
             this.pb_position.Name = "pb_position";
             this.pb_position.Size = new System.Drawing.Size(168, 32);
             this.pb_position.TabIndex = 7;
             this.pb_position.TabStop = false;
             // 
-            // label_position
-            // 
-            this.label_position.AutoSize = true;
-            this.label_position.Location = new System.Drawing.Point(751, 52);
-            this.label_position.Name = "label_position";
-            this.label_position.Size = new System.Drawing.Size(35, 13);
-            this.label_position.TabIndex = 8;
-            this.label_position.Text = "label1";
-            // 
             // tbData
             // 
-            this.tbData.Location = new System.Drawing.Point(263, 11);
+            this.tbData.Location = new System.Drawing.Point(243, 11);
             this.tbData.Multiline = true;
             this.tbData.Name = "tbData";
             this.tbData.ReadOnly = true;
@@ -137,7 +127,6 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(810, 596);
             this.Controls.Add(this.tbData);
-            this.Controls.Add(this.label_position);
             this.Controls.Add(this.pb_position);
             this.Controls.Add(this.pb_activity);
             this.Controls.Add(this.pb_spec);
@@ -165,7 +154,6 @@
         private System.Windows.Forms.Timer timerDisconnect;
         private System.Windows.Forms.PictureBox pb_activity;
         private System.Windows.Forms.PictureBox pb_position;
-        private System.Windows.Forms.Label label_position;
         private System.Windows.Forms.TextBox tbData;
     }
 }
