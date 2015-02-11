@@ -83,7 +83,12 @@ namespace SomnoSoftware
                 this.BeginInvoke(new EventHandler<UpdateStatusEvent>(UpdateStatus), new object[] { sender, e });
                 return;
             }
-            labelStatus.Text = e.text;
+            int maxTextLength = 10000; // maximum text length in text box
+            if (tbData.TextLength > maxTextLength)
+                tbData.Text = tbData.Text.Remove(0, tbData.TextLength - maxTextLength);
+
+            tbData.AppendText(DateTime.Now.ToString("dd. MMM HH:mm:ss") + ": " + e.text + "\r\n");
+            tbData.ScrollToCaret();
         }
 
         private void View_Resize(object sender, EventArgs e)
@@ -161,6 +166,11 @@ namespace SomnoSoftware
         public void EnableTimer(bool state)
         {
             timerDisconnect.Enabled = state;
+        }
+
+        private void View_Load(object sender, EventArgs e)
+        {
+
         }
 
     }

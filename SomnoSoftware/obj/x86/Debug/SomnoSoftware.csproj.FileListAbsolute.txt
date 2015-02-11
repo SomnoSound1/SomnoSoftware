@@ -70,3 +70,4 @@ C:\Users\Lizenznehmer\Documents\GitHub\SomnoSoftware\SomnoSoftware\bin\Debug\sv\
 C:\Users\Lizenznehmer\Documents\GitHub\SomnoSoftware\SomnoSoftware\bin\Debug\tr\ZedGraph.resources.dll
 C:\Users\Lizenznehmer\Documents\GitHub\SomnoSoftware\SomnoSoftware\bin\Debug\zh-cn\ZedGraph.resources.dll
 C:\Users\Lizenznehmer\Documents\GitHub\SomnoSoftware\SomnoSoftware\bin\Debug\zh-tw\ZedGraph.resources.dll
+C:\Users\Lizenznehmer\Documents\GitHub\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.Connect.resources

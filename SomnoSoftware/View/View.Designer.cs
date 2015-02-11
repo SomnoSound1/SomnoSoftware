@@ -32,12 +32,12 @@
             this.buttonConnect = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.zedGraphAudio = new ZedGraph.ZedGraphControl();
-            this.labelStatus = new System.Windows.Forms.Label();
             this.pb_spec = new System.Windows.Forms.PictureBox();
             this.timerDisconnect = new System.Windows.Forms.Timer(this.components);
             this.pb_activity = new System.Windows.Forms.PictureBox();
             this.pb_position = new System.Windows.Forms.PictureBox();
             this.label_position = new System.Windows.Forms.Label();
+            this.tbData = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pb_spec)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_activity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_position)).BeginInit();
@@ -45,26 +45,30 @@
             // 
             // buttonConnect
             // 
+            this.buttonConnect.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonConnect.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonConnect.Location = new System.Drawing.Point(12, 12);
             this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(75, 23);
+            this.buttonConnect.Size = new System.Drawing.Size(90, 52);
             this.buttonConnect.TabIndex = 0;
             this.buttonConnect.Text = "Connect";
-            this.buttonConnect.UseVisualStyleBackColor = true;
+            this.buttonConnect.UseVisualStyleBackColor = false;
             // 
             // buttonSave
             // 
+            this.buttonSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSave.Enabled = false;
-            this.buttonSave.Location = new System.Drawing.Point(246, 12);
+            this.buttonSave.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSave.Location = new System.Drawing.Point(108, 12);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(91, 23);
+            this.buttonSave.Size = new System.Drawing.Size(111, 52);
             this.buttonSave.TabIndex = 1;
             this.buttonSave.Text = "Start Recording";
-            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.UseVisualStyleBackColor = false;
             // 
             // zedGraphAudio
             // 
-            this.zedGraphAudio.Location = new System.Drawing.Point(10, 70);
+            this.zedGraphAudio.Location = new System.Drawing.Point(12, 70);
             this.zedGraphAudio.Name = "zedGraphAudio";
             this.zedGraphAudio.ScrollGrace = 0D;
             this.zedGraphAudio.ScrollMaxX = 0D;
@@ -76,19 +80,10 @@
             this.zedGraphAudio.Size = new System.Drawing.Size(720, 250);
             this.zedGraphAudio.TabIndex = 3;
             // 
-            // labelStatus
-            // 
-            this.labelStatus.AutoSize = true;
-            this.labelStatus.Location = new System.Drawing.Point(93, 17);
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(136, 13);
-            this.labelStatus.TabIndex = 4;
-            this.labelStatus.Text = "Press to Connect to Sensor";
-            // 
             // pb_spec
             // 
             this.pb_spec.BackColor = System.Drawing.SystemColors.Window;
-            this.pb_spec.Location = new System.Drawing.Point(10, 330);
+            this.pb_spec.Location = new System.Drawing.Point(12, 330);
             this.pb_spec.Name = "pb_spec";
             this.pb_spec.Size = new System.Drawing.Size(720, 250);
             this.pb_spec.TabIndex = 5;
@@ -101,15 +96,16 @@
             // pb_activity
             // 
             this.pb_activity.BackColor = System.Drawing.SystemColors.Window;
-            this.pb_activity.Location = new System.Drawing.Point(736, 70);
+            this.pb_activity.Location = new System.Drawing.Point(621, 17);
             this.pb_activity.Name = "pb_activity";
-            this.pb_activity.Size = new System.Drawing.Size(36, 510);
+            this.pb_activity.Size = new System.Drawing.Size(177, 32);
             this.pb_activity.TabIndex = 6;
             this.pb_activity.TabStop = false;
             // 
             // pb_position
             // 
-            this.pb_position.Location = new System.Drawing.Point(604, 35);
+            this.pb_position.BackColor = System.Drawing.SystemColors.Window;
+            this.pb_position.Location = new System.Drawing.Point(447, 12);
             this.pb_position.Name = "pb_position";
             this.pb_position.Size = new System.Drawing.Size(168, 32);
             this.pb_position.TabIndex = 7;
@@ -118,27 +114,39 @@
             // label_position
             // 
             this.label_position.AutoSize = true;
-            this.label_position.Location = new System.Drawing.Point(601, 17);
+            this.label_position.Location = new System.Drawing.Point(751, 52);
             this.label_position.Name = "label_position";
             this.label_position.Size = new System.Drawing.Size(35, 13);
             this.label_position.TabIndex = 8;
             this.label_position.Text = "label1";
             // 
+            // tbData
+            // 
+            this.tbData.Location = new System.Drawing.Point(263, 11);
+            this.tbData.Multiline = true;
+            this.tbData.Name = "tbData";
+            this.tbData.ReadOnly = true;
+            this.tbData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbData.Size = new System.Drawing.Size(164, 53);
+            this.tbData.TabIndex = 9;
+            // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(780, 592);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(810, 596);
+            this.Controls.Add(this.tbData);
             this.Controls.Add(this.label_position);
             this.Controls.Add(this.pb_position);
             this.Controls.Add(this.pb_activity);
             this.Controls.Add(this.pb_spec);
-            this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.zedGraphAudio);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonConnect);
             this.Name = "View";
             this.Text = "SomnoSoftware";
+            this.Load += new System.EventHandler(this.View_Load);
             this.Resize += new System.EventHandler(this.View_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pb_spec)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_activity)).EndInit();
@@ -153,12 +161,12 @@
         private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.Button buttonSave;
         private ZedGraph.ZedGraphControl zedGraphAudio;
-        private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.PictureBox pb_spec;
         private System.Windows.Forms.Timer timerDisconnect;
         private System.Windows.Forms.PictureBox pb_activity;
         private System.Windows.Forms.PictureBox pb_position;
         private System.Windows.Forms.Label label_position;
+        private System.Windows.Forms.TextBox tbData;
     }
 }
 

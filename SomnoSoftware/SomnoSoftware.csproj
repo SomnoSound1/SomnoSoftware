@@ -68,6 +68,12 @@
     <Compile Include="Model\SaveData.cs" />
     <Compile Include="Model\SerialCommunication.cs" />
     <Compile Include="Statics.cs" />
+    <Compile Include="View\Connect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Connect.Designer.cs">
+      <DependentUpon>Connect.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\SaveDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +99,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\Connect.resx">
+      <DependentUpon>Connect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\SaveDialog.resx">
       <DependentUpon>SaveDialog.cs</DependentUpon>
     </EmbeddedResource>

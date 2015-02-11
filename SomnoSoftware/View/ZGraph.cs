@@ -34,8 +34,8 @@ namespace SomnoSoftware
             myPane.XAxis.Scale.MinorStep = 1;
             myPane.XAxis.Scale.MajorStep = 2;
 
-            myPane.YAxis.Scale.Min = 0;
-            myPane.YAxis.Scale.Max = 1024;
+            myPane.YAxis.Scale.Min = 0-Statics.offset;
+            myPane.YAxis.Scale.Max = 1024-Statics.offset;
             myPane.YAxis.Scale.MinorStep = 40;
             myPane.YAxis.Scale.MajorStep = 200;
 

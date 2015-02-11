@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -14,6 +15,7 @@ namespace SomnoSoftware.Control
 {
     public class Controller
     {
+        private Connect connectDialog;
         private View form1;
         private SaveDialog saveDialog;
         private SerialCommunication serial;
@@ -37,8 +39,10 @@ namespace SomnoSoftware.Control
         {
             PrepareView();
             form1.setController(this);
+            connectDialog.setController(this);
             processData = new ProcessData(52);
-            UpdateStatus(this, new UpdateStatusEvent("Press to Connect to Sensor"));
+            UpdateStatus(this, new UpdateStatusEvent("Wilkommen zu SomnoSoftware 0.1"));
+            UpdateStatus(this, new UpdateStatusEvent("Beachten Sie bitte die Anweisungen bevor Sie die Verbindung mit dem Sensor herstellen"));
             runner();
         }
 
@@ -48,7 +52,9 @@ namespace SomnoSoftware.Control
         public void PrepareView()
         {
             form1 = new View();
-            form1.Show();
+            connectDialog = new Connect();
+            connectDialog.Show();
+            //form1.Show();
         }
 
         /// <summary>
@@ -59,8 +65,9 @@ namespace SomnoSoftware.Control
             while (!exitProgram)
             {
                 if (!stopProgram)
-                    //model.Tick(currentDirectionChange);
-                Delay(30);
+                {
+                    Delay(30);
+                }
             }
         }
 
@@ -71,7 +78,7 @@ namespace SomnoSoftware.Control
         private void Delay(long time)
         {
             long time1 = System.Environment.TickCount;
-            while ((System.Environment.TickCount - time1) < time) Application.DoEvents();
+            while ((System.Environment.TickCount - time1) < time){Thread.Sleep(1); Application.DoEvents();}
         }
 
         /// <summary>
@@ -83,6 +90,7 @@ namespace SomnoSoftware.Control
         {
             //Deactivate Button
             form1.ChangeConnectButtonState(false);
+            connectDialog.ChangeConnectButtonState(false);
 
             //Searches all availible Prots for Sensor .. or disconnects
             if (!processData.sensorAnswer)
@@ -95,20 +103,28 @@ namespace SomnoSoftware.Control
                 portNames = serial.GetPortNames();
                 for (int i = 0; i < portNames.Length; i++)
                 {
-                    UpdateStatus(this, new UpdateStatusEvent("Try to Connect to " + portNames[i]));
+                    UpdateStatus(this, new UpdateStatusEvent("Versuche mit " + portNames[i] + " zu verbinden."));
                     serial.Connect(portNames[i]);
                     serial.CallSensor();
                     Delay(300);
                     if (processData.sensorAnswer)
                     {
-                        UpdateStatus(this, new UpdateStatusEvent("Connected to " + portNames[i]));
+                        UpdateStatus(this, new UpdateStatusEvent("Verbunden mit " + portNames[i]));
                         break;
                     }
                 }
                 if (processData.sensorAnswer)
+                {
                     serial.StartSensor();
+                    connectDialog.Hide();
+                    form1.Show();
+                }
                 else
-                    UpdateStatus(this, new UpdateStatusEvent("No Sensor found"));
+                {
+                    UpdateStatus(this, new UpdateStatusEvent("Kein Sensor gefunden"));
+                    UpdateStatus(this, new UpdateStatusEvent("Stellen Sie sicher, dass Bluetooth am Computer aktiviert ist und der Sensor eingeschaltet ist"));
+                    UpdateStatus(this, new UpdateStatusEvent("Versuchen Sie es erneut"));
+                }
             }
             else
             Disconnect();
@@ -121,6 +137,7 @@ namespace SomnoSoftware.Control
             form1.ChangeConnectButtonText(processData.sensorAnswer);
             //Activate Button
             form1.ChangeConnectButtonState(true);
+            connectDialog.ChangeConnectButtonState(true);
         }
 
         /// <summary>
@@ -131,9 +148,10 @@ namespace SomnoSoftware.Control
             serial.Close();
             form1.ChangeSaveButtonState(false);
             processData.sensorAnswer = false;
-            UpdateStatus(this, new UpdateStatusEvent("Disconnected"));
+            UpdateStatus(this, new UpdateStatusEvent("Die Verbindung wurde getrennt"));
+            form1.Hide();
+            connectDialog.Show();
             //Finalize EDF-File and end save process
-            if(save)
             EndSave();
         }
 
@@ -149,7 +167,7 @@ namespace SomnoSoftware.Control
             time = DateTime.Now - dcTime;
             if (time.Seconds >= 3)
             {
-                UpdateStatus(this, new UpdateStatusEvent("Searching Sensor..."));
+                UpdateStatus(this, new UpdateStatusEvent("Verbindung unterbrochen, suche Sensor!"));
                 //If reconnect successful 
                 if (serial.Reconnect())
                 {
@@ -159,7 +177,7 @@ namespace SomnoSoftware.Control
                         time = DateTime.Now - dcTime;
                         saveData.FillMissingData(time);
                     }
-                    UpdateStatus(this, new UpdateStatusEvent("Reconnected"));
+                    UpdateStatus(this, new UpdateStatusEvent("Verbindung wiederhergestellt!"));
                 }
                 
             }
@@ -175,7 +193,6 @@ namespace SomnoSoftware.Control
         public void Exit(Object sender, EventArgs e)
         {
             //Finalize EDF-File and end save process
-            if(save)
             EndSave();
             exitProgram = true;
         }
@@ -220,7 +237,9 @@ namespace SomnoSoftware.Control
         /// <param name="gender"></param>
         public void StartRecording(string name, DateTime birthDate, char gender)
         {
-            saveData = new SaveData(1,"output.edf",Statics.complexSave);
+            UpdateStatus(this, new UpdateStatusEvent("Messung gestartet"));
+            if (!Directory.Exists("Messungen//")) Directory.CreateDirectory("Messungen//");
+            saveData = new SaveData(1,"Messungen//"+name+"-"+DateTime.Now.ToString("yy-MM-dd-hh-mm-ss")+".edf",Statics.complexSave);
             saveData.addInformation("test","",birthDate,gender,name);
             save = true;
             saveDialog.Dispose();
@@ -230,11 +249,15 @@ namespace SomnoSoftware.Control
 
         private void EndSave()
         {
-            save = false;
-            saveData.commitChanges();
-            //Deletes the SaveData Object
-            saveData = new SaveData();
-            form1.ChangeSaveButtonText(true);
+            if (save)
+            {
+                UpdateStatus(this, new UpdateStatusEvent("Messung beendet"));
+                save = false;
+                saveData.commitChanges();
+                //Deletes the SaveData Object
+                saveData = new SaveData();
+                form1.ChangeSaveButtonText(true);
+            }
         }
 
         /// <summary>
@@ -279,7 +302,6 @@ namespace SomnoSoftware.Control
                         saveData.sendData(1, (short)processData.activity);
                         saveData.sendData(2, (short)processData.sleepPosition);
                         saveData.sendData(0, processData.audio);
-
                     }
                 }
             }

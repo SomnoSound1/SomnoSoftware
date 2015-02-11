@@ -120,6 +120,7 @@
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonConfirm);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "SaveDialog";
             this.Text = "SaveDialog";
             this.ResumeLayout(false);
