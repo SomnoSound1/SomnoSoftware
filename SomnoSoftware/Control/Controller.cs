@@ -27,7 +27,6 @@ namespace SomnoSoftware.Control
 
         //Save Variables
         private bool save = false;
-        private bool disconnect = false;
         
         bool exitProgram = false;
         bool stopProgram = false;
@@ -53,8 +52,8 @@ namespace SomnoSoftware.Control
         {
             form1 = new View();
             connectDialog = new Connect();
-            connectDialog.Show();
-            //form1.Show();
+            //connectDialog.Show();
+            form1.Show();
         }
 
         /// <summary>

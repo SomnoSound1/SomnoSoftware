@@ -85,7 +85,7 @@
             this.pb_spec.BackColor = System.Drawing.SystemColors.Window;
             this.pb_spec.Location = new System.Drawing.Point(12, 330);
             this.pb_spec.Name = "pb_spec";
-            this.pb_spec.Size = new System.Drawing.Size(720, 250);
+            this.pb_spec.Size = new System.Drawing.Size(795, 250);
             this.pb_spec.TabIndex = 5;
             this.pb_spec.TabStop = false;
             // 
@@ -96,9 +96,9 @@
             // pb_activity
             // 
             this.pb_activity.BackColor = System.Drawing.SystemColors.Window;
-            this.pb_activity.Location = new System.Drawing.Point(621, 17);
+            this.pb_activity.Location = new System.Drawing.Point(738, 70);
             this.pb_activity.Name = "pb_activity";
-            this.pb_activity.Size = new System.Drawing.Size(177, 32);
+            this.pb_activity.Size = new System.Drawing.Size(69, 250);
             this.pb_activity.TabIndex = 6;
             this.pb_activity.TabStop = false;
             // 

@@ -100,33 +100,44 @@ namespace SomnoSoftware
         private void SetSize()
         {
             // Control is always 10 pixels inset from the client rectangle of the form
-            Rectangle formRect = this.ClientRectangle;
-            Rectangle formRect1 = this.ClientRectangle;
+            Rectangle Audio = this.ClientRectangle;
+            Rectangle Spec = this.ClientRectangle;
+            Rectangle Activity = new Rectangle(); 
             
-            formRect1.Height = (int)(this.ClientRectangle.Height - 90) / 2;
-            formRect.Height = (int)(this.ClientRectangle.Height - 90) / 2;
+            Spec.Height = (int)(this.ClientRectangle.Height - 90) / 2;
+            Audio.Height = (int)(this.ClientRectangle.Height - 90) / 2;
 
-            formRect1.Width = (int)(this.ClientRectangle.Width - 20);
-            formRect.Width = (int)(this.ClientRectangle.Width - 20);
+            Spec.Width = (int)(this.ClientRectangle.Width - 20);
+            Audio.Width = (int)(this.ClientRectangle.Width - 80);
 
-            formRect.X += 10;
-            formRect1.X += 10;
+            Audio.X += 10;
+            Spec.X += 10;
 
-            formRect.Y += 70;
-            formRect1.Y =  formRect.Y+formRect.Height + 10;
+            Audio.Y += 70;
+            Spec.Y =  Audio.Y+Audio.Height + 10;
 
+            Activity.Width = (this.ClientRectangle.Width - Audio.X - Audio.Width) - 20;
+            Activity.Height = Audio.Height;
+                        
+            Activity.Y = Audio.Y;
+            Activity.X = Audio.X + Audio.Width + 10;          
 
-            if (zedGraphAudio.Size != formRect.Size)
+           
+            
+            if (zedGraphAudio.Size != Audio.Size)
             {
-                zedGraphAudio.Location = formRect.Location;
-                zedGraphAudio.Size = formRect.Size;
+                zedGraphAudio.Location = Audio.Location;
+                zedGraphAudio.Size = Audio.Size;
+
+                pb_activity.Location = Activity.Location;
+                pb_activity.Size = Activity.Size;
             }
            
             
-            if (pb_spec.Size != formRect1.Size)
+            if (pb_spec.Size != Spec.Size)
             {
-                pb_spec.Location = formRect1.Location;
-                pb_spec.Size = formRect1.Size;
+                pb_spec.Location = Spec.Location;
+                pb_spec.Size = Spec.Size;
             }
 
             spec = new Spectrogram(ref pb_spec);
