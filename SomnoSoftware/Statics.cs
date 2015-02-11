@@ -22,6 +22,9 @@ namespace SomnoSoftware
         // Audio Data Offset
         public static int offset = 512;
 
+        // Maximum value activity
+        public static int max_act = 20;
+
         /// <summary>
         /// Converts a Degree Angle into Rad
         /// </summary>
