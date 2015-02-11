@@ -45,7 +45,7 @@
             // buttonConnect
             // 
             this.buttonConnect.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonConnect.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonConnect.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonConnect.Location = new System.Drawing.Point(12, 12);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(90, 52);
@@ -57,7 +57,7 @@
             // 
             this.buttonSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSave.Enabled = false;
-            this.buttonSave.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSave.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSave.Location = new System.Drawing.Point(108, 12);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(111, 52);
@@ -104,20 +104,20 @@
             // pb_position
             // 
             this.pb_position.BackColor = System.Drawing.SystemColors.Window;
-            this.pb_position.Location = new System.Drawing.Point(523, 21);
+            this.pb_position.Location = new System.Drawing.Point(622, 11);
             this.pb_position.Name = "pb_position";
-            this.pb_position.Size = new System.Drawing.Size(168, 32);
+            this.pb_position.Size = new System.Drawing.Size(185, 53);
             this.pb_position.TabIndex = 7;
             this.pb_position.TabStop = false;
             // 
             // tbData
             // 
-            this.tbData.Location = new System.Drawing.Point(243, 11);
+            this.tbData.Location = new System.Drawing.Point(225, 11);
             this.tbData.Multiline = true;
             this.tbData.Name = "tbData";
             this.tbData.ReadOnly = true;
             this.tbData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbData.Size = new System.Drawing.Size(164, 53);
+            this.tbData.Size = new System.Drawing.Size(391, 53);
             this.tbData.TabIndex = 9;
             // 
             // View

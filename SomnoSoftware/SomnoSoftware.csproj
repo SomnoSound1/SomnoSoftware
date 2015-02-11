@@ -80,7 +80,10 @@
     <Compile Include="View\SaveDialog.Designer.cs">
       <DependentUpon>SaveDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Spectrogram.cs" />
+    <Compile Include="View\Show.cs" />
+    <Compile Include="View\ShowActivity.cs" />
+    <Compile Include="View\ShowPosition.cs" />
+    <Compile Include="View\ShowSpectrogram.cs" />
     <Compile Include="View\View.cs">
       <SubType>Form</SubType>
     </Compile>

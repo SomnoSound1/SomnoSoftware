@@ -38,6 +38,8 @@ namespace SomnoSoftware
 
         public void DrawActivity(int act)
         {
+            //TODO Kein Balken bei Null!! Bitte bearbeiten!!
+            //   -Laborleiter Doktor Kalkbrenner
             Graphics g = Graphics.FromImage(bmp_front);
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 

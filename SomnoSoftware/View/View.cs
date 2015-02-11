@@ -75,7 +75,7 @@ namespace SomnoSoftware
                       
             spec.DrawSpectrogram(e.FFT, counter);
 
-            act.DrawActivity((int)rand.Next(11));
+            act.DrawActivity((int)rand.Next(Statics.max_act+1));
             
             if (counter < Statics.num_of_lines-1)
                 counter++;
