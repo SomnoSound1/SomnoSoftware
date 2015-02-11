@@ -14,9 +14,13 @@ namespace SomnoSoftware
     public partial class View : Form
     {
         private Controller controller;
-        Spectrogram spec;
+        private ShowSpectrogram spec;
+        private ShowActivity act;
+        private ShowPosition pos;
         private ZGraph zGraph;
         private int counter = 0;
+
+        private Random rand = new Random();
 
         /// <summary>
         /// Constructor, initializing the components
@@ -26,7 +30,10 @@ namespace SomnoSoftware
             InitializeComponent();
             SetSize();
             zGraph = new ZGraph(ref zedGraphAudio);
-            spec = new Spectrogram(ref pb_spec);
+            spec = new ShowSpectrogram(ref pb_spec);
+            act = new ShowActivity(ref pb_activity);
+            pos = new ShowPosition(ref pb_position);
+            
             zGraph.LoadZedGraph();
         }
         
@@ -68,6 +75,8 @@ namespace SomnoSoftware
                       
             spec.DrawSpectrogram(e.FFT, counter);
 
+            act.DrawActivity((int)rand.Next(11));
+            
             if (counter < Statics.num_of_lines-1)
                 counter++;
             else
@@ -108,7 +117,7 @@ namespace SomnoSoftware
             Audio.Height = (int)(this.ClientRectangle.Height - 90) / 2;
 
             Spec.Width = (int)(this.ClientRectangle.Width - 20);
-            Audio.Width = (int)(this.ClientRectangle.Width - 80);
+            Audio.Width = (int)(this.ClientRectangle.Width - 100);
 
             Audio.X += 10;
             Spec.X += 10;
@@ -120,10 +129,9 @@ namespace SomnoSoftware
             Activity.Height = Audio.Height;
                         
             Activity.Y = Audio.Y;
-            Activity.X = Audio.X + Audio.Width + 10;          
+            Activity.X = Audio.X + Audio.Width + 10;      
 
-           
-            
+ 
             if (zedGraphAudio.Size != Audio.Size)
             {
                 zedGraphAudio.Location = Audio.Location;
@@ -140,7 +148,8 @@ namespace SomnoSoftware
                 pb_spec.Size = Spec.Size;
             }
 
-            spec = new Spectrogram(ref pb_spec);
+            spec = new ShowSpectrogram(ref pb_spec);
+            act = new ShowActivity(ref pb_activity);
 
         }
 
