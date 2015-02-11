@@ -129,9 +129,17 @@ namespace SomnoSoftware
             Activity.Height = Audio.Height;
                         
             Activity.Y = Audio.Y;
-            Activity.X = Audio.X + Audio.Width + 10;      
+            Activity.X = Audio.X + Audio.Width + 10;
 
- 
+            buttonConnect.Width = (int)(this.ClientRectangle.Width - 350) /4;
+            buttonSave.Width = (int)(this.ClientRectangle.Width - 350) / 4;
+            tbData.Width = (int)(this.ClientRectangle.Width+585) / 4;
+            pb_position.Width = (int)(this.ClientRectangle.Width - 90) / 4;
+
+            buttonSave.Location = new Point(buttonConnect.Location.X + 10 + buttonConnect.Width, buttonSave.Location.Y);
+            tbData.Location = new Point(buttonSave.Location.X + 10 + buttonSave.Width, tbData.Location.Y);
+            pb_position.Location = new Point(tbData.Location.X + 10 + tbData.Width, pb_position.Location.Y);
+
             if (zedGraphAudio.Size != Audio.Size)
             {
                 zedGraphAudio.Location = Audio.Location;
@@ -141,7 +149,6 @@ namespace SomnoSoftware
                 pb_activity.Size = Activity.Size;
             }
            
-            
             if (pb_spec.Size != Spec.Size)
             {
                 pb_spec.Location = Spec.Location;
