@@ -52,8 +52,8 @@ namespace SomnoSoftware.Control
         {
             form1 = new View();
             connectDialog = new Connect();
-            //connectDialog.Show();
-            form1.Show();
+            connectDialog.Show();
+            //form1.Show();
         }
 
         /// <summary>
