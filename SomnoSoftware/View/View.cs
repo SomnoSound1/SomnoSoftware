@@ -107,6 +107,8 @@ namespace SomnoSoftware
 
         private void View_Resize(object sender, EventArgs e)
         {
+            //Minimize sets Height/Width to zero --> causes error
+            if (ClientRectangle.Height != 0 && ClientRectangle.Width != 0)
             SetSize();
         }
 

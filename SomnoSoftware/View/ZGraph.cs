@@ -58,9 +58,10 @@ namespace SomnoSoftware
             rect = new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
 
             //Hide Border
-            myPane.Border.IsVisible = false;
-
-            }
+            //myPane.Border.IsVisible = false;
+            myPane.Border.Color = Color.SteelBlue;
+            myPane.Border.Width = 3;
+        }
 
         /// <summary>
         /// Updates the ZedGraph

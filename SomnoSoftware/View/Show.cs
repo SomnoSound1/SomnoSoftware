@@ -18,6 +18,7 @@ namespace SomnoSoftware
         protected int h = 0;
         protected int w = 0;
 
+        protected Pen p_frame = new Pen(Color.SteelBlue, 2);
         protected Pen p_black = new Pen(Color.Black, 1.5f);
         protected SolidBrush b_black = new SolidBrush(Color.Black);
         protected Font font = new Font("Arial", 9);

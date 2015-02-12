@@ -30,7 +30,9 @@ namespace SomnoSoftware
             Graphics g = Graphics.FromImage(bmp_back);
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
-            g.DrawString("Aktivität", font, b_black, 10, 2); 
+            g.DrawString("Aktivität", font, b_black, 11, 2);
+
+            g.DrawRectangle(p_frame, new Rectangle(1, 1, w - 2, h - 2));
 
             pb.BackgroundImage = bmp_back;
 

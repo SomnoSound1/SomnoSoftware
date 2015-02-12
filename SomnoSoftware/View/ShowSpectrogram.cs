@@ -54,6 +54,8 @@ namespace SomnoSoftware
             
             float taxispos_y = h-faxispos_ybot;
 
+            g.DrawRectangle(p_frame, new Rectangle(1, 1, w - 2, h - 2));
+
             ///////// frequency axis ////////////////////            
             
             g.DrawLine(p_black, faxispos_x , faxispos_ytop, faxispos_x, h - faxispos_ybot);         // frequency axis            
