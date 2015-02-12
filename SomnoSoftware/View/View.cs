@@ -195,6 +195,11 @@ namespace SomnoSoftware
             timerDisconnect.Enabled = state;
         }
 
+        private void View_Load(object sender, EventArgs e)
+        {
+
+        }
+
 
     }
 }

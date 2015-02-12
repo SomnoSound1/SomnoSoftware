@@ -139,8 +139,10 @@
             this.Controls.Add(this.zedGraphAudio);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonConnect);
+            this.MinimumSize = new System.Drawing.Size(826, 634);
             this.Name = "View";
             this.Text = "SomnoSoftware";
+            this.Load += new System.EventHandler(this.View_Load);
             this.Resize += new System.EventHandler(this.View_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pb_spec)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_activity)).EndInit();
