@@ -77,12 +77,15 @@ namespace SomnoSoftware
 
             act.DrawActivity((int)rand.Next(Statics.max_act+1));
 
-            pos.DrawPosition(0);
-            
-            if (counter < Statics.num_of_lines-1)
+
+
+            if (counter < Statics.num_of_lines - 1)
                 counter++;
             else
+            {
                 counter = 0;
+                pos.DrawPosition((int)rand.Next(3));
+            }
         }
        
 
@@ -159,6 +162,7 @@ namespace SomnoSoftware
 
             spec = new ShowSpectrogram(ref pb_spec);
             act = new ShowActivity(ref pb_activity);
+            pos = new ShowPosition(ref pb_position);
 
         }
 

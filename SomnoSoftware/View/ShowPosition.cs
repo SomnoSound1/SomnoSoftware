@@ -30,9 +30,10 @@ namespace SomnoSoftware
             Graphics g = Graphics.FromImage(bmp_back);
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
-            g.DrawString("Schlafposition", font, b_black, 50, 2);
+            g.DrawString("Schlafposition", font, b_black, new PointF(w / 2 - 35, 5));
 
             pb.BackgroundImage = bmp_back;
+    
         }
 
         public void DrawPosition(int pos)
@@ -40,9 +41,32 @@ namespace SomnoSoftware
             Graphics g = Graphics.FromImage(bmp_front);
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
-            //Image img = Image.FromFile(".//Resources/side.PNG");
+            pb.Image = null;
+            g.Clear(Color.Transparent);
 
-            g.DrawImage(img, 10, 10);
+            switch (pos)
+            {
+                case 0:
+                    {
+                        g.DrawImage(Properties.Resources.faceup, new RectangleF(w / 2 - 60, 20, 120, 60));
+                        g.DrawString("Rückenlage", font, b_black, w / 2 - 30, 80);
+                        break;
+                    }
+                case 1:
+                    {
+                        g.DrawImage(Properties.Resources.side, new RectangleF(w / 2 - 60, 20, 120, 60));
+                        g.DrawString("Seitenlage", font, b_black, w / 2 - 30, 80);
+                        break;
+                    }
+                case 2:
+                    {
+                        g.DrawImage(Properties.Resources.facedown, new RectangleF(w / 2 - 60, 20, 120, 60));
+                        g.DrawString("Bauchlage", font, b_black, w / 2 - 30, 80);
+                        break;
+                    }
+                default:
+                    break;
+            }            
 
             pb.Image = bmp_front;
 
