@@ -47,7 +47,7 @@
             // 
             this.buttonConnect.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonConnect.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonConnect.Location = new System.Drawing.Point(12, 12);
+            this.buttonConnect.Location = new System.Drawing.Point(12, 35);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(90, 52);
             this.buttonConnect.TabIndex = 0;
@@ -59,7 +59,7 @@
             this.buttonSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.buttonSave.Enabled = false;
             this.buttonSave.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSave.Location = new System.Drawing.Point(108, 12);
+            this.buttonSave.Location = new System.Drawing.Point(108, 35);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(111, 52);
             this.buttonSave.TabIndex = 1;
@@ -74,7 +74,7 @@
             this.zedGraphAudio.IsEnableVPan = false;
             this.zedGraphAudio.IsEnableVZoom = false;
             this.zedGraphAudio.IsEnableWheelZoom = false;
-            this.zedGraphAudio.Location = new System.Drawing.Point(12, 70);
+            this.zedGraphAudio.Location = new System.Drawing.Point(12, 163);
             this.zedGraphAudio.Name = "zedGraphAudio";
             this.zedGraphAudio.ScrollGrace = 0D;
             this.zedGraphAudio.ScrollMaxX = 0D;
@@ -89,7 +89,7 @@
             // pb_spec
             // 
             this.pb_spec.BackColor = System.Drawing.SystemColors.Window;
-            this.pb_spec.Location = new System.Drawing.Point(12, 330);
+            this.pb_spec.Location = new System.Drawing.Point(12, 419);
             this.pb_spec.Name = "pb_spec";
             this.pb_spec.Size = new System.Drawing.Size(795, 250);
             this.pb_spec.TabIndex = 5;
@@ -102,7 +102,7 @@
             // pb_activity
             // 
             this.pb_activity.BackColor = System.Drawing.SystemColors.Window;
-            this.pb_activity.Location = new System.Drawing.Point(738, 70);
+            this.pb_activity.Location = new System.Drawing.Point(738, 163);
             this.pb_activity.Name = "pb_activity";
             this.pb_activity.Size = new System.Drawing.Size(69, 250);
             this.pb_activity.TabIndex = 6;
@@ -113,7 +113,7 @@
             this.pb_position.BackColor = System.Drawing.SystemColors.Window;
             this.pb_position.Location = new System.Drawing.Point(622, 11);
             this.pb_position.Name = "pb_position";
-            this.pb_position.Size = new System.Drawing.Size(185, 53);
+            this.pb_position.Size = new System.Drawing.Size(185, 100);
             this.pb_position.TabIndex = 7;
             this.pb_position.TabStop = false;
             // 
@@ -124,7 +124,7 @@
             this.tbData.Name = "tbData";
             this.tbData.ReadOnly = true;
             this.tbData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbData.Size = new System.Drawing.Size(391, 53);
+            this.tbData.Size = new System.Drawing.Size(391, 100);
             this.tbData.TabIndex = 9;
             // 
             // View
@@ -132,7 +132,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(810, 596);
+            this.ClientSize = new System.Drawing.Size(818, 737);
             this.Controls.Add(this.tbData);
             this.Controls.Add(this.pb_position);
             this.Controls.Add(this.pb_activity);
