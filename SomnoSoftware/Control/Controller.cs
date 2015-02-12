@@ -124,7 +124,7 @@ namespace SomnoSoftware.Control
                 {
                     UpdateStatus(this, new UpdateStatusEvent("Kein Sensor gefunden"));
                     UpdateStatus(this, new UpdateStatusEvent("Stellen Sie sicher, dass Bluetooth am Computer aktiviert ist und der Sensor eingeschaltet ist"));
-                    UpdateStatus(this, new UpdateStatusEvent("Versuchen Sie es erneut"));
+                    UpdateStatus(this, new UpdateStatusEvent("Schalten Sie den Sensor aus und wieder ein und versuchen Sie es erneut"));
                 }
             }
             else

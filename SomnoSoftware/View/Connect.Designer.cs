@@ -88,6 +88,7 @@
             this.Controls.Add(this.tbData);
             this.Controls.Add(this.buttonConnect);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Connect";
             this.Text = "Connect";
             this.ResumeLayout(false);

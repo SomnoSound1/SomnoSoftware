@@ -80,18 +80,17 @@ namespace SomnoSoftware.Model
             //stehen
             //if (vektor_sensor_winkel_y[2] >= Rechner.deg2rad(140))
             //    position = 4;
-
             //bauch
             if (vektorSensorWinkelZ[2] >= Statics.deg2rad(140))
-                return 3;
-            //seite
-            if (vektorSensorWinkelZ[2] >= Statics.deg2rad(50) && vektorSensorWinkelZ[2] <= Statics.deg2rad(140))
                 return 2;
-            //rücken
-            if (vektorSensorWinkelZ[2] >= Statics.deg2rad(0) && vektorSensorWinkelZ[2] <= Statics.deg2rad(50))
+            //seite
+            if (vektorSensorWinkelZ[2] >= Statics.deg2rad(50) && vektorSensorWinkelZ[2] < Statics.deg2rad(140))
                 return 1;
-            //n. def.
+            //rücken
+            if (vektorSensorWinkelZ[2] >= Statics.deg2rad(0) && vektorSensorWinkelZ[2] < Statics.deg2rad(50))
                 return 0;
+            //n. def.
+                return -1;
         }
 
 
