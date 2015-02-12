@@ -168,20 +168,20 @@ namespace SomnoSoftware
         public void ChangeConnectButtonText(bool connected)
         {
             if (connected)
-                buttonConnect.Text = "Disconnect";
+                buttonConnect.Text = "Verbindung trennen";
             else
             {
-                buttonConnect.Text = "Connect";
+                buttonConnect.Text = "Verbindung herstellen";
             }
         }
 
         public void ChangeSaveButtonText(bool save)
         {
             if (save)
-                buttonSave.Text = "Start Recording";
+                buttonSave.Text = "Aufnahme starten";
             else
             {
-                buttonSave.Text = "Stop Recording";
+                buttonSave.Text = "Aufnahme beenden";
             }
         }
 
@@ -195,10 +195,6 @@ namespace SomnoSoftware
             timerDisconnect.Enabled = state;
         }
 
-        private void View_Load(object sender, EventArgs e)
-        {
-
-        }
 
     }
 }

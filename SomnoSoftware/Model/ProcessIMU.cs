@@ -66,11 +66,11 @@ namespace SomnoSoftware.Model
                 activity[i] = (Math.Abs(vektorSensorStored[0] - vektorSensorWinkelX[0]) +
                                 Math.Abs(vektorSensorStored[1] - vektorSensorWinkelY[0]) +
                                 Math.Abs(vektorSensorStored[2] - vektorSensorWinkelZ[0])) *
-                                (325 / activity.Length);
+                                (325 / activity.Length)*2;
             }
 
-            if (activity.Sum() > 10)
-                return 10;
+            if (activity.Sum() > 20)
+                return 20;
             return (int)activity.Sum();
         }
 

@@ -50,7 +50,7 @@
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(90, 52);
             this.buttonConnect.TabIndex = 0;
-            this.buttonConnect.Text = "Connect";
+            this.buttonConnect.Text = "Verbindung herstellen";
             this.buttonConnect.UseVisualStyleBackColor = false;
             // 
             // buttonSave
@@ -62,11 +62,17 @@
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(111, 52);
             this.buttonSave.TabIndex = 1;
-            this.buttonSave.Text = "Start Recording";
+            this.buttonSave.Text = "Aufnahme starten";
             this.buttonSave.UseVisualStyleBackColor = false;
             // 
             // zedGraphAudio
             // 
+            this.zedGraphAudio.BackColor = System.Drawing.SystemColors.Control;
+            this.zedGraphAudio.IsEnableHPan = false;
+            this.zedGraphAudio.IsEnableHZoom = false;
+            this.zedGraphAudio.IsEnableVPan = false;
+            this.zedGraphAudio.IsEnableVZoom = false;
+            this.zedGraphAudio.IsEnableWheelZoom = false;
             this.zedGraphAudio.Location = new System.Drawing.Point(12, 70);
             this.zedGraphAudio.Name = "zedGraphAudio";
             this.zedGraphAudio.ScrollGrace = 0D;
@@ -135,7 +141,6 @@
             this.Controls.Add(this.buttonConnect);
             this.Name = "View";
             this.Text = "SomnoSoftware";
-            this.Load += new System.EventHandler(this.View_Load);
             this.Resize += new System.EventHandler(this.View_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.pb_spec)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_activity)).EndInit();

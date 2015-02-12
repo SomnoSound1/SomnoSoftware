@@ -52,6 +52,7 @@ namespace SomnoSoftware.Control
         {
             form1 = new View();
             connectDialog = new Connect();
+            connectDialog.StartPosition = form1.StartPosition = FormStartPosition.CenterScreen;
             connectDialog.Show();
             //form1.Show();
         }
@@ -117,6 +118,7 @@ namespace SomnoSoftware.Control
                     serial.StartSensor();
                     connectDialog.Hide();
                     form1.Show();
+                    form1.BringToFront();
                 }
                 else
                 {
@@ -150,6 +152,7 @@ namespace SomnoSoftware.Control
             UpdateStatus(this, new UpdateStatusEvent("Die Verbindung wurde getrennt"));
             form1.Hide();
             connectDialog.Show();
+            connectDialog.BringToFront();
             //Finalize EDF-File and end save process
             EndSave();
         }
@@ -207,6 +210,7 @@ namespace SomnoSoftware.Control
             {
                 form1.Hide();
                 saveDialog = new SaveDialog();
+                saveDialog.StartPosition = FormStartPosition.CenterScreen;
                 saveDialog.Show();
                 saveDialog.setController(this);
             }

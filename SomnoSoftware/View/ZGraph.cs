@@ -24,9 +24,10 @@ namespace SomnoSoftware
         {
             RectangleF rectF;
             GraphPane myPane = zedgraph.GraphPane;
-            myPane.Title.Text = "Audio Data";
-            myPane.XAxis.Title.Text = "Seconds";
+            myPane.Title.Text = "Audio";
+            myPane.XAxis.Title.Text = "Sekunden";
             myPane.YAxis.Title.Text = "Amplitude";
+            
 
             //Manually set the axis for the Graph
             myPane.XAxis.Scale.Min = 0;
@@ -47,6 +48,7 @@ namespace SomnoSoftware
             // Initially, a curve is added with no data points (list is empty)
             // Color is blue, and there will be no symbols
             LineItem curve = myPane.AddCurve("Audio", list, Color.Blue, SymbolType.None);
+            curve.Label.IsVisible = false;
 
             // Scale the axes
             zedgraph.AxisChange();
