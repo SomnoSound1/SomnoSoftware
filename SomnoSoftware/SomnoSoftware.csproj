@@ -70,11 +70,6 @@
     <Compile Include="Model\ProcessIMU.cs" />
     <Compile Include="Model\SaveData.cs" />
     <Compile Include="Model\SerialCommunication.cs" />
-    <Compile Include="Resource1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource1.resx</DependentUpon>
-    </Compile>
     <Compile Include="Statics.cs" />
     <Compile Include="View\Connect.cs">
       <SubType>Form</SubType>
@@ -109,11 +104,8 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Resource1.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="View\Connect.resx">
       <DependentUpon>Connect.cs</DependentUpon>
     </EmbeddedResource>
@@ -134,11 +126,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\side.PNG" />
     <None Include="Resources\facedown.PNG" />
     <None Include="Resources\faceup.PNG" />
     <Content Include="Resources\icon.ico" />
-    <None Include="Resources\side.PNG" />
-    <None Include="Resources\Image1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
