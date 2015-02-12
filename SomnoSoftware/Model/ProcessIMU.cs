@@ -26,7 +26,6 @@ namespace SomnoSoftware.Model
         
         private double[] activity = new double[10];
 
-
         public void UpdateIMU(Int16 GyroX, Int16 GyroY, Int16 GyroZ, Int16 AccX, Int16 AccY, Int16 AccZ)
         {
             AHRS.Update(GyroX,GyroY,GyroZ,AccX,AccY,AccZ);
