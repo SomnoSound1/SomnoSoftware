@@ -41,7 +41,7 @@
             // 
             // buttonConfirm
             // 
-            this.buttonConfirm.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonConfirm.BackColor = System.Drawing.Color.LightSteelBlue;
             this.buttonConfirm.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonConfirm.Location = new System.Drawing.Point(37, 118);
             this.buttonConfirm.Name = "buttonConfirm";
@@ -53,7 +53,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonCancel.BackColor = System.Drawing.Color.LightSteelBlue;
             this.buttonCancel.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonCancel.Location = new System.Drawing.Point(166, 118);
             this.buttonCancel.Name = "buttonCancel";

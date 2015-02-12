@@ -37,11 +37,11 @@
             // 
             // buttonConnect
             // 
-            this.buttonConnect.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonConnect.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonConnect.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.buttonConnect.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonConnect.Location = new System.Drawing.Point(130, 124);
             this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(107, 55);
+            this.buttonConnect.Size = new System.Drawing.Size(110, 55);
             this.buttonConnect.TabIndex = 0;
             this.buttonConnect.Text = "Verbindung herstellen";
             this.buttonConnect.UseVisualStyleBackColor = false;

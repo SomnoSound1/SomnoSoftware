@@ -38,6 +38,7 @@
             this.pb_activity = new System.Windows.Forms.PictureBox();
             this.pb_position = new System.Windows.Forms.PictureBox();
             this.tbData = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pb_spec)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_activity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_position)).BeginInit();
@@ -45,9 +46,9 @@
             // 
             // buttonConnect
             // 
-            this.buttonConnect.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonConnect.BackColor = System.Drawing.Color.LightSteelBlue;
             this.buttonConnect.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonConnect.Location = new System.Drawing.Point(12, 35);
+            this.buttonConnect.Location = new System.Drawing.Point(12, 40);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(90, 52);
             this.buttonConnect.TabIndex = 0;
@@ -56,10 +57,10 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.buttonSave.BackColor = System.Drawing.Color.LightSteelBlue;
             this.buttonSave.Enabled = false;
             this.buttonSave.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSave.Location = new System.Drawing.Point(108, 35);
+            this.buttonSave.Location = new System.Drawing.Point(136, 40);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(111, 52);
             this.buttonSave.TabIndex = 1;
@@ -120,20 +121,32 @@
             // 
             // tbData
             // 
-            this.tbData.Location = new System.Drawing.Point(225, 11);
+            this.tbData.Location = new System.Drawing.Point(253, 40);
             this.tbData.Multiline = true;
             this.tbData.Name = "tbData";
             this.tbData.ReadOnly = true;
             this.tbData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbData.Size = new System.Drawing.Size(391, 100);
+            this.tbData.Size = new System.Drawing.Size(363, 71);
             this.tbData.TabIndex = 9;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Copperplate Gothic Bold", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.label1.Location = new System.Drawing.Point(304, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(235, 26);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "SomnoSoftware";
             // 
             // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(818, 737);
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ClientSize = new System.Drawing.Size(804, 592);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.tbData);
             this.Controls.Add(this.pb_position);
             this.Controls.Add(this.pb_activity);
@@ -142,7 +155,7 @@
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonConnect);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(826, 634);
+            this.MinimumSize = new System.Drawing.Size(820, 630);
             this.Name = "View";
             this.Text = "SomnoSoftware";
             this.Load += new System.EventHandler(this.View_Load);
@@ -165,6 +178,7 @@
         private System.Windows.Forms.PictureBox pb_activity;
         private System.Windows.Forms.PictureBox pb_position;
         private System.Windows.Forms.TextBox tbData;
+        private System.Windows.Forms.Label label1;
     }
 }
 

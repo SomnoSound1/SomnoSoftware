@@ -25,7 +25,7 @@ namespace SomnoSoftware
             RectangleF rectF;
             GraphPane myPane = zedgraph.GraphPane;
             myPane.Title.Text = "Audio";
-            myPane.XAxis.Title.Text = "Sekunden";
+            myPane.XAxis.Title.Text = "Zeit [s]";
             myPane.YAxis.Title.Text = "Amplitude";
             
 
@@ -56,7 +56,11 @@ namespace SomnoSoftware
             //Initialize the Rectangle for redrawing 
             rectF = myPane.Chart.Rect;
             rect = new Rectangle((int)rectF.X, (int)rectF.Y, (int)rectF.Width, (int)rectF.Height);
-        }
+
+            //Hide Border
+            myPane.Border.IsVisible = false;
+
+            }
 
         /// <summary>
         /// Updates the ZedGraph

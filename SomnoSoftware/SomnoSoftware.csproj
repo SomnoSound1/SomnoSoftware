@@ -34,7 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NeuroLoopGainLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -70,6 +71,11 @@
     <Compile Include="Model\ProcessIMU.cs" />
     <Compile Include="Model\SaveData.cs" />
     <Compile Include="Model\SerialCommunication.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Statics.cs" />
     <Compile Include="View\Connect.cs">
       <SubType>Form</SubType>
@@ -97,15 +103,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\ZGraph.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="View\Connect.resx">
       <DependentUpon>Connect.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,7 +130,9 @@
     <None Include="Resources\side.PNG" />
     <None Include="Resources\facedown.PNG" />
     <None Include="Resources\faceup.PNG" />
-    <Content Include="Resources\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
