@@ -111,6 +111,7 @@
             // pb_position
             // 
             this.pb_position.BackColor = System.Drawing.SystemColors.Window;
+            this.pb_position.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pb_position.Location = new System.Drawing.Point(622, 11);
             this.pb_position.Name = "pb_position";
             this.pb_position.Size = new System.Drawing.Size(185, 100);
