@@ -46,18 +46,19 @@ namespace SomnoSoftware
             pb.Image = null;
             g.Clear(Color.Transparent);
 
-            float height_box = (h - 5 - 20) / Statics.max_act;
+            float height_box = (float)(h - 5 - 18) / (float)Statics.max_act;
             float width_box = w - 10;
 
-
-            for (int i = 0; i <= act; i++)
-            {
-                Color c = MapRainbowColor(i, Statics.max_act, 0);
-                b_black.Color = c;
-                float y_box = h - 5 - ((i+1) * height_box);
-                g.FillRectangle(b_black, new RectangleF(5, y_box, width_box, height_box-2));
-            }
-                
+            //if (act != 0)
+            //{
+                for (int i = 1; i <= act; i++)
+                {
+                    Color c = MapRainbowColor(i, Statics.max_act, 0);
+                    b_black.Color = c;
+                    float y_box = h - 5 - (i * height_box);
+                    g.FillRectangle(b_black, new RectangleF(5, y_box, width_box, height_box - 2));
+                }
+            //}   
             pb.Image = bmp_front;
 
         }
