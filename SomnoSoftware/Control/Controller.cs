@@ -118,7 +118,6 @@ namespace SomnoSoftware.Control
                     serial.StartSensor();
                     connectDialog.Hide();
                     form1.Show();
-                    form1.BringToFront();
                 }
                 else
                 {
