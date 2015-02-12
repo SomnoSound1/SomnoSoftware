@@ -38,8 +38,7 @@ namespace SomnoSoftware
 
         public void DrawActivity(int act)
         {
-            //TODO Kein Balken bei Null!! Bitte bearbeiten!!
-            //   -Laborleiter Doktor Kalkbrenner
+
             Graphics g = Graphics.FromImage(bmp_front);
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
@@ -49,28 +48,21 @@ namespace SomnoSoftware
             float height_box = (float)(h - 5 - 18) / (float)Statics.max_act;
             float width_box = w - 10;
 
-            //if (act != 0)
-            //{
-                for (int i = 1; i <= act; i++)
-                {
-                    Color c = MapRainbowColor(i, Statics.max_act, 0);
-                    b_black.Color = c;
-                    float y_box = h - 5 - (i * height_box);
-                    g.FillRectangle(b_black, new RectangleF(5, y_box, width_box, height_box - 2));
-                }
-            //}   
+            for (int i = 1; i <= act; i++)
+            {
+                Color c = MapRainbowColor(i, Statics.max_act, 0);
+                b_black.Color = c;
+                float y_box = h - 5 - (i * height_box);
+                g.FillRectangle(b_black, new RectangleF(5, y_box, width_box, height_box - 2));
+            }
+       
             pb.Image = bmp_front;
 
         }
 
 
         private Color MapRainbowColor(int value, int red_value, int green_value)
-        {
-
-            //// Convert into a value between 0 and 1023.
-            //int int_value = (int)(511 * (value - red_value) / (green_value - red_value));
-
-            
+        {                    
             
             // Map different color bands.
             if (value <= 10)
@@ -83,18 +75,7 @@ namespace SomnoSoftware
                 // Red to yellow. (255, 0, 0) to (255, 255, 0).
                 return Color.FromArgb(255, 255 - (value - 10) * 25, 0);
             }
-            //else if (int_value < 768)
-            //{
-            //    // Green to aqua. (0, 255, 0) to (0, 255, 255).
-            //    int_value -= 512;
-            //    return Color.FromArgb(0, 255, int_value);
-            //}
-            //else
-            //{
-            //    // Aqua to blue. (0, 255, 255) to (0, 0, 255).
-            //    int_value -= 768;
-            //    return Color.FromArgb(0, 255 - int_value, 255);
-            //}
+            
         }
     }
 }

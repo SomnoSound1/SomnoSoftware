@@ -76,6 +76,8 @@ namespace SomnoSoftware
             spec.DrawSpectrogram(e.FFT, counter);
 
             act.DrawActivity((int)rand.Next(Statics.max_act+1));
+
+            pos.DrawPosition(0);
             
             if (counter < Statics.num_of_lines-1)
                 counter++;
@@ -113,8 +115,8 @@ namespace SomnoSoftware
             Rectangle Spec = this.ClientRectangle;
             Rectangle Activity = new Rectangle(); 
             
-            Spec.Height = (int)(this.ClientRectangle.Height - 90) / 2;
-            Audio.Height = (int)(this.ClientRectangle.Height - 90) / 2;
+            Spec.Height = (int)(this.ClientRectangle.Height - 140) / 2;
+            Audio.Height = (int)(this.ClientRectangle.Height - 140) / 2;
 
             Spec.Width = (int)(this.ClientRectangle.Width - 20);
             Audio.Width = (int)(this.ClientRectangle.Width - 100);
@@ -122,7 +124,7 @@ namespace SomnoSoftware
             Audio.X += 10;
             Spec.X += 10;
 
-            Audio.Y += 70;
+            Audio.Y += 120;
             Spec.Y =  Audio.Y+Audio.Height + 10;
 
             Activity.Width = (this.ClientRectangle.Width - Audio.X - Audio.Width) - 20;
