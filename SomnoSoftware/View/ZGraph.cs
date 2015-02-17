@@ -43,7 +43,7 @@ namespace SomnoSoftware
             // Save 1200 points.  At 50 ms sample rate, this is one minute
             // The RollingPointPairList is an efficient storage class that always
             // keeps a rolling set of point data without needing to shift any data values
-            RollingPointPairList list = new RollingPointPairList(Statics.FS);
+            RollingPointPairList list = new RollingPointPairList(Statics.FS*2);
 
             // Initially, a curve is added with no data points (list is empty)
             // Color is blue, and there will be no symbols
@@ -106,17 +106,17 @@ namespace SomnoSoftware
             for (int i = 0; i < Data.Length; i++)
             {
 
-                seconds = (double)(time + localTime) / 4890;
+                seconds = (double)(time + localTime) / Statics.FS;
                 // Time is measured in seconds
-                localTime++;
+                 localTime++;
                 // 3 seconds per cycle
                 list.Add(seconds, Data[i]);
             }
 
             //Only redraw a certain area
             var xPix = (int)zedGraph.GraphPane.XAxis.Scale.Transform(seconds);
-            rect.X = xPix - ((int)zedGraph.GraphPane.Chart.Rect.Width / 6); //- 20;
-            rect.Width = (int)zedGraph.GraphPane.Chart.Rect.Width/3;
+            rect.X = xPix - ((int) zedGraph.GraphPane.Chart.Rect.Width/6); //- 20;
+            rect.Width = (int)zedGraph.GraphPane.Chart.Rect.Width/5;
             zedGraph.Invalidate(rect);
             }
 

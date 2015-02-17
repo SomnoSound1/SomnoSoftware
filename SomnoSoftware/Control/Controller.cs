@@ -26,8 +26,7 @@ namespace SomnoSoftware.Control
         private DateTime dcTime;
 
         //Save Variables
-        private bool save = false;
-        
+        public bool save = false;
         bool exitProgram = false;
         bool stopProgram = false;
 
@@ -218,6 +217,7 @@ namespace SomnoSoftware.Control
                 //Finalize EDF-File and end save process
                 EndSave();
             }
+            
         }
 
         /// <summary>
@@ -247,6 +247,7 @@ namespace SomnoSoftware.Control
             saveDialog.Dispose();
             form1.Show();
             form1.ChangeSaveButtonText(false);
+            form1.ChangeSaveImage();
         }
 
         private void EndSave()
@@ -259,6 +260,7 @@ namespace SomnoSoftware.Control
                 //Deletes the SaveData Object
                 saveData = new SaveData();
                 form1.ChangeSaveButtonText(true);
+                form1.ChangeSaveImage();
             }
         }
 

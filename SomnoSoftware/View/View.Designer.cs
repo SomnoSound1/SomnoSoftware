@@ -53,7 +53,7 @@
             this.buttonConnect.BackColor = System.Drawing.Color.LightSteelBlue;
             this.buttonConnect.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonConnect.Image = ((System.Drawing.Image)(resources.GetObject("buttonConnect.Image")));
-            this.buttonConnect.Location = new System.Drawing.Point(1035, 609);
+            this.buttonConnect.Location = new System.Drawing.Point(901, 518);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(171, 70);
             this.buttonConnect.TabIndex = 0;
@@ -68,7 +68,7 @@
             this.buttonSave.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSave.Image = global::SomnoSoftware.Properties.Resources.logoRec;
             this.buttonSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonSave.Location = new System.Drawing.Point(82, 613);
+            this.buttonSave.Location = new System.Drawing.Point(12, 518);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(202, 70);
             this.buttonSave.TabIndex = 1;
@@ -99,7 +99,7 @@
             // pb_spec
             // 
             this.pb_spec.BackColor = System.Drawing.SystemColors.Window;
-            this.pb_spec.Location = new System.Drawing.Point(12, 313);
+            this.pb_spec.Location = new System.Drawing.Point(12, 222);
             this.pb_spec.Name = "pb_spec";
             this.pb_spec.Size = new System.Drawing.Size(1251, 290);
             this.pb_spec.TabIndex = 5;
@@ -178,7 +178,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1084, 612);
+            this.ClientSize = new System.Drawing.Size(1084, 575);
             this.Controls.Add(this.pb_rec);
             this.Controls.Add(this.pb_logo);
             this.Controls.Add(this.label1);

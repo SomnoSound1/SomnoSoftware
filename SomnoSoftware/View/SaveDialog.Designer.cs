@@ -43,7 +43,7 @@
             // 
             this.buttonConfirm.BackColor = System.Drawing.Color.LightSteelBlue;
             this.buttonConfirm.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonConfirm.Location = new System.Drawing.Point(37, 118);
+            this.buttonConfirm.Location = new System.Drawing.Point(37, 94);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(103, 52);
             this.buttonConfirm.TabIndex = 0;
@@ -55,7 +55,7 @@
             // 
             this.buttonCancel.BackColor = System.Drawing.Color.LightSteelBlue;
             this.buttonCancel.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonCancel.Location = new System.Drawing.Point(166, 118);
+            this.buttonCancel.Location = new System.Drawing.Point(163, 93);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(101, 52);
             this.buttonCancel.TabIndex = 1;
@@ -68,16 +68,16 @@
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(200, 20);
             this.textBoxName.TabIndex = 2;
-            this.textBoxName.Text = "Max Muster";
+            this.textBoxName.Text = "001";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(38, 13);
+            this.label1.Size = new System.Drawing.Size(69, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Name:";
+            this.label1.Text = "Patienten ID:";
             // 
             // label2
             // 
@@ -87,6 +87,7 @@
             this.label2.Size = new System.Drawing.Size(62, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "Geburtstag:";
+            this.label2.Visible = false;
             // 
             // dateTimePickerBDay
             // 
@@ -94,6 +95,7 @@
             this.dateTimePickerBDay.Name = "dateTimePickerBDay";
             this.dateTimePickerBDay.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerBDay.TabIndex = 5;
+            this.dateTimePickerBDay.Visible = false;
             // 
             // label3
             // 
@@ -103,6 +105,7 @@
             this.label3.Size = new System.Drawing.Size(64, 13);
             this.label3.TabIndex = 6;
             this.label3.Text = "Geschlecht:";
+            this.label3.Visible = false;
             // 
             // textBoxGender
             // 
@@ -111,12 +114,13 @@
             this.textBoxGender.Size = new System.Drawing.Size(35, 20);
             this.textBoxGender.TabIndex = 7;
             this.textBoxGender.Text = "M";
+            this.textBoxGender.Visible = false;
             // 
             // SaveDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(306, 186);
+            this.ClientSize = new System.Drawing.Size(306, 152);
             this.Controls.Add(this.textBoxGender);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dateTimePickerBDay);

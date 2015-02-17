@@ -7,7 +7,7 @@ namespace SomnoSoftware
 {
     public static class Statics
     {
-        public static int FS = 4890;
+        public static int FS = 5440;
 
         public static int timeDisplay = 10 * FS;
         //false = 3 channel edf file, true 9 channel edf file (with imu data)

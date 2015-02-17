@@ -246,13 +246,21 @@ namespace SomnoSoftware
             timerDisconnect.Enabled = state;
         }
 
+        public void ChangeSaveImage()
+        {
+            if (controller.save)
+                buttonSave.Image = Properties.Resources.logoStopRec;    
+            else
+                buttonSave.Image = Properties.Resources.logoRec;
+        }
+
         /// <summary>
         /// Show/Hide record logo 
         /// </summary>
         private void Change_Rec_logo()
         {
 
-            if (rec_logo)
+            if (rec_logo && controller.save)
                 pb_rec.Image = Properties.Resources.logoRec;
             else
                 pb_rec.Image = null;
