@@ -14,9 +14,6 @@ namespace SomnoSoftware
     {
         private Controller controller;
 
-
-
-
         public Connect()
         {
             InitializeComponent();
@@ -56,6 +53,7 @@ namespace SomnoSoftware
         {
             buttonConnect.Enabled = state;
         }
+
 
     }
 }

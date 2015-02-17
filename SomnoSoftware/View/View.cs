@@ -19,6 +19,7 @@ namespace SomnoSoftware
         private ShowPosition pos;
         private ZGraph zGraph;
         private int counter = 0;
+        private bool rec_logo = false;
 
         private Random rand = new Random();
 
@@ -29,12 +30,14 @@ namespace SomnoSoftware
         {
             InitializeComponent();
             SetSize();
+            
             zGraph = new ZGraph(ref zedGraphAudio);
             spec = new ShowSpectrogram(ref pb_spec);
             act = new ShowActivity(ref pb_activity);
             pos = new ShowPosition(ref pb_position);
             
             zGraph.LoadZedGraph();
+            Change_Rec_logo();
         }
         
         /// <summary>
@@ -76,16 +79,28 @@ namespace SomnoSoftware
             spec.DrawSpectrogram(e.FFT, counter);
 
             act.DrawActivity((int)rand.Next(Statics.max_act+1));
+            
+            //act.DrawActivity(e.activity);
 
+            //pos.DrawPosition(e.sleepPosition);
 
 
             if (counter < Statics.num_of_lines - 1)
+            {
                 counter++;
+                if ((counter % (int)(Statics.FS / Statics.FFTSize)) == 0)
+                {
+                    rec_logo = !rec_logo;
+                    Change_Rec_logo();
+                }
+            }
             else
             {
                 counter = 0;
                 pos.DrawPosition((int)rand.Next(3));
             }
+
+
         }
        
 
@@ -105,6 +120,11 @@ namespace SomnoSoftware
             tbData.ScrollToCaret();
         }
 
+        /// <summary>
+        /// Event handler for resizing of window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void View_Resize(object sender, EventArgs e)
         {
             //Minimize sets Height/Width to zero --> causes error
@@ -112,55 +132,78 @@ namespace SomnoSoftware
             SetSize();
         }
 
-        // Set the size and location of the ZedGraphControl
+        /// <summary>
+        /// Sets position and size of all surface elements at the beginning and in case of resizing
+        /// </summary>
         private void SetSize()
         {
-            // Control is always 10 pixels inset from the client rectangle of the form
-            Rectangle Audio = this.ClientRectangle;
-            Rectangle Spec = this.ClientRectangle;
-            Rectangle Activity = new Rectangle(); 
+            Rectangle Audio = new Rectangle();
+            Rectangle Spec = new Rectangle();
+            Rectangle Activity = new Rectangle();
+            Rectangle Position = new Rectangle();
+            Rectangle Logo = new Rectangle(pb_logo.Location, pb_logo.Size);            
             
-            Spec.Height = (int)(this.ClientRectangle.Height - 140) / 2;
-            Audio.Height = (int)(this.ClientRectangle.Height - 140) / 2;
+            // Variables which define position of all surface elements
 
-            Spec.Width = (int)(this.ClientRectangle.Width - 20);
-            Audio.Width = (int)(this.ClientRectangle.Width - 100);
+            int x_right = 100;      // Distance from right edge to audio/spectrogram
+            
+            int y_top = 55;         // Distance from top edge to audio/spectrogram
+            int y_bot = 100;        // Distance from bottom edge to audio/spectrogram
 
-            Audio.X += 10;
-            Spec.X += 10;
-
-            Audio.Y += 120;
-            Spec.Y =  Audio.Y+Audio.Height + 10;
-
-            Activity.Width = (this.ClientRectangle.Width - Audio.X - Audio.Width) - 20;
-            Activity.Height = Audio.Height;
+            int dist = 10;          // Distance between surface elements
                         
-            Activity.Y = Audio.Y;
-            Activity.X = Audio.X + Audio.Width + 10;
+            Audio.Height = (int)(this.ClientRectangle.Height - y_top - y_bot - dist) / 2;
+            Audio.Width = (int)(this.ClientRectangle.Width - x_right - dist);            
+            
+            Spec.Width = Audio.Width;            
+            Spec.Height = Audio.Height;
 
-            buttonConnect.Width = (int)(this.ClientRectangle.Width - 350) /4;
-            buttonSave.Width = (int)(this.ClientRectangle.Width - 350) / 4;
-            tbData.Width = (int)(this.ClientRectangle.Width+585) / 4;
-            pb_position.Width = (int)(this.ClientRectangle.Width - 90) / 4;
+            Audio.X = dist;
+            Audio.Y = y_top;
 
-            buttonSave.Location = new Point(buttonConnect.Location.X + 10 + buttonConnect.Width, buttonSave.Location.Y);
-            tbData.Location = new Point(buttonSave.Location.X + 10 + buttonSave.Width, tbData.Location.Y);
-            pb_position.Location = new Point(tbData.Location.X + 10 + tbData.Width, pb_position.Location.Y);
+            Spec.X = Audio.X;
+            Spec.Y = Audio.Y + Audio.Height + 10;
 
-            if (zedGraphAudio.Size != Audio.Size)
-            {
-                zedGraphAudio.Location = Audio.Location;
-                zedGraphAudio.Size = Audio.Size;
+            Logo.X = this.ClientRectangle.Width - dist - Logo.Width;
+            Logo.Y = pb_logo.Location.Y;
 
-                pb_activity.Location = Activity.Location;
-                pb_activity.Size = Activity.Size;
-            }
-           
-            if (pb_spec.Size != Spec.Size)
-            {
-                pb_spec.Location = Spec.Location;
-                pb_spec.Size = Spec.Size;
-            }
+            Position.Height = Audio.Height;
+            Position.Width = x_right - 2 * dist;
+            
+            Activity.Width = Position.Width;
+            Activity.Height = Spec.Height;
+
+            Position.X = Audio.X + Audio.Width + dist;
+            Position.Y = Audio.Y;
+
+            Activity.X = Position.X;
+            Activity.Y = Spec.Y;            
+            
+            zedGraphAudio.Location = Audio.Location;
+            zedGraphAudio.Size = Audio.Size;
+
+            pb_spec.Location = Spec.Location;
+            pb_spec.Size = Spec.Size;
+
+            pb_logo.Location = Logo.Location;
+            
+            pb_position.Location = Position.Location;
+            pb_position.Size = Position.Size;
+            
+            pb_activity.Location = Activity.Location;
+            pb_activity.Size = Activity.Size;
+
+            tbData.Size = new Size(350, y_bot - 2 * dist);
+            tbData.Location = new Point((int)this.ClientRectangle.Width / 2 - tbData.Size.Width / 2, Spec.Y + Spec.Height + dist);
+
+            buttonSave.Size = new Size(180, y_bot - 2 * dist-10);
+            buttonSave.Location = new Point(5 * dist, tbData.Location.Y);
+
+            buttonConnect.Size = buttonSave.Size;
+            buttonConnect.Location = new Point((int)this.ClientRectangle.Width - buttonSave.Location.X - buttonConnect.Size.Width, tbData.Location.Y);
+
+            pb_rec.Size = new Size(120, 45);
+            pb_rec.Location = new Point(buttonSave.Location.X + buttonSave.Width + dist, this.ClientRectangle.Height-y_bot+20);
 
             spec = new ShowSpectrogram(ref pb_spec);
             act = new ShowActivity(ref pb_activity);
@@ -203,11 +246,17 @@ namespace SomnoSoftware
             timerDisconnect.Enabled = state;
         }
 
-        private void View_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Show/Hide record logo 
+        /// </summary>
+        private void Change_Rec_logo()
         {
 
+            if (rec_logo)
+                pb_rec.Image = Properties.Resources.logoRec;
+            else
+                pb_rec.Image = null;
         }
-
 
     }
 }

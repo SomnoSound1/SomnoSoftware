@@ -17,7 +17,7 @@ namespace SomnoSoftware
         float faxispos_ytop = 30;   // y-distance frequency axis on top
         float faxispos_ybot = 40;   // y-distance freqency axis on bottom
 
-        float taxispos_xr = 30;     // x-position time axis right
+        float taxispos_xr = 15;     // x-position time axis right
 
         float taxis_length;
         float faxis_length;
@@ -50,7 +50,7 @@ namespace SomnoSoftware
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
             
             string[] ftick_label = new string[5]{"2","1,5","1","0,5","0"};
-            string[] ttick_label = new string[4]{"0", "2", "4", "6"};
+            string[] ttick_label = new string[6]{"0", "2", "4", "6", "8", "10"};
             
             float taxispos_y = h-faxispos_ybot;
 

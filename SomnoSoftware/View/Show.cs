@@ -10,6 +10,9 @@ using SomnoSoftware.Control;
 
 namespace SomnoSoftware
 {
+    /// <summary>
+    /// Abstract class for display of position, spectrogram and activity
+    /// </summary>
     abstract class Show
     {
         protected Bitmap bmp_front;

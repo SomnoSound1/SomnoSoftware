@@ -12,6 +12,10 @@ namespace SomnoSoftware
 {
     class ShowActivity : Show
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="pb">reference of picturebox for activity display</param>
         public ShowActivity(ref PictureBox pb)
         {
             this.pb = pb;
@@ -25,12 +29,15 @@ namespace SomnoSoftware
             Initialize();
         }
 
+        /// <summary>
+        /// Draw font and frame
+        /// </summary>
         private void Initialize()
         {
             Graphics g = Graphics.FromImage(bmp_back);
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
-            g.DrawString("Aktivität", font, b_black, 11, 2);
+            g.DrawString("Aktivität", font, b_black, 16, 5);
 
             g.DrawRectangle(p_frame, new Rectangle(1, 1, w - 2, h - 2));
 
@@ -38,23 +45,27 @@ namespace SomnoSoftware
 
         }
 
+        /// <summary>
+        /// Draw activity 
+        /// </summary>
+        /// <param name="act">activity (O...20)</param>
         public void DrawActivity(int act)
         {
 
             Graphics g = Graphics.FromImage(bmp_front);
             g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
-            pb.Image = null;
+            pb.Image = null;                // Clear image before redrawing
             g.Clear(Color.Transparent);
 
-            float height_box = (float)(h - 5 - 18) / (float)Statics.max_act;
-            float width_box = w - 10;
+            float height_box = (float)(h - 5 - 20) / (float)Statics.max_act;    // Height of one box
+            float width_box = w - 10;                                           // Width of one box
 
             for (int i = 1; i <= act; i++)
             {
                 Color c = MapRainbowColor(i, Statics.max_act, 0);
                 b_black.Color = c;
-                float y_box = h - 5 - (i * height_box);
+                float y_box = h - 5 - (i * height_box);             // y-position of box
                 g.FillRectangle(b_black, new RectangleF(5, y_box, width_box, height_box - 2));
             }
        
@@ -62,7 +73,13 @@ namespace SomnoSoftware
 
         }
 
-
+        /// <summary>
+        /// Map Value (0...20) to color (green to red)
+        /// </summary>
+        /// <param name="value">value</param>
+        /// <param name="red_value">20</param>
+        /// <param name="green_value">0</param>
+        /// <returns></returns>
         private Color MapRainbowColor(int value, int red_value, int green_value)
         {                    
             
