@@ -52,8 +52,8 @@ namespace SomnoSoftware.Control
             form1 = new View();
             connectDialog = new Connect();
             connectDialog.StartPosition = form1.StartPosition = FormStartPosition.CenterScreen;
-            //connectDialog.Show();
-            form1.Show();
+            connectDialog.Show();
+            //form1.Show();
         }
 
         /// <summary>
@@ -327,8 +327,8 @@ namespace SomnoSoftware.Control
             string caption = "Aufnahmen beenden";
             MessageBoxButtons b = MessageBoxButtons.OKCancel;
             MessageBoxIcon icon = MessageBoxIcon.Warning;
-
-            DialogResult result = MessageBox.Show(messageBoxText, caption, b, icon);
+            MessageBoxDefaultButton d = MessageBoxDefaultButton.Button2;
+            DialogResult result = MessageBox.Show(messageBoxText, caption, b, icon, d);
             return result;
         }
 
@@ -342,8 +342,8 @@ namespace SomnoSoftware.Control
             string caption = "Verbindung schließen";
             MessageBoxButtons b = MessageBoxButtons.OKCancel;
             MessageBoxIcon icon = MessageBoxIcon.Warning;
-
-            DialogResult result = MessageBox.Show(messageBoxText, caption, b, icon);
+            MessageBoxDefaultButton d = MessageBoxDefaultButton.Button2;
+            DialogResult result = MessageBox.Show(messageBoxText, caption, b, icon, d);
             return result;
         }
 

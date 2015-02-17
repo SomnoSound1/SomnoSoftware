@@ -95,7 +95,7 @@ namespace SomnoSoftware
             {
                 list.Clear();
                 // Force a redraw
-                zedGraph.Invalidate();
+                //zedGraph.Invalidate();
             }
 
             // If this is null, it means the reference at curve.Points does not
