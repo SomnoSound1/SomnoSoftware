@@ -40,7 +40,7 @@ namespace SomnoSoftware.Control
             connectDialog.setController(this);
             processData = new ProcessData(52);
             UpdateStatus(this, new UpdateStatusEvent("Wilkommen zu SomnoSoftware 0.1"));
-            UpdateStatus(this, new UpdateStatusEvent("Beachten Sie bitte die Anweisungen bevor Sie die Verbindung mit dem Sensor herstellen"));
+            UpdateStatus(this, new UpdateStatusEvent("Bitte beachten Sie die Anweisungen bevor Sie eine Verbindung mit dem Sensor herstellen"));
             runner();
         }
 
@@ -126,7 +126,10 @@ namespace SomnoSoftware.Control
                 }
             }
             else
-            Disconnect();
+            {
+                if (ShowDialog_Disconnect() == DialogResult.OK)
+                    Disconnect();            
+            }
 
             //Enable/Disable Disconnect Timer
             form1.EnableTimer(processData.sensorAnswer);
@@ -214,6 +217,7 @@ namespace SomnoSoftware.Control
             }
             else
             {
+                if (ShowDialog_AbortSave() == DialogResult.OK)
                 //Finalize EDF-File and end save process
                 EndSave();
             }
@@ -312,7 +316,36 @@ namespace SomnoSoftware.Control
 
            
         }
-        
+
+        /// <summary>
+        /// Shows dialog for recording stop
+        /// </summary>
+        /// <returns>Dialog result</returns>
+        private DialogResult ShowDialog_AbortSave()
+        {
+            string messageBoxText = "Möchten Sie die Aufnahmne wirklich beenden?";
+            string caption = "Aufnahmen beenden";
+            MessageBoxButtons b = MessageBoxButtons.OKCancel;
+            MessageBoxIcon icon = MessageBoxIcon.Warning;
+
+            DialogResult result = MessageBox.Show(messageBoxText, caption, b, icon);
+            return result;
+        }
+
+        /// <summary>
+        /// Shows dialog for disconnecting
+        /// </summary>
+        /// <returns>Dialog result</returns>
+        private DialogResult ShowDialog_Disconnect()
+        {
+            string messageBoxText = "Möchten Sie die Verbindung zum Sensor wirklich schließen?";
+            string caption = "Verbindung schließen";
+            MessageBoxButtons b = MessageBoxButtons.OKCancel;
+            MessageBoxIcon icon = MessageBoxIcon.Warning;
+
+            DialogResult result = MessageBox.Show(messageBoxText, caption, b, icon);
+            return result;
+        }
 
     }
 }
