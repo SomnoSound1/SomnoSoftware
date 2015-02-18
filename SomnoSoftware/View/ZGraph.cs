@@ -116,7 +116,7 @@ namespace SomnoSoftware
             //Only redraw a certain area
             var xPix = (int)zedGraph.GraphPane.XAxis.Scale.Transform(seconds);
             rect.X = xPix - ((int) zedGraph.GraphPane.Chart.Rect.Width/6); //- 20;
-            rect.Width = (int)zedGraph.GraphPane.Chart.Rect.Width/5;
+            rect.Width = (int)zedGraph.GraphPane.Chart.Rect.Width/6+10;
             zedGraph.Invalidate(rect);
             }
 

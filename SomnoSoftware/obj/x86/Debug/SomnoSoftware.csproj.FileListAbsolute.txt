@@ -96,3 +96,7 @@ C:\Users\Lizenznehmer\Documents\GitHub\SomnoSoftware\SomnoSoftware\obj\x86\Debug
 \\hs-ulm.de\fs\users\eichenla\Desktop\Master-Thesis\Software\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.View.resources
 \\hs-ulm.de\fs\users\eichenla\Desktop\Master-Thesis\Software\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.csproj.GenerateResource.Cache
 R:\org\Institute\IMM\Projekte\P_04\SomnoSound\03_Software\SomnoSound\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.Connect.resources
+C:\Users\Lizenznehmer\Documents\GitHub\SomnoSoftware\SomnoSoftware\bin\Debug\SomnoSoftware.exe.manifest
+C:\Users\Lizenznehmer\Documents\GitHub\SomnoSoftware\SomnoSoftware\bin\Debug\SomnoSoftware.application
+C:\Users\Lizenznehmer\Documents\GitHub\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.exe.manifest
+C:\Users\Lizenznehmer\Documents\GitHub\SomnoSoftware\SomnoSoftware\obj\x86\Debug\SomnoSoftware.application

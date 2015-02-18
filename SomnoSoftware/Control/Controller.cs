@@ -52,8 +52,8 @@ namespace SomnoSoftware.Control
             form1 = new View();
             connectDialog = new Connect();
             connectDialog.StartPosition = form1.StartPosition = FormStartPosition.CenterScreen;
-            connectDialog.Show();
-            //form1.Show();
+            //connectDialog.Show();
+            form1.Show();
         }
 
         /// <summary>
@@ -78,6 +78,11 @@ namespace SomnoSoftware.Control
         {
             long time1 = System.Environment.TickCount;
             while ((System.Environment.TickCount - time1) < time){Thread.Sleep(1); Application.DoEvents();}
+        }
+
+        public void Closing(Object sender, FormClosingEventArgs e)
+        {
+
         }
 
         /// <summary>
@@ -127,7 +132,7 @@ namespace SomnoSoftware.Control
             }
             else
             {
-                if (ShowDialog_Disconnect() == DialogResult.OK)
+                if (ShowDialog("Möchten Sie die Verbindung zum Sensor wirklich schließen?", "Verbindung schließen") == DialogResult.OK)
                     Disconnect();            
             }
 
@@ -193,11 +198,16 @@ namespace SomnoSoftware.Control
         /// </summary>
         /// <param name="sender">Object that calls the function</param>
         /// <param name="e">Default, empty and useless event argument</param>
-        public void Exit(Object sender, EventArgs e)
+        public void Exit(Object sender, FormClosingEventArgs e)
         {
-            //Finalize EDF-File and end save process
-            EndSave();
-            exitProgram = true;
+            if (ShowDialog("Möchten Sie die das Programm wirklich beenden?", "Programm beenden") == DialogResult.OK)
+            {
+                //Finalize EDF-File and end save process
+                EndSave();
+                exitProgram = true;
+            }
+            else
+                e.Cancel = true;
         }
 
         /// <summary>
@@ -209,15 +219,16 @@ namespace SomnoSoftware.Control
         {
             if (!save)
             {
-                form1.Hide();
+                form1.Enabled = false;
                 saveDialog = new SaveDialog();
                 saveDialog.StartPosition = FormStartPosition.CenterScreen;
                 saveDialog.Show();
+                saveDialog.Focus();
                 saveDialog.setController(this);
             }
             else
             {
-                if (ShowDialog_AbortSave() == DialogResult.OK)
+                if (ShowDialog("Möchten Sie die Aufnahmne wirklich beenden?", "Aufnahmen beenden") == DialogResult.OK)
                 //Finalize EDF-File and end save process
                 EndSave();
             }
@@ -243,13 +254,20 @@ namespace SomnoSoftware.Control
         /// <param name="gender"></param>
         public void StartRecording(string name, DateTime birthDate, char gender)
         {
-            UpdateStatus(this, new UpdateStatusEvent("Messung gestartet"));
-            if (!Directory.Exists("Messungen//")) Directory.CreateDirectory("Messungen//");
-            saveData = new SaveData(1,"Messungen//"+name+"-"+DateTime.Now.ToString("yy-MM-dd-hh-mm-ss")+".edf",Statics.complexSave);
+            string documents = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string subPath = Path.Combine("Messungen", name);
+            string fileName = DateTime.Now.ToString("yyyy_MM_dd") + "_" + DateTime.Now.ToLongTimeString() + ".edf";
+            subPath = Path.Combine(documents, subPath);
+            fileName = fileName.Replace(':', '_');
+            fileName = Path.Combine(subPath, fileName);
+            if (!Directory.Exists(subPath)) Directory.CreateDirectory(subPath);
+
+            saveData = new SaveData(1, fileName, Statics.complexSave);
             saveData.addInformation("test","",birthDate,gender,name);
             save = true;
             saveDialog.Dispose();
-            form1.Show();
+            form1.Enabled = true;
+            form1.Focus();
             form1.ChangeSaveButtonText(false);
             form1.ChangeSaveImage();
         }
@@ -321,31 +339,13 @@ namespace SomnoSoftware.Control
         /// Shows dialog for recording stop
         /// </summary>
         /// <returns>Dialog result</returns>
-        private DialogResult ShowDialog_AbortSave()
+        private DialogResult ShowDialog(string messageBoxText, string caption)
         {
-            string messageBoxText = "Möchten Sie die Aufnahmne wirklich beenden?";
-            string caption = "Aufnahmen beenden";
             MessageBoxButtons b = MessageBoxButtons.OKCancel;
             MessageBoxIcon icon = MessageBoxIcon.Warning;
             MessageBoxDefaultButton d = MessageBoxDefaultButton.Button2;
             DialogResult result = MessageBox.Show(messageBoxText, caption, b, icon, d);
             return result;
         }
-
-        /// <summary>
-        /// Shows dialog for disconnecting
-        /// </summary>
-        /// <returns>Dialog result</returns>
-        private DialogResult ShowDialog_Disconnect()
-        {
-            string messageBoxText = "Möchten Sie die Verbindung zum Sensor wirklich schließen?";
-            string caption = "Verbindung schließen";
-            MessageBoxButtons b = MessageBoxButtons.OKCancel;
-            MessageBoxIcon icon = MessageBoxIcon.Warning;
-            MessageBoxDefaultButton d = MessageBoxDefaultButton.Button2;
-            DialogResult result = MessageBox.Show(messageBoxText, caption, b, icon, d);
-            return result;
-        }
-
     }
 }

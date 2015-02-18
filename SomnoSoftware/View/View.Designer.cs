@@ -84,6 +84,7 @@
             this.zedGraphAudio.IsEnableVPan = false;
             this.zedGraphAudio.IsEnableVZoom = false;
             this.zedGraphAudio.IsEnableWheelZoom = false;
+            this.zedGraphAudio.IsShowContextMenu = false;
             this.zedGraphAudio.Location = new System.Drawing.Point(12, 54);
             this.zedGraphAudio.Name = "zedGraphAudio";
             this.zedGraphAudio.ScrollGrace = 0D;
@@ -178,7 +179,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1084, 575);
+            this.ClientSize = new System.Drawing.Size(1084, 669);
             this.Controls.Add(this.pb_rec);
             this.Controls.Add(this.pb_logo);
             this.Controls.Add(this.label1);
