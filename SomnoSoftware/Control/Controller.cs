@@ -79,12 +79,7 @@ namespace SomnoSoftware.Control
             long time1 = System.Environment.TickCount;
             while ((System.Environment.TickCount - time1) < time){Thread.Sleep(1); Application.DoEvents();}
         }
-
-        public void Closing(Object sender, FormClosingEventArgs e)
-        {
-
-        }
-
+        
         /// <summary>
         /// Establishes the SerialCommunication
         /// </summary>
@@ -191,8 +186,7 @@ namespace SomnoSoftware.Control
             }
             form1.EnableTimer(processData.sensorAnswer);
         }
-
-
+        
         /// <summary>
         /// Exits the program
         /// </summary>
