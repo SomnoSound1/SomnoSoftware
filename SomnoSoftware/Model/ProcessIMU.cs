@@ -23,10 +23,14 @@ namespace SomnoSoftware.Model
         private double[] vektorSensorWinkelX = new double[3];
         private double[] vektorSensorWinkelY = new double[3];
         private double[] vektorSensorWinkelZ = new double[3];
-        
-        private double[] activity = new double[10];
 
-        public void UpdateIMU(Int16 GyroX, Int16 GyroY, Int16 GyroZ, Int16 AccX, Int16 AccY, Int16 AccZ)
+        private const int activitySize = 20;
+        private List<double> activity = new List<double>();
+
+        //private double[] activity = new double[10];
+        //private int counterActivity = 0;
+
+        public void UpdateIMU(float GyroX, float GyroY, float GyroZ, float AccX, float AccY, float AccZ)
         {
             AHRS.Update(GyroX,GyroY,GyroZ,AccX,AccY,AccZ);
             rotMatrix = new x_IMU_API.QuaternionData(AHRS.Quaternion).ConvertToConjugate().ConvertToRotationMatrix();
@@ -59,17 +63,18 @@ namespace SomnoSoftware.Model
 
         public int MeasureActivity()
         {
-            //Calculate Activity
-            for (int i = 0; i > activity.Length; i++)
-            {
-                activity[i] = (Math.Abs(vektorSensorStored[0] - vektorSensorWinkelX[0]) +
+            activity.Add((Math.Abs(vektorSensorStored[0] - vektorSensorWinkelX[0]) +
                                 Math.Abs(vektorSensorStored[1] - vektorSensorWinkelY[0]) +
                                 Math.Abs(vektorSensorStored[2] - vektorSensorWinkelZ[0])) *
-                                (325 / activity.Length)*2;
-            }
+                                (325 / activitySize));
 
-            if (activity.Sum() > 20)
-                return 20;
+            if (activity.Count > activitySize)
+                activity.RemoveAt(0);
+
+            if (activity == null)
+                return 0;
+            if (activity.Sum() > activitySize)
+                return activitySize;
             return (int)activity.Sum();
         }
 

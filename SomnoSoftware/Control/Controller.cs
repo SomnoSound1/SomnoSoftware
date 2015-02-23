@@ -168,7 +168,7 @@ namespace SomnoSoftware.Control
             form1.EnableTimer(!processData.sensorAnswer);
             TimeSpan time;
             time = DateTime.Now - dcTime;
-            if (time.Seconds >= 3)
+            if (time.Seconds >= 4)
             {
                 UpdateStatus(this, new UpdateStatusEvent("Verbindung unterbrochen, suche Sensor!"));
                 //If reconnect successful 

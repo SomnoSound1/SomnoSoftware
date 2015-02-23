@@ -80,9 +80,9 @@ namespace SomnoSoftware
 
             act.DrawActivity((int)rand.Next(Statics.max_act+1));
             
-            //act.DrawActivity(e.activity);
+            act.DrawActivity(e.activity);
 
-            //pos.DrawPosition(e.sleepPosition);
+            pos.DrawPosition(e.sleepPosition);
 
 
             if (counter < Statics.num_of_lines - 1)
@@ -97,7 +97,7 @@ namespace SomnoSoftware
             else
             {
                 counter = 0;
-                pos.DrawPosition((int)rand.Next(3));
+                //pos.DrawPosition((int)rand.Next(3));
             }
 
 

@@ -208,7 +208,7 @@ namespace SomnoSoftware.Model
         /// </summary>
         public void CalculateIMU()
         {
-            processImu.UpdateIMU(gyro[0],gyro[1],gyro[2],accelerationRaw[0],accelerationRaw[1],accelerationRaw[2]);
+            processImu.UpdateIMU(Statics.deg2rad(gyro[0]), Statics.deg2rad(gyro[1]), Statics.deg2rad(gyro[2]), accelerationRaw[0], accelerationRaw[1], accelerationRaw[2]);
             activity = processImu.MeasureActivity();
             sleepPosition = processImu.MeasureSleepPosition();
         }

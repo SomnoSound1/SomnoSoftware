@@ -26,6 +26,7 @@ namespace SomnoSoftware.Model
         {
             string[] portNames = SerialPort.GetPortNames();
             Array.Sort(portNames);
+            Array.Reverse(portNames);
             return portNames;
         }
 
@@ -89,15 +90,25 @@ namespace SomnoSoftware.Model
         /// <param name="e"></param>
         void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            int dataLength = serialPort.BytesToRead;
-            byte[] data = new byte[dataLength];
-            int nbrDataRead = serialPort.Read(data, 0, dataLength);
-            if (nbrDataRead == 0)
-                return;
+            try
+            {
+                int dataLength = serialPort.BytesToRead;
+                byte[] data = new byte[dataLength];
+                int nbrDataRead = serialPort.Read(data, 0, dataLength);
+                if (nbrDataRead == 0)
+                    return;
 
-            // Send data to whom ever interested
-            if (NewSerialDataRecieved != null)
-                NewSerialDataRecieved(this, new SerialDataEventArgs(data));
+                // Send data to whom ever interested
+                if (NewSerialDataRecieved != null)
+                    NewSerialDataRecieved(this, new SerialDataEventArgs(data));
+            }
+            catch (Exception)
+            {
+
+            }
+            
+
+            
         }
 
 
