@@ -158,7 +158,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SaveDialog";
-            this.Text = "SaveDialog";
+            this.Text = "Patienten Informationen";
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

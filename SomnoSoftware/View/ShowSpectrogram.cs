@@ -110,7 +110,7 @@ namespace SomnoSoftware
 
             for (int i = 0; i < (int)limit; i++)
             {
-                Color c = MapRainbowColor((float)FFT[i], 50, 0);
+                Color c = MapRainbowColor((float)FFT[i], 40, 8);
                 b_black.Color = c;
                 x = faxispos_x + counter * box_width + 1;               // x-position box
                 y = (h - faxispos_ybot) - (i + 1) * box_height ;        // y-position box       

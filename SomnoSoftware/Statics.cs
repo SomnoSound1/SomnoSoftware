@@ -7,7 +7,7 @@ namespace SomnoSoftware
 {
     public static class Statics
     {
-        public static int FS = 5440;
+        public static int FS = 5000;
 
         public static int timeDisplay = 10 * FS;
         //false = 3 channel edf file, true 9 channel edf file (with imu data)
@@ -20,7 +20,7 @@ namespace SomnoSoftware
         public static int dB_factor = 10;
 
         // Audio Data Offset
-        public static int offset = 512;
+        public static int offset = 516;
 
         // Maximum value activity
         public static int max_act = 20;

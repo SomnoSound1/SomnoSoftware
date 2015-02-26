@@ -7,7 +7,7 @@ namespace SomnoSoftware.Model
 {
     class ProcessIMU
     {
-        MadgwickAHRS AHRS = new MadgwickAHRS(1f / 238f, 0.2f);
+        MadgwickAHRS AHRS = new MadgwickAHRS(1f / (Statics.FS/20f), 0.2f);
         private float[] rotMatrix = new float[9];
 
         private double[] vektorSensorX = new double[3];
@@ -15,6 +15,7 @@ namespace SomnoSoftware.Model
         private double[] vektorSensorZ = new double[3];
         private double[] vektorSensorXYZ = new double[3];
         private double[] vektorSensorStored = new double[3];
+        private double[] accStored = new double[3];
 
         private double[] vektorWeltX = new double[3] { 1, 0, 0 };
         private double[] vektorWeltY = new double[3] { 0, 1, 0 };
@@ -60,23 +61,27 @@ namespace SomnoSoftware.Model
             vektorSensorWinkelZ[1] = Statics.angle_between_vectors(vektorSensorZ, vektorWeltY);
             vektorSensorWinkelZ[2] = Statics.angle_between_vectors(vektorSensorZ, vektorWeltZ);
         }
+        
 
         public int MeasureActivity()
         {
-            activity.Add((Math.Abs(vektorSensorStored[0] - vektorSensorWinkelX[0]) +
+            activity.Add(((Math.Abs(vektorSensorStored[0] - vektorSensorWinkelX[0]) +
                                 Math.Abs(vektorSensorStored[1] - vektorSensorWinkelY[0]) +
                                 Math.Abs(vektorSensorStored[2] - vektorSensorWinkelZ[0])) *
-                                (325 / activitySize));
+                                activitySize*2)-0.06);
 
             if (activity.Count > activitySize)
                 activity.RemoveAt(0);
 
             if (activity == null)
                 return 0;
-            if (activity.Sum() > activitySize)
-                return activitySize;
+            if (activity.Sum() > 20)
+                return 20;
+            if (activity.Sum() < 0)
+                return 0;
             return (int)activity.Sum();
         }
+
 
         public int MeasureSleepPosition()
         {

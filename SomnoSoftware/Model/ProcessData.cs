@@ -79,6 +79,14 @@ namespace SomnoSoftware.Model
             accelerationRaw = new Int16[3];
             gyroRaw = new Int16[3];
 
+            //for (int i = 0; i < 40; i++)
+            //{
+            //    if (dataPaket[i] > 200)
+            //    {
+            //        continue;
+            //    }
+            //}
+
             //Lesen der ersten 40 Bytes (20 Werte) für die Audio Informationen
             for (int i = 0; i < 40; i = i + 2)
                 audio[i / 2] = (Int16)(((char)dataPaket[i + 1]) | (char)dataPaket[i] << 8);

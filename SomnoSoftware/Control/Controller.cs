@@ -237,7 +237,8 @@ namespace SomnoSoftware.Control
         public void CancelDialog(Object sender, EventArgs e)
         {
             saveDialog.Dispose();
-            form1.Show();
+            form1.Enabled = true;
+            form1.Focus();
         }
 
         /// <summary>
