@@ -20,7 +20,8 @@ namespace SomnoSoftware
         public static int dB_factor = 10;
 
         // Audio Data Offset
-        public static int offset = 516;
+        public static int offset = 516; //Somno 3
+        //public static int offset = 512; //Somno 2
 
         // Maximum value activity
         public static int max_act = 20;

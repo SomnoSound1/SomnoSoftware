@@ -50,7 +50,7 @@ namespace SomnoSoftware.Model
         public bool ImportByte(byte Data)
         {
             // Determine if we have a "packet" in the queue
-            if (hsuprot.ByteImport(Data) == 1)
+            if (hsuprot.ByteImport(Data) == 0x01)
             {
                 if (!((hsuprot.inPck_.ID & (byte)(0x80)) != 0)) //If Data
                     dataPaket = hsuprot.inPck_.Bytes;

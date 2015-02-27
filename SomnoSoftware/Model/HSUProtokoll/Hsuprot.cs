@@ -21,15 +21,13 @@ namespace SomnoSoftware
 
         //##############################################################################
 
-        const int MAXPCKSIZE = 255;
+        const int MAXPCKSIZE = 52;
 
         // Transmission Flags
         const byte STARTFLAG = 170;     // signs begin of a new transmission
         const byte STOPFLAG = 171;      // signs end of transmission
         const byte ESCFLAG = 0xAF;       // signs next byte is coded with ESCAPEMASK
-
         const byte ESCMASK = 0x80;       // TX -> byte &= ~ESCMASK / RX -> byte |= ESCMASK
-
         const byte IDMESSAGE = 0x80;     // Confirmation messages  == _Command |= 0x80
         const byte IDSIZE = 0x20;        // PACKAGESIZE instead of ESCAPEFLAGS and CHECKSUM
         const byte IDERROR = 0xFF;       // Sensor Error-ID
@@ -47,9 +45,9 @@ namespace SomnoSoftware
         public class serialPck // structSerialPck
         {
             public byte ID;
-            public ushort Size;
-            public ushort SizeCnt;
-            public byte[] Bytes = new byte[MAXPCKSIZE];
+            public byte Size;
+            public byte SizeCnt;
+            public byte[] Bytes = new byte[52];
             public byte ChkSum;
             public byte Flags;
         }
@@ -120,98 +118,85 @@ namespace SomnoSoftware
 
         public int ByteImport(byte newByte)
         {
-            //--- first check if a "sized" data package is processed ----------------------------
-            if (!((rxPck_.Flags & PCKCMPL) != 0)               // it's a new package
-                    && !((rxPck_.ID & IDMESSAGE) != 0)         //   it's data package
-                    && ((rxPck_.ID & IDSIZE) != 0)              //   it's a package with size info
-                    && (rxPck_.SizeCnt < rxPck_.Size))   //   it's not the the stop flag
+            if (!((rxPck_.Flags & PCKCMPL) != 0) 		// it's a new package
+      && !((rxPck_.ID & IDMESSAGE) != 0)    //   it's data package
+      && ((rxPck_.ID & IDSIZE) != 0) 				//   it's a package with size info
+      && (rxPck_.SizeCnt < rxPck_.Size))     //   it's not the the stop flag
             {
-                if ((rxPck_.Flags & PCKSIZE) != 0)             // the size is already received
+                if ((rxPck_.Flags & PCKSIZE) != 0) 		// the size is received
                 {
                     rxPck_.Bytes[rxPck_.SizeCnt++] = newByte;
                 }
-                else                                    // the actual byte is the size
+                else
                 {
-                    if (newByte != 0)
-                    {
-                        rxPck_.Size = (ushort)(newByte - 4);      // (data +START +ID +SIZE +STOP)
-                    }
-                    else
-                    {
-                        rxPck_.Size = extPckSize;       // SetPckSize() !!!
-                    }
-                    rxPck_.Flags += PCKSIZE;            // TODO what does size specify exactly ???
+                    rxPck_.Size = (byte)(newByte - 4);
+                    rxPck_.Flags += PCKSIZE;
                     return PCKSIZE;
                 }
                 return 0;
             }
-            else if (!((rxPck_.Flags & PCKCMPL) != 0)               // it's a new package
-                    && !((rxPck_.ID & IDMESSAGE) != 0)         //   it's data package
-                    && ((rxPck_.ID & IDSIZE) != 0)              //   it's a package with size info
-                    && (rxPck_.SizeCnt >= rxPck_.Size))
-            {
-                if (newByte == STOPFLAG)
-                {
-                    inPck_ = rxPck_;
-                    rxPck_ = new serialPck();
-                    return PCKCMPL;
-                }
-            }
-            //--- normal (no sized) package ------------------------------------------------
+
             switch (newByte)
             {
-                case STARTFLAG:                     // always do (STARTFLAG)
-                    rxPck_.ID = 0;                  //  clear IDenntity Byte
-                    rxPck_.Size = 1;    //TODO why ???
-                    rxPck_.SizeCnt = 0;             //  reset DataBuffer
+                case STARTFLAG:							// always do (STARTFLAG)
+                    rxPck_.ID = 0;     			//  clear IDenntity Byte
+                    rxPck_.Size = 1;
+                    rxPck_.SizeCnt = 0;  			//  reset DataBuffer
                     rxPck_.ChkSum = 0;
-                    if ((rxPck_.Flags & PCKCMPL) != 0)     // prev. Pack. complete ?
+                    if ((rxPck_.Flags & PCKCMPL) != 0) 	// prev. Pack. complete ?
                     {
-                        rxPck_.Flags = 0;           //  reset Command Flags
+                        rxPck_.Flags = 0;	    //  reset Command Flags
                     }
                     else
-                    {                               // no -> StopError
-                        rxPck_.Flags = 0;           //  reset Command Flags
+                    {                           // no -> StopError
+                        rxPck_.Flags = 0;	    //  reset Command Flags
                         return PERRSTOP;
                     }
                     break;
                 case ESCFLAG:
-                    if (((rxPck_.Flags & PCKCMPL) != 0) || ((rxPck_.Flags & PCKESC) != 0))
+                    if (((rxPck_.Flags & PCKCMPL) != 0)  || ((rxPck_.Flags & PCKESC) != 0) )
                     {
-                        rxPck_.Flags |= PERRCMD;    // error
+                        rxPck_.Flags |= PERRCMD;// error
                         return PERRCMD;
                     }
                     else
-                        rxPck_.Flags |= PCKESC;     // set EscapeFlag
+                        rxPck_.Flags |= PCKESC;	// set EscapeFlag
                     break;
                 case STOPFLAG:
-                    if (((rxPck_.Flags & PCKCMPL) != 0) || (rxPck_.SizeCnt < 1))
+                    if (((rxPck_.Flags & PCKCMPL) != 0)  || (rxPck_.SizeCnt < 1))
                     {
-                        rxPck_.Flags |= PERRSTART;  // missing StartFlag
+                        rxPck_.Flags |= PERRSTART;	// missing StartFlag
                         return PERRSTART;
                     }
                     else
                     {
-                        rxPck_.Flags |= PCKCMPL;    // set StopFlag
-                        if ((rxPck_.ID & IDSIZE) != 0)
+                        rxPck_.Flags |= PCKCMPL; 	// set StopFlag
+                        if ((rxPck_.ID & IDSIZE) != 0) //if stop and package with size info
                         {
-                            inPck_ = rxPck_;
-                            return PCKCMPL;
+                            if (rxPck_.SizeCnt == rxPck_.Size)
+                            {
+                                inPck_ = rxPck_;
+                                return PCKCMPL;
+                            }
+                            else
+                            {
+                                rxPck_.Flags |= PERRCHKSUM; // CheckSumError
+                                return PERRCHKSUM;
+                            }
                         }
-                        rxPck_.ChkSum = rxPck_.ID;  //  and calc. CHKSUM
+                        rxPck_.ChkSum = rxPck_.ID;	//  and calc. CHKSUM
                         for (int j = 0; j < (rxPck_.SizeCnt - 1); j++)
                             if ((rxPck_.Bytes[j] == STARTFLAG)
-                                    || (rxPck_.Bytes[j] == STOPFLAG)
-                                    || (rxPck_.Bytes[j] == ESCFLAG)
-                                    )
+                                || (rxPck_.Bytes[j] == STOPFLAG)
+                                || (rxPck_.Bytes[j] == ESCFLAG)
+                                )
                                 rxPck_.ChkSum += (byte)(rxPck_.Bytes[j] & ~ESCMASK);
                             else
                                 rxPck_.ChkSum += rxPck_.Bytes[j];
                         if (rxPck_.ChkSum != rxPck_.Bytes[--rxPck_.SizeCnt])
-                        {                               // remove CHKSUM
-                            rxPck_.Flags |= PERRCHKSUM; // CheckSumError
-                            //return PERRCHKSUM;
-                            return PCKCMPL;
+                        {                              	// remove CHKSUM
+                            rxPck_.Flags |= PERRCHKSUM;	// CheckSumError
+                            return PERRCHKSUM;
                         }
                         else
                         {
@@ -219,31 +204,28 @@ namespace SomnoSoftware
                             inPck_ = rxPck_;
                             return PCKCMPL;
                         }
-                    }
+                    }//else (!missing startflag)
+                //				break;
                 default:
-                    if ((rxPck_.Flags & PCKCMPL) != 0)
-                    {                                   // StartError
-                        rxPck_.Flags |= PERRSTART;      //   (missing flag)
+                    if ((rxPck_.Flags & PCKCMPL) != 0) 
+                    {								// StartError
+                        rxPck_.Flags |= PERRSTART;	//   (missing flag)
                         return PERRSTART;
                     }
-                    if (!(rxPck_.Flags != 0))                  // new transmission
-                    {                                   //   -> this is PackageID
-                        rxPck_.Flags = PCKID;           //   set flag
+                    if (!(rxPck_.Flags != 0))          // new transmission
+                    {                           	//   -> this is PackageID
+                        rxPck_.Flags = PCKID;		//   set flag
                         rxPck_.ID = newByte;
                         return PCKID;
                     }
-                    else                                // running transmisssion
+                    else                    	// running transmisssion
                     {
-                        if (!((rxPck_.ID & IDSIZE) != 0)) //its not a package with size info
+                        rxPck_.Bytes[(++rxPck_.SizeCnt) - 1] = newByte; /* TODO : ??? ++C -1 ??? */
+                        if ((rxPck_.Flags & PCKESC) != 0) 	//   check EscapeFlag
                         {
-                            rxPck_.Bytes[(++rxPck_.SizeCnt) - 1] = newByte; /* TODO : ??? ++C -1 ??? */
-                            if ((rxPck_.Flags & PCKESC) != 0)      //   check EscapeFlag
-                            {
-                                rxPck_.Bytes[rxPck_.SizeCnt - 1] |= ESCMASK;
-                                rxPck_.Flags = (byte)(~PCKESC & rxPck_.Flags);    //   clear EscapeFlag
-                            }
+                            rxPck_.Bytes[rxPck_.SizeCnt - 1] |= ESCMASK;
+                            rxPck_.Flags = (byte)(rxPck_.Flags & ~PCKESC);//   clear EscapeFlag
                         }
-
                     }
                     break;// default
             }//switch (newByte)
