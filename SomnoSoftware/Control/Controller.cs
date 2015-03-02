@@ -30,6 +30,9 @@ namespace SomnoSoftware.Control
         bool exitProgram = false;
         bool stopProgram = false;
 
+        //PackageNumber Variable
+        private bool firstPackage = true;
+
         /// <summary>
         /// Constructor of the controller class!
         /// </summary>
@@ -96,7 +99,7 @@ namespace SomnoSoftware.Control
             {
                 serial = new SerialCommunication();
                 serial.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(NewSerialDataRecieved);
-                processData = new ProcessData(52);
+                processData = new ProcessData(54);
 
                 string[] portNames;
                 portNames = serial.GetPortNames();
@@ -109,6 +112,7 @@ namespace SomnoSoftware.Control
                     if (processData.sensorAnswer)
                     {
                         UpdateStatus(this, new UpdateStatusEvent("Verbunden mit " + portNames[i]));
+                        firstPackage = true;
                         break;
                     }
                 }
@@ -174,6 +178,8 @@ namespace SomnoSoftware.Control
                 //If reconnect successful 
                 if (serial.Reconnect())
                 {
+                    //read new packageNumber
+                    firstPackage = true;
                     //Replace missing Data in Save-File
                     if (save)
                     {
@@ -297,7 +303,19 @@ namespace SomnoSoftware.Control
                 if (processData.ImportByte(t))
                 {
                     processData.Convert2Byte();
-                    
+
+                    //Check package number
+                    if (firstPackage)
+                    {
+                        firstPackage = false;
+                        processData.SetPackageNumber();
+                    }
+                    else
+                    {
+                        if (!processData.CheckPackageNumber() && save)
+                            saveData.FillMissingData(processData.lostPackages);
+                    }
+
                     //IMU
                     processData.CalculateIMU();
 

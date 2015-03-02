@@ -7,21 +7,7 @@ namespace SomnoSoftware
 {
     class Hsuprot
     {
-        //-----------------------------------------------------------------------------
-        //     File:          qhsuprot.h
-        //                    22.09.14
-        //     Description:   HS-Ulm Serial Protocol
-        //                   
-        //
-        //	Version:
-        //            _.__	see qhsuprot.cpp !!!
-        //-----------------------------------------------------------------------------
-        //#ifndef QHSUPROT_H
-        //const int QHSUPROT_H
-
-        //##############################################################################
-
-        const int MAXPCKSIZE = 52;
+        const int MAXPCKSIZE = 54;
 
         // Transmission Flags
         const byte STARTFLAG = 170;     // signs begin of a new transmission
@@ -47,7 +33,7 @@ namespace SomnoSoftware
             public byte ID;
             public byte Size;
             public byte SizeCnt;
-            public byte[] Bytes = new byte[52];
+            public byte[] Bytes = new byte[MAXPCKSIZE];
             public byte ChkSum;
             public byte Flags;
         }
@@ -260,13 +246,8 @@ namespace SomnoSoftware
             package[i++] = (char)message.Bytes[0];
             package[i++] = (char)(message.ID + message.Bytes[0]); //CheckSum
             package[i++] = (char)STOPFLAG;
-
-
+            
             return package;
-
-
-
-
         }
     }
 }

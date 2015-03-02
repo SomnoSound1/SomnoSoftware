@@ -19,6 +19,9 @@ namespace SomnoSoftware.Model
         public Int16[] gyro = new Int16[3];
         public Int16[] accelerationRaw = new Int16[3];
         public Int16[] gyroRaw = new Int16[3];
+        private ushort packageNumber;
+        public ushort packageNumberPC;
+        public int lostPackages;
         public int activity;
         public int sleepPosition;
 
@@ -78,15 +81,7 @@ namespace SomnoSoftware.Model
             gyro = new Int16[3];
             accelerationRaw = new Int16[3];
             gyroRaw = new Int16[3];
-
-            //for (int i = 0; i < 40; i++)
-            //{
-            //    if (dataPaket[i] > 200)
-            //    {
-            //        continue;
-            //    }
-            //}
-
+            
             //Lesen der ersten 40 Bytes (20 Werte) für die Audio Informationen
             for (int i = 0; i < 40; i = i + 2)
                 audio[i / 2] = (Int16)(((char)dataPaket[i + 1]) | (char)dataPaket[i] << 8);
@@ -120,6 +115,8 @@ namespace SomnoSoftware.Model
                 gyro[1] = (Int16)(gyroRaw[1] / 32.8);
                 gyro[2] = (Int16)(-(gyroRaw[2]) / 32.8);
             }
+            //Package_Number einlesen
+            packageNumber = (ushort)(((char)dataPaket[52]) | (char)dataPaket[53] << 8);
         }
 
         /// <summary>
@@ -219,6 +216,38 @@ namespace SomnoSoftware.Model
             processImu.UpdateIMU(Statics.deg2rad(gyro[0]), Statics.deg2rad(gyro[1]), Statics.deg2rad(gyro[2]), accelerationRaw[0], accelerationRaw[1], accelerationRaw[2]);
             activity = processImu.MeasureActivity();
             sleepPosition = processImu.MeasureSleepPosition();
+        }
+
+        /// <summary>
+        /// Sets the packageNumber on the PC to the packageNumber of the last received package
+        /// </summary>
+        public void SetPackageNumber()
+        {
+            packageNumberPC = packageNumber;
+        }
+
+        /// <summary>
+        /// Increases the packageNumber on the PC and compares it with the last received packageNumber
+        /// </summary>
+        /// <returns>Return true if packageNumbers are equal, else false</returns>
+        public bool CheckPackageNumber()
+        {
+            packageNumberPC++;
+            if (packageNumberPC == packageNumber)
+                return true;
+            else
+            {
+                lostPackages = packageNumber - packageNumberPC;
+                SetPackageNumber();
+                //If we lost data at 8 bit limit
+                if (lostPackages < 0)
+                    lostPackages += 65535;
+                //If we lost too many packages, something went wrong!
+                //(After 4 seconds sensor disconnects and refills data after reconnect)
+                if (lostPackages > 2500 || lostPackages <=0)
+                    return true;
+                return false;
+            }
         }
     }
 }

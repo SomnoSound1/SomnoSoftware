@@ -71,14 +71,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SomnoSoftware.exe" size="316928">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SomnoSoftware.exe" size="317440">
       <assemblyIdentity name="SomnoSoftware" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>d3DLC3nQwgpI6lBIQHnzoUI4z78=</dsig:DigestValue>
+        <dsig:DigestValue>OU5xi8CY3xeS1Nmop6+lOSdyNZQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

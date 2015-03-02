@@ -163,6 +163,38 @@ namespace SomnoSoftware.Model
         }
 
         /// <summary>
+        /// Fills all channels of EDF-File with zeroes over a certain time 
+        /// </summary>
+        /// <param name="time">Amount of lost Packages</param>
+        public void FillMissingData(int lostPackages)
+        {
+          Int16[] audio = new Int16[20];
+          Int16[] gyro = new Int16[3];
+          Int16[] accelerationRaw = new Int16[3];
+          int activity = 0;
+          int sleepPosition = 0;
+
+          Array.Clear(audio, 0, audio.Length);
+          Array.Clear(gyro, 0, gyro.Length);
+          Array.Clear(accelerationRaw, 0, accelerationRaw.Length);
+
+            for (int j = 0; j < lostPackages; j++)
+            {
+                if (Statics.complexSave)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        sendData(i + 3, gyro[i]);
+                        sendData(i + 6, accelerationRaw[i]);
+                    }
+                }
+                sendData(1, (short)activity);
+                sendData(2, (short)sleepPosition);
+                sendData(0, audio);
+            }
+        }
+
+        /// <summary>
         /// Writes Data into the Data Buffer
         /// </summary>
         /// <param name="signalNr"></param>
