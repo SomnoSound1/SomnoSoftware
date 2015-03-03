@@ -13,6 +13,7 @@ namespace SomnoSoftware.Model
         private EdfFile edfFile;
         private int nrSignals = 0;
         private Int32 dataBlockNr = 0;
+        private DateTime saveStart;
 
         private List<Int16>[] buffer;
 
@@ -96,6 +97,7 @@ namespace SomnoSoftware.Model
             edfFile.FileInfo.PatientName = name;
             edfFile.FileInfo.StartDate = DateTime.Today;
             edfFile.FileInfo.StartTime = DateTime.Now.TimeOfDay;
+            saveStart = DateTime.Now;
             edfFile.CommitChanges();
         }
 
@@ -151,7 +153,7 @@ namespace SomnoSoftware.Model
         /// <param name="time">Time to fill with zeroes</param>
         public void FillMissingData(TimeSpan time)
         {
-           for (int j = 0; j < time.Seconds; j++)
+           for (int j = 0; j < time.TotalSeconds; j++)
            {
                for (int i = edfFile.SignalInfo.Count; i > 0; i--)
                 {
@@ -217,6 +219,16 @@ namespace SomnoSoftware.Model
             //If Audio Signal reached (longest Signal) write!
             if(signalNr==(0))
             writeDataBlock();
+        }
+
+        /// <summary>
+        /// Measures Time between Start and End of Data Recording and fixes wrong SampleRates
+        /// </summary>
+        public void fixSampleRate()
+        {
+            TimeSpan recordingTime = DateTime.Now - saveStart;
+            edfFile.FileInfo.SampleRecDuration = ((double)recordingTime.TotalSeconds/(double)dataBlockNr);
+            commitChanges();
         }
 
         /// <summary>
