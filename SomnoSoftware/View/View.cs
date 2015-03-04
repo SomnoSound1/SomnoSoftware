@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using SomnoSoftware.Control;
+using SomnoSoftware.Model;
 using ZedGraph;
 
 namespace SomnoSoftware
@@ -99,8 +100,6 @@ namespace SomnoSoftware
                 counter = 0;
                 //pos.DrawPosition((int)rand.Next(3));
             }
-
-
         }
        
 

@@ -42,7 +42,7 @@ namespace SomnoSoftware.Control
             form1.setController(this);
             connectDialog.setController(this);
             processData = new ProcessData(52);
-            UpdateStatus(this, new UpdateStatusEvent("Wilkommen zu SomnoSoftware 0.1"));
+            UpdateStatus(this, new UpdateStatusEvent("Wilkommen zu SomnoSoftware 0.2"));
             UpdateStatus(this, new UpdateStatusEvent("Bitte beachten Sie die Anweisungen bevor Sie eine Verbindung mit dem Sensor herstellen"));
             runner();
         }
@@ -97,7 +97,7 @@ namespace SomnoSoftware.Control
             //Searches all availible Prots for Sensor .. or disconnects
             if (!processData.sensorAnswer)
             {
-                serial = new SerialCommunication();
+                serial = new SerialCommunication(this);
                 serial.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(NewSerialDataRecieved);
                 processData = new ProcessData(54);
 
@@ -105,7 +105,7 @@ namespace SomnoSoftware.Control
                 portNames = serial.GetPortNames();
                 for (int i = 0; i < portNames.Length; i++)
                 {
-                    UpdateStatus(this, new UpdateStatusEvent("Versuche mit " + portNames[i] + " zu verbinden."));
+                    UpdateStatus(this, new UpdateStatusEvent("Versuche mit " + portNames[i] + " zu verbinden"));
                     serial.Connect(portNames[i]);
                     serial.CallSensor();
                     Delay(300);
@@ -186,6 +186,7 @@ namespace SomnoSoftware.Control
                         time = DateTime.Now - dcTime;
                         saveData.FillMissingData(time);
                     }
+                    serial.StartSensor();
                     UpdateStatus(this, new UpdateStatusEvent("Verbindung wiederhergestellt!"));
                 }
                 
@@ -263,7 +264,7 @@ namespace SomnoSoftware.Control
             fileName = Path.Combine(subPath, fileName);
             if (!Directory.Exists(subPath)) Directory.CreateDirectory(subPath);
 
-            saveData = new SaveData(1, fileName, Statics.complexSave);
+            saveData = new SaveData(1, fileName, Statics.complexSave,this);
             saveData.addInformation("test","",birthDate,gender,name);
             save = true;
             saveDialog.Dispose();
@@ -271,6 +272,7 @@ namespace SomnoSoftware.Control
             form1.Focus();
             form1.ChangeSaveButtonText(false);
             form1.ChangeSaveImage();
+            UpdateStatus(this, new UpdateStatusEvent("Messung gestartet"));
         }
 
         private void EndSave()
@@ -282,7 +284,7 @@ namespace SomnoSoftware.Control
                 saveData.fixSampleRate();
                 saveData.commitChanges();
                 //Deletes the SaveData Object
-                saveData = new SaveData();
+                saveData = new SaveData(this);
                 form1.ChangeSaveButtonText(true);
                 form1.ChangeSaveImage();
             }
@@ -361,5 +363,16 @@ namespace SomnoSoftware.Control
             DialogResult result = MessageBox.Show(messageBoxText, caption, b, icon, d);
             return result;
         }
+
+
+        /// <summary>
+        /// Shows dialog for recording stop
+        /// </summary>
+        /// <returns>Dialog result</returns>
+        public void SendToTextBox(string messageBoxText)
+        {
+            UpdateStatus(this, new UpdateStatusEvent(messageBoxText));
+        }
+
     }
 }

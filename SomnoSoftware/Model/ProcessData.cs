@@ -84,8 +84,14 @@ namespace SomnoSoftware.Model
             
             //Lesen der ersten 40 Bytes (20 Werte) für die Audio Informationen
             for (int i = 0; i < 40; i = i + 2)
-                audio[i / 2] = (Int16)(((char)dataPaket[i + 1]) | (char)dataPaket[i] << 8);
-
+            {
+                audio[i/2] = (Int16) (((char) dataPaket[i + 1]) | (char) dataPaket[i] << 8);
+                //Wenn Audio außerhalb der 10 Bit Auflösung ist wird der Wert auf den Offset korrigiert.
+                if (audio[i / 2] > 1024 || audio[i / 2] < 0)
+                {
+                    audio[i/2] = (Int16)Statics.offset;
+                }
+            }
             //Die ersten Werte des IMU's werden genutzt um Offsets der Gyrometer zu korrigieren
             if (stepsDone < offsetSteps)
             {
@@ -181,7 +187,7 @@ namespace SomnoSoftware.Model
         }
 
         /// <summary>
-        /// Buffers Audio Data and processes FFT
+        /// Buffers Audio Data removes Offset and processes FFT
         /// </summary>
         public bool Buffering()
         {

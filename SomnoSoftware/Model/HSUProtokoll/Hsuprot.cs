@@ -206,7 +206,15 @@ namespace SomnoSoftware
                     }
                     else                    	// running transmisssion
                     {
-                        rxPck_.Bytes[(++rxPck_.SizeCnt) - 1] = newByte; /* TODO : ??? ++C -1 ??? */
+                        //return PERRSTART;
+                        try
+                        {
+                            rxPck_.Bytes[(++rxPck_.SizeCnt) - 1] = newByte;
+                        } /* TODO : ??? ++C -1 ??? */
+                        catch
+                        {
+                            return PERRCHKSUM;
+                        }
                         if ((rxPck_.Flags & PCKESC) != 0) 	//   check EscapeFlag
                         {
                             rxPck_.Bytes[rxPck_.SizeCnt - 1] |= ESCMASK;

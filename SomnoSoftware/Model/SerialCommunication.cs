@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using SomnoSoftware.Control;
 
 namespace SomnoSoftware.Model
 {
@@ -12,9 +13,11 @@ namespace SomnoSoftware.Model
     {
         private SerialPort serialPort;
         public event EventHandler<SerialDataEventArgs> NewSerialDataRecieved;
-        
-        public SerialCommunication()
+        private Controller controller;
+
+        public SerialCommunication(Controller controller)
         {
+            this.controller = controller;
             serialPort = new SerialPort();
         }
         
@@ -53,6 +56,7 @@ namespace SomnoSoftware.Model
             }
             catch
             {
+                controller.SendToTextBox("Fehler: " + portName + " konnte nicht geöffnet werden");
             }
 
         }
@@ -92,6 +96,8 @@ namespace SomnoSoftware.Model
         {
             try
             {
+            if (serialPort.IsOpen)
+            {
                 int dataLength = serialPort.BytesToRead;
                 byte[] data = new byte[dataLength];
                 int nbrDataRead = serialPort.Read(data, 0, dataLength);
@@ -102,9 +108,10 @@ namespace SomnoSoftware.Model
                 if (NewSerialDataRecieved != null)
                     NewSerialDataRecieved(this, new SerialDataEventArgs(data));
             }
+            }
             catch (Exception)
             {
-
+                controller.SendToTextBox("Fehler: Störung während des Datenemfpangs");
             }
         }
 
@@ -137,7 +144,7 @@ namespace SomnoSoftware.Model
                 dcbObj.GetType().GetField("BaudRate", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).SetValue(dcbObj, (UInt32)br);
                 UInt32 baudr = (UInt32)dcbObj.GetType().GetField("BaudRate", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(dcbObj);
                 if (baudr != br)
-                    throw new ApplicationException("Error setting dcb.BaudRate. Hardware does not support this baud rate?");
+                    controller.SendToTextBox("Fehler: Hardware unterstüzt BaudRate nicht");
             }
         }
 
@@ -165,6 +172,7 @@ namespace SomnoSoftware.Model
                 }
                 catch
                 {
+                    controller.SendToTextBox("Fehler: Konnte nicht an COM-Port senden");
                 }
             }
 
@@ -173,7 +181,6 @@ namespace SomnoSoftware.Model
         public bool Reconnect()
         {
             Connect(serialPort.PortName);
-            StartSensor();
             return (serialPort.IsOpen);
         }
     }

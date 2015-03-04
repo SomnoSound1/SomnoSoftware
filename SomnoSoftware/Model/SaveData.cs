@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using NeuroLoopGainLibrary;
 using NeuroLoopGainLibrary.Edf;
+using SomnoSoftware.Control;
 
 namespace SomnoSoftware.Model
 {
@@ -14,16 +15,17 @@ namespace SomnoSoftware.Model
         private int nrSignals = 0;
         private Int32 dataBlockNr = 0;
         private DateTime saveStart;
-
         private List<Int16>[] buffer;
+        private Controller controller;
 
-        public SaveData()
+        public SaveData(Controller controller)
         {
-
+            this.controller = controller;
         }
 
-        public SaveData(int sampleDuration, string fileName, bool complex)
+        public SaveData(int sampleDuration, string fileName, bool complex, Controller controller)
         {
+            this.controller = controller;
             if (complex)
                 nrSignals = 9;
             else
@@ -159,6 +161,9 @@ namespace SomnoSoftware.Model
                 {
                     Int16[] Data = new short[edfFile.SignalInfo[i-1].NrSamples];
                     Array.Clear(Data,0,Data.Length);
+                    if (i == 1)
+                        for (int k = 0; k < Data.Length; k++)
+                                Data[k] = (Int16)Statics.offset;
                     writeDataBuffer(i-1, Data);
                 }
            }
@@ -179,6 +184,10 @@ namespace SomnoSoftware.Model
           Array.Clear(audio, 0, audio.Length);
           Array.Clear(gyro, 0, gyro.Length);
           Array.Clear(accelerationRaw, 0, accelerationRaw.Length);
+
+              for (int i = 0; i < audio.Length; i++)
+              audio[i] = (Int16)Statics.offset;
+          
 
             for (int j = 0; j < lostPackages; j++)
             {
@@ -205,7 +214,10 @@ namespace SomnoSoftware.Model
         {
             //Check if data size is equal to assigned size in edffile
             if (edfFile.SignalInfo[signalNr].NrSamples != data.Length)
-            { Exception exception = new Exception("Data size differs from defined size in edfFile"); throw exception; }
+            {
+                controller.SendToTextBox("Fehler: Falsche Buffergröße für EDF-File");
+                return;
+            }
 
             //Calculate Offset in DataBuffer
             int offset = 0;
@@ -236,9 +248,16 @@ namespace SomnoSoftware.Model
         /// </summary>
         private void writeDataBlock()
         {
-            edfFile.WriteDataBlock(dataBlockNr);
-            dataBlockNr++;
-            commitChanges();
+            try
+            {
+                edfFile.WriteDataBlock(dataBlockNr);
+                dataBlockNr++;
+                commitChanges();
+            }
+            catch
+            {
+                controller.SendToTextBox("Fehler: Probleme beim Zugriff auf die EDF-Datei");
+            }
         }
 
         /// <summary>
@@ -246,7 +265,14 @@ namespace SomnoSoftware.Model
         /// </summary>
         public void commitChanges()
         {
-            edfFile.CommitChanges();
+            try
+            {
+                edfFile.CommitChanges();
+            }
+            catch
+            {
+                controller.SendToTextBox("Fehler: Probleme beim Zugriff auf die EDF-Datei");
+            }
         }
 
     }
