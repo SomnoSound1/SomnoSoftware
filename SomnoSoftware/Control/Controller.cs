@@ -281,7 +281,7 @@ namespace SomnoSoftware.Control
             {
                 UpdateStatus(this, new UpdateStatusEvent("Messung beendet"));
                 save = false;
-                saveData.fixSampleRate();
+                //saveData.fixSampleRate();
                 saveData.commitChanges();
                 //Deletes the SaveData Object
                 saveData = new SaveData(this);

@@ -89,7 +89,7 @@ namespace SomnoSoftware.Model
                 //Wenn Audio außerhalb der 10 Bit Auflösung ist wird der Wert auf den Offset korrigiert.
                 if (audio[i / 2] > 1024 || audio[i / 2] < 0)
                 {
-                    audio[i/2] = (Int16)Statics.offset;
+                    audio[i / 2] = (Int16)Statics.offset;
                 }
             }
             //Die ersten Werte des IMU's werden genutzt um Offsets der Gyrometer zu korrigieren
