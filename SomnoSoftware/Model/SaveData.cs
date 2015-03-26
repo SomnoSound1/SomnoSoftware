@@ -238,9 +238,16 @@ namespace SomnoSoftware.Model
         /// </summary>
         public void fixSampleRate()
         {
+            double sampleRecDuration = 0;
             TimeSpan recordingTime = DateTime.Now - saveStart;
-            edfFile.FileInfo.SampleRecDuration = ((double)recordingTime.TotalSeconds/(double)dataBlockNr);
-            commitChanges();
+
+            sampleRecDuration = ((double)recordingTime.TotalSeconds / (double)dataBlockNr);
+            //If measured duration out of bounds, something went wrong & we dont make any changes
+            if (sampleRecDuration >= 0.9 && sampleRecDuration <= 1.1)
+            {
+                edfFile.FileInfo.SampleRecDuration = sampleRecDuration;
+                commitChanges();
+            }
         }
 
         /// <summary>
