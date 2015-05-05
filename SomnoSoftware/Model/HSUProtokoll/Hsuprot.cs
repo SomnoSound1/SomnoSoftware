@@ -51,51 +51,6 @@ namespace SomnoSoftware
             rxPck_.Size = 0;
         }
 
-        public bool MakePck(ref serialPck outPackage)
-        {
-            outPck_.Bytes[0] = STARTFLAG;               // STARTFLAG
-            if ((outPackage.ID == STARTFLAG)
-                    || (outPackage.ID == STOPFLAG)         // ID != FLAG !!!
-                    || (outPackage.ID == ESCFLAG))
-                return false;
-
-            outPck_.ID = outPackage.ID;
-            outPck_.Bytes[1] = outPackage.ID;
-            outPck_.Size = 2;
-            outPck_.ChkSum = outPackage.ID;
-
-            for (int i = 0; i < outPackage.Size - 1; i++)  // DATA
-            {
-                if ((outPackage.Bytes[i] == STARTFLAG)
-                        || (outPackage.Bytes[i] == STOPFLAG)
-                        || (outPackage.Bytes[i] == ESCFLAG))
-                {
-                    outPck_.Bytes[outPck_.Size++] = ESCFLAG;
-                    if (!(outPck_.Size != 0))
-                        return false;                   // overflow occured
-                    outPackage.Bytes[i] = (byte)(~ESCMASK & outPackage.Bytes[i]);
-                }
-                outPck_.Bytes[outPck_.Size++] = outPackage.Bytes[i];
-                if (!(outPck_.Size != 0))
-                    return false;                       // overflow occured
-                outPck_.ChkSum += outPackage.Bytes[i];  // calc. chkSum;
-            }
-
-            if ((outPck_.ChkSum == STARTFLAG)
-                    || (outPck_.ChkSum == STOPFLAG)
-                    || (outPck_.ChkSum == ESCFLAG))
-            {
-                outPck_.Bytes[outPck_.Size++] = ESCFLAG;
-                outPck_.ChkSum = (byte)(~ESCMASK & outPck_.ChkSum);
-            }
-            outPck_.Bytes[outPck_.Size++] = outPck_.ChkSum;
-            outPck_.Bytes[outPck_.Size++] = STOPFLAG;
-            if (outPck_.Size < 4)
-                return false;                           // overflow occured
-            outPackage = outPck_;
-            return true;
-        }
-
         public bool GetPck(ref serialPck inPackage)
         {
             inPackage = inPck_;
@@ -105,9 +60,9 @@ namespace SomnoSoftware
         public int ByteImport(byte newByte)
         {
             if (!((rxPck_.Flags & PCKCMPL) != 0) 		// it's a new package
-      && !((rxPck_.ID & IDMESSAGE) != 0)    //   it's data package
-      && ((rxPck_.ID & IDSIZE) != 0) 				//   it's a package with size info
-      && (rxPck_.SizeCnt < rxPck_.Size))     //   it's not the the stop flag
+            && !((rxPck_.ID & IDMESSAGE) != 0)    //   it's data package
+            && ((rxPck_.ID & IDSIZE) != 0) 				//   it's a package with size info
+            && (rxPck_.SizeCnt < rxPck_.Size))     //   it's not the the stop flag
             {
                 if ((rxPck_.Flags & PCKSIZE) != 0) 		// the size is received
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using NeuroLoopGainLibrary;
@@ -13,10 +14,12 @@ namespace SomnoSoftware.Model
     {
         private EdfFile edfFile;
         private int nrSignals = 0;
+        private long lostTime = 0;
         private Int32 dataBlockNr = 0;
         private DateTime saveStart;
         private List<Int16>[] buffer;
         private Controller controller;
+        private List<Int16> storedData = new List<short>();
 
         public SaveData(Controller controller)
         {
@@ -36,6 +39,7 @@ namespace SomnoSoftware.Model
             
             edfFile.FileInfo.SampleRecDuration = sampleDuration;
             buffer = new List<short>[nrSignals];
+
             for (int i = 0; i < nrSignals; i++)
                 buffer[i]=new List<short>();
 
@@ -135,8 +139,19 @@ namespace SomnoSoftware.Model
         /// <param name="data"></param>
         public void sendData(int signalNr, short[] data)
         {
-                Int16[] Data = new short[edfFile.SignalInfo[signalNr].NrSamples];
-            
+            Int16[] Data = new short[edfFile.SignalInfo[signalNr].NrSamples];
+
+            if (signalNr == 0)
+            {
+                if (storedData.Count < edfFile.SignalInfo[signalNr].NrSamples)
+                    storedData.AddRange(data);
+                else
+                {
+                    storedData.RemoveRange(0, data.Length);
+                    storedData.AddRange(data);
+                }
+            }
+
             if (buffer[signalNr].Count < edfFile.SignalInfo[signalNr].NrSamples)
                 buffer[signalNr].AddRange(data);
             else
@@ -144,8 +159,53 @@ namespace SomnoSoftware.Model
                 buffer[signalNr].CopyTo(0, Data, 0, edfFile.SignalInfo[signalNr].NrSamples);
                 buffer[signalNr].RemoveRange(0, edfFile.SignalInfo[signalNr].NrSamples);
                 buffer[signalNr].AddRange(data);
+                writeDataBuffer(signalNr,Data);
+            }
+        }
 
-                    writeDataBuffer(signalNr,Data);
+
+        /// <summary>
+        /// Notes lost Time and adds Empty Values to EDF File after 1 second of lost time.
+        /// </summary>
+        /// <param name="time"></param>
+        public void AddLostTime(Stopwatch stopwatch, int elapsedSeconds)
+        {
+            lostTime += (stopwatch.ElapsedTicks - (Stopwatch.Frequency*elapsedSeconds));
+            
+            //If more than 2 seconds are missing
+            if (lostTime >= Stopwatch.Frequency*2)
+            {
+                while (lostTime >= Stopwatch.Frequency)
+                {
+                    lostTime -= Stopwatch.Frequency;
+                    //Fügt eine Sekunde zur EDF Datei hinzu
+                    for (int i = edfFile.SignalInfo.Count; i > 0; i--)
+                    {
+                        Int16[] Data = new short[edfFile.SignalInfo[i - 1].NrSamples];
+                        Array.Clear(Data, 0, Data.Length);
+                        if (i == 1)
+                            for (int k = 0; k < Data.Length; k++)
+                                Data[k] = (Int16)Statics.offset;
+                        writeDataBuffer(i - 1, Data);
+                    }
+                }
+            }
+            //If only one seconds needs to be filled in
+            else if (lostTime >= Stopwatch.Frequency)
+            {
+                lostTime -= Stopwatch.Frequency;
+                //Fügt eine Sekunde zur EDF Datei hinzu
+                for (int i = edfFile.SignalInfo.Count; i > 0; i--)
+                {
+                    Int16[] Data = new short[edfFile.SignalInfo[i - 1].NrSamples];
+                    Array.Clear(Data, 0, Data.Length);
+                    if (i == 1)
+                    {
+                        storedData.CopyTo(0, Data, 0, edfFile.SignalInfo[i - 1].NrSamples);
+                        Array.Reverse(Data);
+                    }
+                    writeDataBuffer(i - 1, Data);
+                }
             }
         }
 

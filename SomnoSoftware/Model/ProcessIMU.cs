@@ -10,6 +10,7 @@ namespace SomnoSoftware.Model
         MadgwickAHRS AHRS = new MadgwickAHRS(1f / (Statics.FS/20f), 0.2f);
         private float[] rotMatrix = new float[9];
 
+        private float[] vektorAcc = new float[3];
         private double[] vektorSensorX = new double[3];
         private double[] vektorSensorY = new double[3];
         private double[] vektorSensorZ = new double[3];
@@ -33,6 +34,7 @@ namespace SomnoSoftware.Model
 
         public void UpdateIMU(float GyroX, float GyroY, float GyroZ, float AccX, float AccY, float AccZ)
         {
+            vektorAcc[0] = AccX; vektorAcc[1] = AccY; vektorAcc[2] = AccZ;
             AHRS.Update(GyroX,GyroY,GyroZ,AccX,AccY,AccZ);
             rotMatrix = new x_IMU_API.QuaternionData(AHRS.Quaternion).ConvertToConjugate().ConvertToRotationMatrix();
 
@@ -87,8 +89,8 @@ namespace SomnoSoftware.Model
         {
             //Falls der Sensor anders im Gehäuse liegt muss das neu bestimmt werden
             //stehen
-            //if (vektor_sensor_winkel_y[2] >= Rechner.deg2rad(140))
-            //    position = 4;
+            if (vektorSensorWinkelZ[2] >= Statics.deg2rad(50) && vektorSensorWinkelZ[2] < Statics.deg2rad(140) && (vektorAcc[1] >= 3800 || vektorAcc[1] <= -3800))
+                return 3;
             //bauch
             if (vektorSensorWinkelZ[2] >= Statics.deg2rad(140))
                 return 2;
@@ -101,8 +103,6 @@ namespace SomnoSoftware.Model
             //n. def.
                 return -1;
         }
-
-
-
+        
     }
 }

@@ -58,10 +58,10 @@ namespace SomnoSoftware
             pb.Image = null;                    // Clear Image before redrawing
             g.Clear(Color.Transparent);
 
-            float pic_w = 55;                   // Width of image
-            float pic_h = 130;                  // Height of image    
+            float pic_w = 60;                   // Width of image
+            float pic_h = 170;                  // Height of image    
 
-            float pic_x = 13;                   // x-position of image
+            float pic_x = 8;                   // x-position of image
             float pic_y = h / 2 - pic_h / 2;    // y-position of image
 
             int font_x = w/2 - 22;              // x-position of font
@@ -85,6 +85,12 @@ namespace SomnoSoftware
                     {
                         g.DrawImage(Properties.Resources.facedown, new RectangleF(pic_x, pic_y, pic_w, pic_h));
                         g.DrawString("Bauch", font, b_black, font_x+2, font_y);
+                        break;
+                    }
+                case 3: // Bauch
+                    {
+                        g.DrawImage(Properties.Resources.wach, new RectangleF(pic_x, pic_y, pic_w, pic_h));
+                        g.DrawString("Stehen", font, b_black, font_x + 2, font_y);
                         break;
                     }
                 default:

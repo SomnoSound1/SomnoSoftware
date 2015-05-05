@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,8 +25,10 @@ namespace SomnoSoftware.Control
         public event EventHandler<NewDataAvailableEvent> NewDataAvailable;
         public event EventHandler<UpdateStatusEvent> UpdateStatus;
         private DateTime dcTime;
+        Stopwatch stopWatch = new Stopwatch();
 
         //Save Variables
+        
         public bool save = false;
         bool exitProgram = false;
         bool stopProgram = false;
@@ -41,7 +44,7 @@ namespace SomnoSoftware.Control
             PrepareView();
             form1.setController(this);
             connectDialog.setController(this);
-            processData = new ProcessData(52);
+            processData = new ProcessData(54);
             UpdateStatus(this, new UpdateStatusEvent("Wilkommen zu SomnoSoftware 0.2"));
             UpdateStatus(this, new UpdateStatusEvent("Bitte beachten Sie die Anweisungen bevor Sie eine Verbindung mit dem Sensor herstellen"));
             runner();
@@ -169,7 +172,7 @@ namespace SomnoSoftware.Control
         /// <param name="e"></param>
         public void Reconnect(Object sender, EventArgs e)
         {
-            form1.EnableTimer(!processData.sensorAnswer);
+            form1.EnableTimer(false);
             TimeSpan time;
             time = DateTime.Now - dcTime;
             if (time.Seconds >= 4)
@@ -178,20 +181,23 @@ namespace SomnoSoftware.Control
                 //If reconnect successful 
                 if (serial.Reconnect())
                 {
-                    //read new packageNumber
-                    firstPackage = true;
-                    //Replace missing Data in Save-File
-                    if (save)
-                    {
-                        time = DateTime.Now - dcTime;
-                        saveData.FillMissingData(time);
-                    }
+                    ////read new packageNumber
+                    //firstPackage = true;
+                    ////Start new File
+                    //if (save)
+                    //{
+                    //    EndSave();
+                    //    serial.StartSensor();
+                    //    StartRecording(saveDialog.patientName, DateTime.Today, 'M');
+                    //}
+                    //else
+                    //processData = new ProcessData(54);
                     serial.StartSensor();
+
                     UpdateStatus(this, new UpdateStatusEvent("Verbindung wiederhergestellt!"));
                 }
-                
             }
-            form1.EnableTimer(processData.sensorAnswer);
+            form1.EnableTimer(true);
         }
         
         /// <summary>
@@ -265,7 +271,7 @@ namespace SomnoSoftware.Control
             if (!Directory.Exists(subPath)) Directory.CreateDirectory(subPath);
 
             saveData = new SaveData(1, fileName, Statics.complexSave,this);
-            saveData.addInformation("test","",birthDate,gender,name);
+            saveData.addInformation("test",Statics.sensorName,birthDate,gender,name);
             save = true;
             saveDialog.Dispose();
             form1.Enabled = true;
@@ -307,16 +313,41 @@ namespace SomnoSoftware.Control
                 {
                     processData.Convert2Byte();
 
-                    //Check package number
+                    //Reset all Values if its the very first package that arrives
                     if (firstPackage)
                     {
                         firstPackage = false;
                         processData.SetPackageNumber();
+                        stopWatch.Reset();
+                        processData.packageCount=0;
                     }
+                    //Check package number
                     else
                     {
+                        if (!processData.CheckPackageNumber())
+                        UpdateStatus(this, new UpdateStatusEvent("Paket verloren gegangen"));
+
                         if (!processData.CheckPackageNumber() && save)
+                        {
                             saveData.FillMissingData(processData.lostPackages);
+                            processData.packageCount += processData.lostPackages;
+                        }
+                    }
+
+                    //Start Stop Watch the first time
+                    if (!stopWatch.IsRunning){stopWatch.Reset();stopWatch.Start();}
+                    
+                    //Count till 2500 Packages have arrive (which should be 10 Seconds) 
+                    processData.packageCount++;
+                    if (processData.packageCount >= 250*10)
+                    {
+                        processData.packageCount -= 250*10;
+                        stopWatch.Stop();
+                        //Add time deviation to ensure time synchronic
+                        if(save) saveData.AddLostTime(stopWatch,10);
+                        //Reset and Start Stop Watch again
+                        stopWatch.Reset();
+                        stopWatch.Start();
                     }
 
                     //IMU

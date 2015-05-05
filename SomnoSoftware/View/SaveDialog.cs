@@ -13,6 +13,7 @@ namespace SomnoSoftware
     public partial class SaveDialog : Form
     {
         private Controller controller;
+        public string patientName;
 
         public SaveDialog()
         {
@@ -31,6 +32,7 @@ namespace SomnoSoftware
 
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
+            patientName = textBoxName.Text;
             controller.StartRecording(textBoxName.Text,dateTimePickerBDay.Value,Convert.ToChar(textBoxGender.Text));
         }
 

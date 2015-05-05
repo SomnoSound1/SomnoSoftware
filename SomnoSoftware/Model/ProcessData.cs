@@ -24,6 +24,7 @@ namespace SomnoSoftware.Model
         public int lostPackages;
         public int activity;
         public int sleepPosition;
+        public int packageCount = 0;
 
         //Lists
         private List<Int16> buffer = new List<Int16>();
@@ -57,9 +58,12 @@ namespace SomnoSoftware.Model
             {
                 if (!((hsuprot.inPck_.ID & (byte)(0x80)) != 0)) //If Data
                     dataPaket = hsuprot.inPck_.Bytes;
-                else
-                    if (hsuprot.inPck_.Bytes[0] == 5) //If not Data and Message equals five
-                        sensorAnswer = true;
+                else if (hsuprot.inPck_.Bytes[0] >= 1 && hsuprot.inPck_.Bytes[0] <= 5)
+                {
+                    //If not Data and Message equals five
+                    Statics.changeSensorVariables(hsuprot.inPck_.Bytes[0]);
+                    sensorAnswer = true;
+                }
                 return true;
             }
             return false;
@@ -92,6 +96,7 @@ namespace SomnoSoftware.Model
                     audio[i / 2] = (Int16)Statics.offset;
                 }
             }
+
             //Die ersten Werte des IMU's werden genutzt um Offsets der Gyrometer zu korrigieren
             if (stepsDone < offsetSteps)
             {

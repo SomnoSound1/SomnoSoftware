@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace SomnoSoftware
         public static bool complexSave = false;
         public static int FFTSize = 256;
         public static int num_of_lines = (int)Math.Round((double)(Statics.timeDisplay / Statics.FFTSize));
+        public static string sensorName = "n.def.";
 
         // Spectrum in dB
         public static bool dB = true;
@@ -58,6 +60,51 @@ namespace SomnoSoftware
         {
 
             return Math.Acos((a[0] * b[0] + a[1] * b[1] + a[2] * b[2]) / (Math.Sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]) * Math.Sqrt(b[0] * b[0] + b[1] * b[1] + b[2] * b[2])));
+
+        }
+
+        /// <summary>
+        ///  Sets static Variables for different Sensors
+        /// </summary>
+        /// <param name="sensorNumber">Sensor Number</param>
+        public static void changeSensorVariables(int sensorNumber)
+        {
+
+            switch (sensorNumber)
+            {
+                case 1:
+                {
+                    sensorName = "Somno1";
+                    offset = 519;
+                    break;
+                }
+                case 2:
+                {
+                    sensorName = "Somno2";
+                    offset = 512;
+                    break;
+                }
+                case 3:
+                {
+                    sensorName = "Somno3";
+                    offset = 517;
+                    break;
+                }
+                case 4:
+                {
+                    sensorName = "Somno4";
+                    offset = 512;
+                    break;
+                }
+                case 5:
+                {
+                    sensorName = "Somno5";
+                    offset = 525;
+                    break;
+                }
+                default:
+                    break;
+            }
 
         }
     }
