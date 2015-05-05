@@ -19,6 +19,7 @@ namespace SomnoSoftware.Model
         public Int16[] gyro = new Int16[3];
         public Int16[] accelerationRaw = new Int16[3];
         public Int16[] gyroRaw = new Int16[3];
+        public ushort trigger;
         private ushort packageNumber;
         public ushort packageNumberPC;
         public int lostPackages;
@@ -128,6 +129,9 @@ namespace SomnoSoftware.Model
             }
             //Package_Number einlesen
             packageNumber = (ushort)(((char)dataPaket[52]) | (char)dataPaket[53] << 8);
+
+            //Trigger einlesen
+            trigger = (char)dataPaket[54];
         }
 
         /// <summary>

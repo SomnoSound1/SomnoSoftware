@@ -30,9 +30,9 @@ namespace SomnoSoftware.Model
         {
             this.controller = controller;
             if (complex)
-                nrSignals = 9;
+                nrSignals = 10;
             else
-                nrSignals = 3;
+                nrSignals = 4;
 
             edfFile = new EdfFile(fileName, false, false, false, false);
             edfFile.CreateNewFile(nrSignals, true);
@@ -56,6 +56,11 @@ namespace SomnoSoftware.Model
                 addSignal(6, "Acc X", "Beschleunigung", Statics.FS / 20, 255, 0);
                 addSignal(7, "Acc X", "Beschleunigung", Statics.FS / 20, 255, 0);
                 addSignal(8, "Acc X", "Beschleunigung", Statics.FS / 20, 255, 0);
+                addSignal(9, "Trigger", "Trigger", Statics.FS / 20, 255, 0);
+            }
+            else
+            {
+                addSignal(3, "Trigger", "Trigger", Statics.FS / 20, 1, 0);
             }
 
         }

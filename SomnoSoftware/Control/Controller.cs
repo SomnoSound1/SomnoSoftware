@@ -44,7 +44,7 @@ namespace SomnoSoftware.Control
             PrepareView();
             form1.setController(this);
             connectDialog.setController(this);
-            processData = new ProcessData(54);
+            processData = new ProcessData(55);
             UpdateStatus(this, new UpdateStatusEvent("Wilkommen zu SomnoSoftware 0.2"));
             UpdateStatus(this, new UpdateStatusEvent("Bitte beachten Sie die Anweisungen bevor Sie eine Verbindung mit dem Sensor herstellen"));
             runner();
@@ -102,7 +102,7 @@ namespace SomnoSoftware.Control
             {
                 serial = new SerialCommunication(this);
                 serial.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(NewSerialDataRecieved);
-                processData = new ProcessData(54);
+                processData = new ProcessData(55);
 
                 string[] portNames;
                 portNames = serial.GetPortNames();
@@ -371,9 +371,14 @@ namespace SomnoSoftware.Control
                                 saveData.sendData(i + 3, processData.gyro[i]);
                                 saveData.sendData(i + 6, processData.accelerationRaw[i]);
                             }
+                            saveData.sendData(9, (short)processData.trigger);
                         }
+                        else
+                        saveData.sendData(3, (short)processData.trigger); 
+
                         saveData.sendData(1, (short)processData.activity);
                         saveData.sendData(2, (short)processData.sleepPosition);
+                        
                         saveData.sendData(0, processData.audio);
                     }
                 }

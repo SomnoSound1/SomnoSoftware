@@ -7,7 +7,7 @@ namespace SomnoSoftware
 {
     class Hsuprot
     {
-        const int MAXPCKSIZE = 54;
+        const int MAXPCKSIZE = 55;
 
         // Transmission Flags
         const byte STARTFLAG = 170;     // signs begin of a new transmission
