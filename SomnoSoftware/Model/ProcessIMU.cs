@@ -89,8 +89,8 @@ namespace SomnoSoftware.Model
         {
             //Falls der Sensor anders im Gehäuse liegt muss das neu bestimmt werden
             //stehen
-            if (vektorSensorWinkelZ[2] >= Statics.deg2rad(50) && vektorSensorWinkelZ[2] < Statics.deg2rad(140) && (vektorAcc[1] >= 3800 || vektorAcc[1] <= -3800))
-                return 3;
+            //if (vektorSensorWinkelZ[2] >= Statics.deg2rad(50) && vektorSensorWinkelZ[2] < Statics.deg2rad(140) && (vektorAcc[1] >= 4000 || vektorAcc[1] <= -3800))
+            //    return 3;
             //bauch
             if (vektorSensorWinkelZ[2] >= Statics.deg2rad(140))
                 return 2;
