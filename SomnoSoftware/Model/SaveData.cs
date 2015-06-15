@@ -45,8 +45,8 @@ namespace SomnoSoftware.Model
 
 
             addSignal(0, "Audio", "Amplitude", Statics.FS, 1024, 0);
-            addSignal(1, "Aktivitaet", "Aktivitaet", Statics.FS / 20, 10, 0);
-            addSignal(2, "Position", "Position", 1, 3, 0);
+            addSignal(1, "Aktivitaet", "Aktivitaet", Statics.FS /20, 10, 0);
+            addSignal(2, "Position", "Position", Statics.FS / 20, 3, 0);
             if (complex)
             {
                 addSignal(3, "Gyro X", "Winkelgeschwindigkeit", Statics.FS / 20, 255, 0);

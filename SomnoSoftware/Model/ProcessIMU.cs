@@ -63,7 +63,6 @@ namespace SomnoSoftware.Model
             vektorSensorWinkelZ[1] = Statics.angle_between_vectors(vektorSensorZ, vektorWeltY);
             vektorSensorWinkelZ[2] = Statics.angle_between_vectors(vektorSensorZ, vektorWeltZ);
         }
-        
 
         public int MeasureActivity()
         {
