@@ -19,7 +19,8 @@ namespace SomnoSoftware.Model
         private DateTime saveStart;
         private List<Int16>[] buffer;
         private Controller controller;
-        private List<Int16> storedData = new List<short>();
+        private List<Int16> storedDataAudio = new List<short>();
+        private List<Int16> storedDataPos = new List<short>();
 
         public SaveData(Controller controller)
         {
@@ -45,7 +46,7 @@ namespace SomnoSoftware.Model
 
 
             addSignal(0, "Audio", "Amplitude", Statics.FS, 1024, 0);
-            addSignal(1, "Aktivitaet", "Aktivitaet", Statics.FS /20, 10, 0);
+            addSignal(1, "Aktivitaet", "Aktivitaet", Statics.FS /20, 100, 0);
             addSignal(2, "Position", "Position", Statics.FS / 20, 3, 0);
             if (complex)
             {
@@ -143,12 +144,23 @@ namespace SomnoSoftware.Model
 
             if (signalNr == 0)
             {
-                if (storedData.Count < edfFile.SignalInfo[signalNr].NrSamples)
-                    storedData.AddRange(data);
+                if (storedDataAudio.Count < edfFile.SignalInfo[signalNr].NrSamples)
+                    storedDataAudio.AddRange(data);
                 else
                 {
-                    storedData.RemoveRange(0, data.Length);
-                    storedData.AddRange(data);
+                    storedDataAudio.RemoveRange(0, data.Length);
+                    storedDataAudio.AddRange(data);
+                }
+            }
+
+            if (signalNr == 2)
+            {
+                if (storedDataPos.Count < edfFile.SignalInfo[signalNr].NrSamples)
+                    storedDataPos.AddRange(data);
+                else
+                {
+                    storedDataPos.RemoveRange(0, data.Length);
+                    storedDataPos.AddRange(data);
                 }
             }
 
@@ -199,9 +211,15 @@ namespace SomnoSoftware.Model
                 {
                     Int16[] Data = new short[edfFile.SignalInfo[i - 1].NrSamples];
                     Array.Clear(Data, 0, Data.Length);
+                    
+                    if (i == 3)
+                    {
+                        storedDataPos.CopyTo(0, Data, 0, edfFile.SignalInfo[i - 1].NrSamples);
+                        //Array.Reverse(Data);
+                    }
                     if (i == 1)
                     {
-                        storedData.CopyTo(0, Data, 0, edfFile.SignalInfo[i - 1].NrSamples);
+                        storedDataAudio.CopyTo(0, Data, 0, edfFile.SignalInfo[i - 1].NrSamples);
                         Array.Reverse(Data);
                     }
                     writeDataBuffer(i - 1, Data);
