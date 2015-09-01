@@ -143,6 +143,16 @@ namespace SomnoSoftware.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap side2 {
+            get {
+                object obj = ResourceManager.GetObject("side2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap wach {
             get {
                 object obj = ResourceManager.GetObject("wach", resourceCulture);

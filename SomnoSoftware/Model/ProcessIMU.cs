@@ -95,7 +95,15 @@ namespace SomnoSoftware.Model
                 return 2;
             //seite
             if (vektorSensorWinkelZ[2] >= Statics.deg2rad(50) && vektorSensorWinkelZ[2] < Statics.deg2rad(140))
-                return 1;
+            {
+                    //auf linker seite
+                    //wenn sensor hochkant vektorAcc[1], ansonsten vektorAcc[0]
+                    if (vektorAcc[1] <= 0)
+                        return 1;
+                    //auf rechter seite
+                    return 3;
+            }
+               
             //rücken
             if (vektorSensorWinkelZ[2] >= Statics.deg2rad(0) && vektorSensorWinkelZ[2] < Statics.deg2rad(50))
                 return 0;

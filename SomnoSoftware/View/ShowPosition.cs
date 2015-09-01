@@ -75,9 +75,9 @@ namespace SomnoSoftware
                         g.DrawString("Rücken", font, b_black, font_x, font_y);
                         break;
                     }
-                case 1: // Seite
+                case 1: // Seite links
                     {
-                        g.DrawImage(Properties.Resources.side, new RectangleF(pic_x, pic_y, pic_w, pic_h));
+                        g.DrawImage(Properties.Resources.side2, new RectangleF(pic_x, pic_y, pic_w, pic_h));
                         g.DrawString("Seite", font, b_black, font_x+5, font_y);
                         break;
                     }
@@ -87,10 +87,10 @@ namespace SomnoSoftware
                         g.DrawString("Bauch", font, b_black, font_x+2, font_y);
                         break;
                     }
-                case 3: // Bauch
+                case 3: // Seite rechts
                     {
-                        g.DrawImage(Properties.Resources.wach, new RectangleF(pic_x, pic_y, pic_w, pic_h));
-                        g.DrawString("Stehen", font, b_black, font_x + 2, font_y);
+                        g.DrawImage(Properties.Resources.side, new RectangleF(pic_x, pic_y, pic_w, pic_h));
+                        g.DrawString("Seite", font, b_black, font_x + 5, font_y);
                         break;
                     }
                 default:
