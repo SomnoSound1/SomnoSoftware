@@ -118,6 +118,28 @@ namespace SomnoSoftware.Model
             Int16[] data_ = new Int16[1];
             data_[0] = data;
 
+            if (signalNr == 0)
+            {
+                if (storedDataAudio.Count < edfFile.SignalInfo[signalNr].NrSamples/10)
+                    storedDataAudio.Add(data);
+                else
+                {
+                    storedDataAudio.RemoveRange(0, 1);
+                    storedDataAudio.Add(data);
+                }
+            }
+
+            if (signalNr == 2)
+            {
+                if (storedDataPos.Count < edfFile.SignalInfo[signalNr].NrSamples/10)
+                    storedDataPos.Add(data);
+                else
+                {
+                    storedDataPos.RemoveRange(0, 1);
+                    storedDataPos.Add(data);
+                }
+            }
+            
             Int16[] Data = new short[edfFile.SignalInfo[signalNr].NrSamples];
 
             if (buffer[signalNr].Count < edfFile.SignalInfo[signalNr].NrSamples)
@@ -144,7 +166,7 @@ namespace SomnoSoftware.Model
 
             if (signalNr == 0)
             {
-                if (storedDataAudio.Count < edfFile.SignalInfo[signalNr].NrSamples)
+                if (storedDataAudio.Count < edfFile.SignalInfo[signalNr].NrSamples / 10)
                     storedDataAudio.AddRange(data);
                 else
                 {
@@ -155,7 +177,7 @@ namespace SomnoSoftware.Model
 
             if (signalNr == 2)
             {
-                if (storedDataPos.Count < edfFile.SignalInfo[signalNr].NrSamples)
+                if (storedDataPos.Count < edfFile.SignalInfo[signalNr].NrSamples / 10)
                     storedDataPos.AddRange(data);
                 else
                 {
@@ -203,26 +225,35 @@ namespace SomnoSoftware.Model
                 }
             }
             //If only one seconds needs to be filled in
-            else if (lostTime >= Stopwatch.Frequency)
+            else if (lostTime >= Stopwatch.Frequency/10)
             {
-                lostTime -= Stopwatch.Frequency;
+                lostTime -= Stopwatch.Frequency/10;
                 //Fügt eine Sekunde zur EDF Datei hinzu
                 for (int i = edfFile.SignalInfo.Count; i > 0; i--)
                 {
-                    Int16[] Data = new short[edfFile.SignalInfo[i - 1].NrSamples];
+                    Int16[] Data = new short[edfFile.SignalInfo[i - 1].NrSamples/10];
                     Array.Clear(Data, 0, Data.Length);
-                    
+
                     if (i == 3)
                     {
-                        storedDataPos.CopyTo(0, Data, 0, edfFile.SignalInfo[i - 1].NrSamples);
+                        storedDataPos.CopyTo(0, Data, 0, edfFile.SignalInfo[i - 1].NrSamples/10);
                         //Array.Reverse(Data);
                     }
+                    //Indikator im Aktivitätssignal (an welcher Stelle wurden Daten eingefügt)
+                    //if (i == 2)
+                    //{
+                    //    for (int j = 0; j < Data.Length; j++)
+                    //    {
+                    //        Data[j] = 5;
+                    //    }
+                    //}
                     if (i == 1)
                     {
-                        storedDataAudio.CopyTo(0, Data, 0, edfFile.SignalInfo[i - 1].NrSamples);
+                        storedDataAudio.CopyTo(0, Data, 0, edfFile.SignalInfo[i - 1].NrSamples/10);
                         Array.Reverse(Data);
                     }
-                    writeDataBuffer(i - 1, Data);
+                    sendData(i - 1, Data);
+                    //writeDataBuffer(i - 1, Data);
                 }
             }
         }

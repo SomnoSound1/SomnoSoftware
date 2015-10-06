@@ -98,7 +98,7 @@ namespace SomnoSoftware.Model
             {
                     //auf linker seite
                     //wenn sensor hochkant vektorAcc[1], ansonsten vektorAcc[0]
-                    if (vektorAcc[1] <= 0)
+                    if (vektorAcc[0] >= 0)
                         return 1;
                     //auf rechter seite
                     return 3;

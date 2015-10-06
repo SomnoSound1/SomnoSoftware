@@ -111,7 +111,7 @@ namespace SomnoSoftware.Model
             }
             catch (Exception)
             {
-                //controller.SendToTextBox("Fehler: Störung während des Datenemfpangs");
+                controller.SendToTextBox("Fehler: Störung während des Datenemfpangs");
             }
         }
 
