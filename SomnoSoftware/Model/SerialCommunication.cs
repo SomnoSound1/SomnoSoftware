@@ -43,8 +43,8 @@ namespace SomnoSoftware.Model
             if (serialPort != null && serialPort.IsOpen)
                 serialPort.Close();
 
-            serialPort.ReadTimeout = 500;
-            serialPort.WriteTimeout = 500;
+            serialPort.ReadTimeout = 1000;
+            serialPort.WriteTimeout = 1000;
             serialPort.PortName = portName;
 
             // Subscribe to event and open serial port for data

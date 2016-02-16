@@ -79,7 +79,7 @@ namespace SomnoSoftware
                       
             spec.DrawSpectrogram(e.FFT, counter);
 
-            act.DrawActivity((int)rand.Next(Statics.max_act+1));
+            //act.DrawActivity((int)rand.Next(Statics.max_act+1));
             
             act.DrawActivity(e.activity);
 

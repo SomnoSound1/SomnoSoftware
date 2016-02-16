@@ -12,7 +12,7 @@ namespace SomnoSoftware
 
         public static int timeDisplay = 10 * FS;
         //false = 3 channel edf file, true 9 channel edf file (with imu data)
-        public static bool complexSave = false;
+        public static bool complexSave = true;
         public static int FFTSize = 256;
         public static int num_of_lines = (int)Math.Round((double)(Statics.timeDisplay / Statics.FFTSize));
         public static string sensorName = "n.def.";
@@ -75,7 +75,7 @@ namespace SomnoSoftware
                 case 1:
                 {
                     sensorName = "Somno1";
-                    offset = 519;
+                    offset = 521;
                     break;
                 }
                 case 2:
@@ -87,7 +87,7 @@ namespace SomnoSoftware
                 case 3:
                 {
                     sensorName = "Somno3";
-                    offset = 517;
+                    offset = 519;
                     break;
                 }
                 case 4:
@@ -99,7 +99,7 @@ namespace SomnoSoftware
                 case 5:
                 {
                     sensorName = "Somno5";
-                    offset = 525;
+                    offset = 516;
                     break;
                 }
                 default:

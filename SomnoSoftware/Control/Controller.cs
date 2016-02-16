@@ -45,7 +45,7 @@ namespace SomnoSoftware.Control
             form1.setController(this);
             connectDialog.setController(this);
             processData = new ProcessData(54);
-            UpdateStatus(this, new UpdateStatusEvent("Wilkommen zu SomnoSoftware 0.2"));
+            UpdateStatus(this, new UpdateStatusEvent("Wilkommen zu SomnoSoftware 0.3"));
             UpdateStatus(this, new UpdateStatusEvent("Bitte beachten Sie die Anweisungen bevor Sie eine Verbindung mit dem Sensor herstellen"));
             runner();
         }
