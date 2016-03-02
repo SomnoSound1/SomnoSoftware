@@ -124,6 +124,10 @@ namespace SomnoSoftware.Control
                     serial.StartSensor();
                     connectDialog.Hide();
                     form1.Show();
+                    //Automatisch Aufnahme nach erfolgreicher Verbindung starten (für Studie)
+                    if (!save)                    
+                      StartRecording();
+                    
                 }
                 else
                 {
@@ -226,12 +230,7 @@ namespace SomnoSoftware.Control
         {
             if (!save)
             {
-                form1.Enabled = false;
-                saveDialog = new SaveDialog();
-                saveDialog.StartPosition = FormStartPosition.CenterScreen;
-                saveDialog.Show();
-                saveDialog.Focus();
-                saveDialog.setController(this);
+                StartSave();
             }
             else
             {
@@ -281,6 +280,36 @@ namespace SomnoSoftware.Control
             UpdateStatus(this, new UpdateStatusEvent("Messung gestartet"));
         }
 
+        /// <summary>
+        /// Starts Recording without save dialog
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="birthDate"></param>
+        /// <param name="gender"></param>
+        public void StartRecording()
+        {
+            DateTime birthDate = DateTime.Today;
+            char gender = 'M';
+            string name = "001";
+            string documents = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string subPath = Path.Combine("Messungen", name);
+            string fileName = DateTime.Now.ToString("yyyy_MM_dd") + "_" + DateTime.Now.ToLongTimeString() + ".edf";
+            subPath = Path.Combine(documents, subPath);
+            fileName = fileName.Replace(':', '_');
+            fileName = Path.Combine(subPath, fileName);
+            if (!Directory.Exists(subPath)) Directory.CreateDirectory(subPath);
+
+            saveData = new SaveData(1, fileName, Statics.complexSave, this);
+            saveData.addInformation("test", Statics.sensorName, birthDate, gender, name);
+            save = true;
+            //saveDialog.Dispose();
+            form1.Enabled = true;
+            form1.Focus();
+            form1.ChangeSaveButtonText(false);
+            form1.ChangeSaveImage();
+            UpdateStatus(this, new UpdateStatusEvent("Messung gestartet"));
+        }
+
         private void EndSave()
         {
             if (save)
@@ -294,6 +323,16 @@ namespace SomnoSoftware.Control
                 form1.ChangeSaveButtonText(true);
                 form1.ChangeSaveImage();
             }
+        }
+
+        private void StartSave()
+        {
+            form1.Enabled = false;
+            saveDialog = new SaveDialog();
+            saveDialog.StartPosition = FormStartPosition.CenterScreen;
+            saveDialog.Show();
+            saveDialog.Focus();
+            saveDialog.setController(this);
         }
 
         /// <summary>
@@ -337,7 +376,7 @@ namespace SomnoSoftware.Control
                     //Start Stop Watch the first time
                     if (!stopWatch.IsRunning){stopWatch.Reset();stopWatch.Start();}
                     
-                    //Count till 2500 Packages have arrive (which should be 10 Seconds) 
+                    //Count till 2500 Packages have arrived (which should be 10 Seconds) 
                     processData.packageCount++;
                     if (processData.packageCount >= 250*10)
                     {

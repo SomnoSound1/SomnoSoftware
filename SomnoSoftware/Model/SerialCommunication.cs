@@ -96,7 +96,7 @@ namespace SomnoSoftware.Model
         {
             try
             {
-            if (serialPort.IsOpen)
+                if (serialPort.IsOpen)
             {
                 int dataLength = serialPort.BytesToRead;
                 byte[] data = new byte[dataLength];

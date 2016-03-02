@@ -108,7 +108,7 @@
             // 
             // timerDisconnect
             // 
-            this.timerDisconnect.Interval = 5000;
+            this.timerDisconnect.Interval = 15000;
             // 
             // pb_activity
             // 

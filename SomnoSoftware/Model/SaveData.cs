@@ -21,6 +21,7 @@ namespace SomnoSoftware.Model
         private Controller controller;
         private List<Int16> storedDataAudio = new List<short>();
         private List<Int16> storedDataPos = new List<short>();
+        private List<Int16>[] storedDataIMU = new List<short>[6];
 
         public SaveData(Controller controller)
         {
@@ -43,6 +44,10 @@ namespace SomnoSoftware.Model
 
             for (int i = 0; i < nrSignals; i++)
                 buffer[i]=new List<short>();
+
+            for (int i = 0; i < nrSignals-3; i++)
+                storedDataIMU[i] = new List<short>();
+
 
 
             addSignal(0, "Audio", "Amplitude", Statics.FS, 1024, 0);
@@ -118,6 +123,7 @@ namespace SomnoSoftware.Model
             Int16[] data_ = new Int16[1];
             data_[0] = data;
 
+            //store data temporarily to fill in missing data
             if (signalNr == 0)
             {
                 if (storedDataAudio.Count < edfFile.SignalInfo[signalNr].NrSamples/10)
@@ -139,7 +145,18 @@ namespace SomnoSoftware.Model
                     storedDataPos.Add(data);
                 }
             }
-            
+
+            if (signalNr > 2 && signalNr < 9)
+            {
+                if (storedDataIMU[signalNr - 3].Count < edfFile.SignalInfo[signalNr].NrSamples / 10)
+                    storedDataIMU[signalNr - 3].Add(data);
+                else
+                {
+                    storedDataIMU[signalNr - 3].RemoveRange(0, 1);
+                    storedDataIMU[signalNr - 3].Add(data);
+                }
+            }
+
             Int16[] Data = new short[edfFile.SignalInfo[signalNr].NrSamples];
 
             if (buffer[signalNr].Count < edfFile.SignalInfo[signalNr].NrSamples)
@@ -186,6 +203,18 @@ namespace SomnoSoftware.Model
                 }
             }
 
+            if (signalNr > 2 && signalNr < 9)
+            {
+                if (storedDataIMU[signalNr - 3].Count < edfFile.SignalInfo[signalNr].NrSamples / 10)
+                    storedDataIMU[signalNr - 3].AddRange(data);
+                else
+                {
+                    storedDataIMU[signalNr - 3].RemoveRange(0, 1);
+                    storedDataIMU[signalNr - 3].AddRange(data);
+                }
+            }
+
+
             if (buffer[signalNr].Count < edfFile.SignalInfo[signalNr].NrSamples)
                 buffer[signalNr].AddRange(data);
             else
@@ -216,7 +245,10 @@ namespace SomnoSoftware.Model
                     for (int i = edfFile.SignalInfo.Count; i > 0; i--)
                     {
                         Int16[] Data = new short[edfFile.SignalInfo[i - 1].NrSamples];
-                        Array.Clear(Data, 0, Data.Length);
+                        for (int k = 0; k < Data.Length; ++k)
+                        {
+                            Data[k] = -1;
+                        }
                         if (i == 1)
                             for (int k = 0; k < Data.Length; k++)
                                 Data[k] = (Int16)Statics.offset;
@@ -233,6 +265,11 @@ namespace SomnoSoftware.Model
                 {
                     Int16[] Data = new short[edfFile.SignalInfo[i - 1].NrSamples/10];
                     Array.Clear(Data, 0, Data.Length);
+
+                    if (i<=9 && i>3)
+                    {
+                        storedDataIMU[i - 4].CopyTo(0, Data, 0, edfFile.SignalInfo[i - 1].NrSamples / 10);
+                    }
 
                     if (i == 3)
                     {
@@ -269,7 +306,11 @@ namespace SomnoSoftware.Model
                for (int i = edfFile.SignalInfo.Count; i > 0; i--)
                 {
                     Int16[] Data = new short[edfFile.SignalInfo[i-1].NrSamples];
-                    Array.Clear(Data,0,Data.Length);
+                    //Array.Clear(Data,0,Data.Length);
+                    for (int k = 0; k < Data.Length; ++k)
+                    {
+                        Data[k] = -1;
+                    }
                     if (i == 1)
                         for (int k = 0; k < Data.Length; k++)
                                 Data[k] = (Int16)Statics.offset;
