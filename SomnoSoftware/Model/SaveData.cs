@@ -55,13 +55,13 @@ namespace SomnoSoftware.Model
             addSignal(2, "Position", "Position", Statics.FS / 20, 3, 0);
             if (complex)
             {
-                addSignal(3, "Gyro X", "Winkelgeschwindigkeit", Statics.FS / 20, 255, 0);
-                addSignal(4, "Gyro Y", "Winkelgeschwindigkeit", Statics.FS / 20, 255, 0);
-                addSignal(5, "Gyro Z", "Winkelgeschwindigkeit", Statics.FS / 20, 255, 0);
+                addSignal(3, "Gyro X", "Winkelgeschwindigkeit", Statics.FS / 20, 1000, -1000);
+                addSignal(4, "Gyro Y", "Winkelgeschwindigkeit", Statics.FS / 20, 1000, -1000);
+                addSignal(5, "Gyro Z", "Winkelgeschwindigkeit", Statics.FS / 20, 1000, -1000);
 
-                addSignal(6, "Acc X", "Beschleunigung", Statics.FS / 20, 255, 0);
-                addSignal(7, "Acc Y", "Beschleunigung", Statics.FS / 20, 255, 0);
-                addSignal(8, "Acc Z", "Beschleunigung", Statics.FS / 20, 255, 0);
+                addSignal(6, "Acc X", "Beschleunigung", Statics.FS / 20, 32767, -32768);
+                addSignal(7, "Acc Y", "Beschleunigung", Statics.FS / 20, 32767, -32768);
+                addSignal(8, "Acc Z", "Beschleunigung", Statics.FS / 20, 32767, -32768);
             }
 
         }
